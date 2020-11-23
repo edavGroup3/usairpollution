@@ -1,7 +1,4 @@
----
-title: "Data Cleaning"
-output: html_notebook
----
+# Data Cleaning
 ```{r setup, include=FALSE}
  # keep this chunk in your .Rmd file
  knitr::opts_chunk$set(warning = FALSE, message = FALSE)
@@ -11,6 +8,8 @@ output: html_notebook
 library(tidyr)
 library(dplyr)
 ```
+
+In data cleaning stage, we deleted unrelated columns from the original data set. We merged two data sets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type.
 
 ```{r}
 site<-read.csv("./data/site.csv")
@@ -23,7 +22,7 @@ data$update_date <- as.Date(data$UPDATE_DATE, "%m/%d/%Y")
 data <- data %>%
   select(-UPDATE_DATE,-DATEOFF) 
 head(data)
-save(data, file="./data/processedData.RData")
+save(data, file="./data/processedData.csv")
 ```
 
 
