@@ -1,2 +1,96 @@
-# Data sources
+---
+title: "Data"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Describe the data sources: 
+
+Huiqian is responsible for collecting data. 
+
+The aim of this project is to analyze the air pollutants over the U.S. The data was collect from CASTNET: Clean Air Status and Trends Network(https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
+
+### Basic information about the dataset:
+
+
+```{r}
+raw_data <- read.csv("./data/Filter Pack Concentrations - Weekly.csv")
+colnames(raw_data)
+```
+```{r}
+nrow(raw_data)
+ncol(raw_data)
+```
+
+The raw data has following 25 columns and 49124 rows:
+
+1. SITE_ID: Site identification code.
+2. TYPE: Sample type code.
+3. DATEON: Date and time sample collection began, Local Standard Time; mm/dd/yyyy hh:mm:ss.
+4. DATEOFF: Date and time sample collection ended, Local Standard Time; mm/dd/yyyy hh:mm:ss.
+5. TSO4: Sulfate (SO4) concentration from Teflon filter; ug/m^3.
+6. TNO3: Nitrate (NO3) concentration from Teflon filter; ug/m^3.
+7. TNH4: Ammonium (NH4) concentration from Teflon filter; ug/m^3.
+8. CA: Calcium (Ca) concentration from Teflon filter; ug/m^3.
+9. MG: Magnesium (Mg) concentration from Teflon filter; ug/m^3.
+10. NA: Sodium (Na) concentration from Teflon filter; ug/m^3.
+11. K: Potassium (K) concentration from Teflon filter; ug/m^3.
+12. CL: Chloride (Cl) concentration from Teflon filter; ug/m^3.
+13. NSO4: Sulfate (SO4) concentration from Nylon filter; ug/m^3.
+14. NHNO3: Nitric acid (NO3) concentration from Nylon filter; ug/m^3.
+15. WSO2: Sulfur dioxide (SO2) concentration from Whatman filter; ug/m^3.
+16. WNO3: Nitrate (NO3) concentration from Whatman filter; ug/m^3.
+17. TOTAL_SO2:	Total sulfur dioxide (SO2) concentration calculated from [wso2]+0.667*nso4]; ug/m^3.
+18. TOTAL_NO3:	Total nitrate (NO3) concentration calculated from [tno3]+0.9841*[nhno3]; ug/m^3.
+19: FLOW_VOLUME:	Flow volume; m^3.
+20. VALID_HOURS:	Valid hours during sampling period
+21. COMMENT_CODES:	Comment codes separated by spaces
+22. STD2LOCAL_CF:	Factor used to convert atmospheric concentrations from standard to local conditions
+23. TEMP_SOURCE:	Source of mean temperature used in conversion factor
+24. QA_CODE:	Quality assurance level of the record. (see QAPP for definition of quality assurance levels)
+25. UPDATE_DATE: Date and time of last record update.
+
+### Describe any issues with the data: 
+
+1.  We need to clean raw data and extract necessary columns: SITE_ID, DATEOFF, TSO4, TNO3, TNH4, CA, MG, NA, K, CL, NSO4, NHNO3, WSO2, WNO3.
+
+
+2.  The date information display in DATEOFF, mm/dd/yyy hh:mm:ss, we need to convert it into DATE mm/dd/yyyy format.
+
+3.  The location information from raw data is SITE_ID, which is site identification code used by CASTNET. To transform SITE_ID into general geographical location, we download site information data from CASTNET: https://java.epa.gov/castnet/epa_jsp/prepackageddata.jsp, and further join the information.
+
+
+```{r}
+site_data <- read.csv("./data/site/site.csv")
+colnames(site_data)
+```
+
+The site data has following columns:
+
+1. SITE_ID:Site identification code
+2.	SITE_NUM:	Numeric unique site identification
+3.	SITE_NAME:	Site name
+4.	ACTIVE:	Sampling operations currently being conducted at site; site is inactive if NULL.
+5.	INACTIVE:	Sampling operations that have previously been conducted at the site but are not currently being performed
+6.	AGENCY:	Operating agency
+7.	STATE:	State abbreviation
+8.	COUNTY:	County
+9.	TIME_ZONE:	Local time zone of site
+10.	LATITUDE:	Latitude; decimal degrees
+11.	LONGITUDE: Longitude; decimal degrees
+12.	ELEVATION: Elevation; m
+13.	MAPID:	USGS 7-1/2 min. map name.
+14.	LAND_USE:	Primary land use
+15.	TERRAIN:	Terrain surrounding site
+16.	MLM:	Does site conform to assumptions of MLM?
+17.	NADP_ID: ADP site code
+18.	NADP_DISTANCE: Distance to nearest NADP site; km
+19.	UPDATE_DATE: Date and time of last record update
+
+
+We don't need all of these columns, we only need extract SITE_ID, STATE, CONTRY, LATITUDE, LONGITUDE, ELEVATION information.
+
 
