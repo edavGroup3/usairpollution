@@ -1,8 +1,4 @@
 # Data Cleaning
-```{r setup, include=FALSE}
- # keep this chunk in your .Rmd file
- knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-```
 
 ```{r}
 library(tidyr)
