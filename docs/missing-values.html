@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Missing values | YOUR TITLE HERE</title>
   <meta name="description" content="Chapter 4 Missing values | YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Missing values | YOUR TITLE HERE" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="YOUR NAMES HERE" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2020-11-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="data-transformation.html"/>
 <link rel="next" href="results.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 
@@ -97,8 +98,34 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="missing-values" class="section level1" number="4">
+<div id="missing-values" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<p>In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column.</p>
+<p>After removing “WNO3” and some other redundant columns, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
+<p>After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below.</p>
+<pre><code>##       SITE_ID          TYPE        DATEON       DATEOFF          TSO4          TNO3          TNH4 
+##             0             0             0             0          1220          1220          1220 
+##            CA            MG           NA.             K            CL          NSO4         NHNO3 
+##          1225          1223          1225          1298          1230          1222          1222 
+##          WSO2          WNO3     TOTAL_SO2     TOTAL_NO3   FLOW_VOLUME   VALID_HOURS COMMENT_CODES 
+##          1246         49124          1234          1212           902           892             0 
+##  STD2LOCAL_CF   TEMP_SOURCE       QA_CODE   UPDATE_DATE 
+##            17             0             0             0</code></pre>
+<p>Notice that each pollutant concentration variables contain almost the same percentage of missing values. We tried to extract missing patterns using mi::missing_data.frame(). To save memory, we only input the first 20,000 data.</p>
+<pre><code>## NOTE: The following pairs of variables appear to have the same missingness pattern.
+##  Please verify whether they are in fact logically distinct variables.
+##      [,1]           [,2]         
+## [1,] &quot;TSO4&quot;         &quot;TNO3&quot;       
+## [2,] &quot;TSO4&quot;         &quot;TNH4&quot;       
+## [3,] &quot;TSO4&quot;         &quot;MG&quot;         
+## [4,] &quot;TNO3&quot;         &quot;TNH4&quot;       
+## [5,] &quot;TNO3&quot;         &quot;MG&quot;         
+## [6,] &quot;TNH4&quot;         &quot;MG&quot;         
+## [7,] &quot;NSO4&quot;         &quot;NHNO3&quot;      
+## [8,] &quot;STD2LOCAL_CF&quot; &quot;TEMP_SOURCE&quot;</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>The result is consistent to what we found before, [“TSO4”, “TNO3”, “TNH4”, “CA”, “MG”, “TSO4”] have the same missingness pattern.</p>
+<p>Also we found out that within each “Side_ID”, the number of missing values is almost the same across each pollutant. We will further work on understanding if these is any patterns between missing values and date or locations. At this point, we would not directly remove these missing points as some missing values may link to other groups in the data.</p>
 
 </div>
             </section>

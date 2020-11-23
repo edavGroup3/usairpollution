@@ -1,1 +1,34 @@
 # Missing values
+
+```{r setup, include=FALSE}
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column. 
+
+After removing “WNO3” and some other redundant columns, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent. 
+
+After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below. 
+
+```{r}
+library(dplyr)
+data <- read.csv(file='./data/Filter_Pack_Concentrations_W.csv')
+remove_columns <- c('WNO3', 'QA_CODE', 'DATEON', 'COMMENT_CODES', 'TOTAL_NO3', 'UPDATE_DATE')
+dt <- select(data, -remove_columns)
+colSums(is.na(data))
+```
+
+Notice that each pollutant concentration variables contain almost the same percentage of missing values. We tried to extract missing patterns using mi::missing_data.frame(). To save memory, we only input the first 20,000 data. 
+```{r}
+library(mi)
+library(betareg)
+x <- missing_data.frame(dt[1:20000,])
+```
+
+```{r}
+image(x)
+```
+
+The result is consistent to what we found before, ["TSO4", "TNO3", "TNH4", "CA", "MG", "TSO4"] have the same missingness pattern. 
+
+Also we found out that within each "Side_ID", the number of missing values is almost the same across each pollutant. We will further work on understanding if these is any patterns between missing values and date or locations. At this point, we would not directly remove these missing points as some missing values may link to other groups in the data. 
