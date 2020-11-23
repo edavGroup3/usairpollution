@@ -64,7 +64,7 @@ The raw data has following 25 columns and 49124 rows:
 
 
 ```{r}
-site_data <- read.csv("./data/site/site.csv")
+site_data <- read.csv("./data/site.csv")
 colnames(site_data)
 ```
 
