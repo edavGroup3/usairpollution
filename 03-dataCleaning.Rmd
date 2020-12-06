@@ -1,4 +1,9 @@
 # Data Cleaning
+```{r setup, include=FALSE}
+ # keep this chunk in your .Rmd file
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
 
 ```{r}
 library(tidyr)
@@ -18,7 +23,9 @@ data$update_date <- as.Date(data$UPDATE_DATE, "%m/%d/%Y")
 data <- data %>%
   select(-UPDATE_DATE,-DATEOFF) 
 head(data)
-save(data, file="./data/processedData.csv")
+write.csv(data, file="./data/processedData.csv")
 ```
+
+
 
 
