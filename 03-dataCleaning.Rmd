@@ -10,7 +10,7 @@ library(tidyr)
 library(dplyr)
 ```
 
-In data cleaning stage, we deleted unrelated columns from the original data set. We merged two data sets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type.
+In data cleaning stage, we deleted unrelated columns from the original data set.For pollution data, we merged two data sets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type. 
 
 ```{r}
 site<-read.csv("./data/site.csv")
@@ -25,7 +25,23 @@ data <- data %>%
 head(data)
 write.csv(data, file="./data/processedData.csv")
 ```
+###NOTE from data source website: 
+The following suppression rules are implemented in the ASCII files. 
 
+--Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
+
+--Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
+
+--Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
+
+```{r}
+load("./data/RawCancerData.RData")
+head(data)
+temp <- data %>%
+  select(-AGE_ADJUSTED_CI_LOWER, -AGE_ADJUSTED_CI_UPPER, -CRUDE_CI_LOWER, -CRUDE_CI_UPPER, -AREA)
+head(temp)
+save(temp, file="./data/DiseaseProcessedData.RData")
+```
 
 
 
