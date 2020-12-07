@@ -17,7 +17,7 @@ site<-read.csv("./data/site.csv")
 raw<-read.csv("./data/Filter Pack Concentrations - Weekly.csv")
 site1<- site %>% select(SITE_ID,STATE,COUNTY,LATITUDE,LONGITUDE,ELEVATION)
 data <- full_join(site1,raw,by='SITE_ID') %>%
-  select(-WNO3,-QA_CODE,-DATEON,-COMMENT_CODES,-TOTAL_NO3) 
+  select(-WNO3,-QA_CODE,-DATEON,-COMMENT_CODES) 
 data$date_off <- as.Date(data$DATEOFF, "%m/%d/%Y")
 data$update_date <- as.Date(data$UPDATE_DATE, "%m/%d/%Y")
 data <- data %>%
