@@ -1,7 +1,7 @@
 # Results
 
 ## Packages
-All packages we used in this section. 
+All packages we have used in this section. 
 ```{r}
 library(dplyr)
 library(tidyverse)
@@ -42,3 +42,20 @@ ggplot(tidy_data, aes(x=reorder(Pollutant, -Concentration, median),
   xlab("Pollutant") +
   ylab("Concentration")
 ```
+
+## How does air pollution spread over the past ten years?
+
+```{r}
+national_so2 <- data %>% 
+  group_by(date_off) %>% 
+  summarise(mean_SO2 = mean(TOTAL_SO2, na.rm=TRUE), .groups='drop') %>% 
+  na.omit()
+
+time_series_obj <- xts(x = national_so2$mean_SO2, order.by = national_so2$date_off)
+dygraph(time_series_obj,
+        main = "Sulfur Dioxide Trend in US",
+        xlab = "Date",
+        ylab = "SO2 (ug/m^3)") %>% 
+  dyRangeSelector()
+```
+
