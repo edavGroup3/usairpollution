@@ -1,16 +1,16 @@
 # Data Cleaning
 ```{r setup, include=FALSE}
- # keep this chunk in your .Rmd file
  knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
-
 
 ```{r}
 library(tidyr)
 library(dplyr)
+library(usmap)
 ```
 
-In data cleaning stage, we deleted unrelated columns from the original data set.For pollution data, we merged two data sets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type. 
+## Air Pollutant Dataset
+In the data cleaning stage, we deleted unrelated columns from the original data set. For air pollutant data, we first merged two datasets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type. 
 
 ```{r}
 site<-read.csv("./data/site.csv")
@@ -21,11 +21,25 @@ data <- full_join(site1,raw,by='SITE_ID') %>%
 data$date_off <- as.Date(data$DATEOFF, "%m/%d/%Y")
 data$update_date <- as.Date(data$UPDATE_DATE, "%m/%d/%Y")
 data <- data %>%
-  select(-UPDATE_DATE,-DATEOFF) 
+  select(-UPDATE_DATE,-DATEOFF)
+```
+
+Next, we added a column called "REGION" into the pollution data so that each state can be classified by one of three larger regions ("east", "middle", "west"). In terms of how we group each state, please refer to [Census Regions and Divisions of United States](https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf){target="_blank"}. 
+
+```{r}
+# First generate a region_table
+# reference: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf
+east_abbr <- c(.new_england, .east_north_central, .mid_atlantic, .east_south_central, .south_atlantic)
+west_abbr <- c(.west_north_central, .west_south_central)
+middle_abbr <- c(.mountain, .pacific)
+region_table <- data.frame("REGION"=c(rep('east', length(east_abbr)), rep('middle', length(middle_abbr)), rep('west', length(west_abbr))), "STATE" = c(east_abbr, middle_abbr, west_abbr))
+data <- left_join(data, region_table, by='STATE')
 head(data)
 write.csv(data, file="./data/processedData.csv")
 ```
-###NOTE from data source website: 
+
+## Cancer Dataset
+NOTE from data source website: 
 The following suppression rules are implemented in the ASCII files. 
 
 --Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 

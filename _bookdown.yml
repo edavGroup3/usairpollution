@@ -6,5 +6,29 @@ view: https://github.com/edavGroup3/usairpollution/blob/main/%s
 language:
   ui:
     chapter_name: "Chapter "
+
+# Chapter ordering
+rmd_files: [
+  # Part: Introduction
+  'index.Rmd',
+  
+  # Part 2: Data Sources
+  '02-data.Rmd',
+  
+  # Part 3: Data Cleaning
+  '03-dataCleaning.Rmd',
+  
+  # Part 3: Missing values
+  '04-missing.Rmd',
+  
+  # Part 5: Results
+  '05-results.Rmd',
+  
+  # Part 6: Interactive
+  '06-interactive.Rmd',
+  
+  # Part 7: Conclusion
+  '07-conclusion.Rmd'
+]
     
 before_chapter_script: "_common.R"

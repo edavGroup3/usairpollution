@@ -5,3 +5,12 @@ missing-values
 results
 interactive-component
 conclusion
+describe-the-data-sources
+basic-information-about-the-dataset
+describe-any-issues-with-the-data
+packages
+data
+data-distributions-ca-mg-cl-k
+data-distributions-so2-and-no3
+air-pollutant-dataset
+cancer-dataset
