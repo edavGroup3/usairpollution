@@ -15,3 +15,9 @@ data-distributions-so2-and-no3
 air-pollutant-dataset
 cancer-dataset
 how-does-air-pollution-spread-over-the-past-ten-years
+tab:unnamed-chunk-4
+data-distribution
+time-series-of-each-pollutant
+so2
+no3
+hh
