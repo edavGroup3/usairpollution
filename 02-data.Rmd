@@ -1,25 +1,19 @@
----
-title: "Data"
-output: html_notebook
----
+# Data
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-### Describe the data sources: 
+## Describe the data sources: 
 
 Huiqian is responsible for collecting data. 
 
 The aim of this project is to analyze the air pollutants over the U.S. The data was collect from CASTNET: Clean Air Status and Trends Network(https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
 
-### Basic information about the dataset:
+## Basic information about the dataset:
 
 
 ```{r}
 raw_data <- read.csv("./data/Filter Pack Concentrations - Weekly.csv")
 colnames(raw_data)
 ```
+
 ```{r}
 nrow(raw_data)
 ncol(raw_data)
@@ -53,7 +47,7 @@ The raw data has following 25 columns and 49124 rows:
 24. QA_CODE:	Quality assurance level of the record. (see QAPP for definition of quality assurance levels)
 25. UPDATE_DATE: Date and time of last record update.
 
-### Describe any issues with the data: 
+## Describe any issues with the data: 
 
 1.  We need to clean raw data and extract necessary columns: SITE_ID, DATEOFF, TSO4, TNO3, TNH4, CA, MG, NA, K, CL, NSO4, NHNO3, WSO2, WNO3.
 

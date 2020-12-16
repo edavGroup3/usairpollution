@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Missing values | YOUR TITLE HERE</title>
-  <meta name="description" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <title>Chapter 4 Missing values | EDAV Group3 Final Project</title>
+  <meta name="description" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <meta property="og:title" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <meta name="twitter:title" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Xinwen Miao, Yilan Jiang, Huiqian Yu, Diyue Gu" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,10 +51,80 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -69,14 +139,34 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">edavgroup3finalproj</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-cleaning.html"><a href="data-cleaning.html"><i class="fa fa-check"></i><b>3</b> Data Cleaning</a></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#describe-the-data-sources"><i class="fa fa-check"></i><b>2.1</b> Describe the data sources:</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#basic-information-about-the-dataset"><i class="fa fa-check"></i><b>2.2</b> Basic information about the dataset:</a></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#describe-any-issues-with-the-data"><i class="fa fa-check"></i><b>2.3</b> Describe any issues with the data:</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-cleaning.html"><a href="data-cleaning.html"><i class="fa fa-check"></i><b>3</b> Data Cleaning</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-cleaning.html"><a href="data-cleaning.html#data-source-1"><i class="fa fa-check"></i><b>3.1</b> Data Source 1</a></li>
+<li class="chapter" data-level="3.2" data-path="data-cleaning.html"><a href="data-cleaning.html#data-source-2"><i class="fa fa-check"></i><b>3.2</b> Data Source 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#data-source-1-1"><i class="fa fa-check"></i><b>4.1</b> Data Source 1</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#data-source-2-1"><i class="fa fa-check"></i><b>4.2</b> Data Source 2</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#packages"><i class="fa fa-check"></i><b>5.1</b> Packages</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#data-1"><i class="fa fa-check"></i><b>5.2</b> Data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#data-distribution"><i class="fa fa-check"></i><b>5.2.1</b> Data Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#how-does-air-pollution-spread-over-the-past-ten-years"><i class="fa fa-check"></i><b>5.3</b> How does air pollution spread over the past ten years?</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#time-series-of-so2-and-no3-across-the-nation"><i class="fa fa-check"></i><b>5.3.1</b> Time Series of SO2 and NO3 Across the Nation</a></li>
+<li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#monthly-time-series"><i class="fa fa-check"></i><b>5.3.2</b> Monthly Time Series</a></li>
+<li class="chapter" data-level="5.3.3" data-path="results.html"><a href="results.html#did-covid-19-lockdown-significantly-reduce-air-pollution-in-new-york-state"><i class="fa fa-check"></i><b>5.3.3</b> Did Covid-19 lockdown significantly reduce air pollution in New York State?</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -90,7 +180,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3 Final Project</a>
           </h1>
         </div>
 
@@ -100,33 +190,32 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<div id="data-source-1-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Data Source 1</h2>
 <p>In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column.</p>
 <p>After removing “WNO3” and some other redundant columns, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
 <p>After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below.</p>
-<pre><code>##       SITE_ID          TYPE        DATEON       DATEOFF          TSO4          TNO3          TNH4 
-##             0             0             0             0          1220          1220          1220 
-##            CA            MG           NA.             K            CL          NSO4         NHNO3 
-##          1225          1223          1225          1298          1230          1222          1222 
-##          WSO2          WNO3     TOTAL_SO2     TOTAL_NO3   FLOW_VOLUME   VALID_HOURS COMMENT_CODES 
-##          1246         49124          1234          1212           902           892             0 
-##  STD2LOCAL_CF   TEMP_SOURCE       QA_CODE   UPDATE_DATE 
-##            17             0             0             0</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="missing-values.html#cb19-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb19-2"><a href="missing-values.html#cb19-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&#39;./data/Filter_Pack_Concentrations_W.csv&#39;</span>)</span>
+<span id="cb19-3"><a href="missing-values.html#cb19-3"></a>remove_columns &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;WNO3&#39;</span>, <span class="st">&#39;QA_CODE&#39;</span>, <span class="st">&#39;DATEON&#39;</span>, <span class="st">&#39;COMMENT_CODES&#39;</span>, <span class="st">&#39;TOTAL_NO3&#39;</span>, <span class="st">&#39;UPDATE_DATE&#39;</span>)</span>
+<span id="cb19-4"><a href="missing-values.html#cb19-4"></a>dt &lt;-<span class="st"> </span><span class="kw">select</span>(data, <span class="op">-</span>remove_columns)</span>
+<span id="cb19-5"><a href="missing-values.html#cb19-5"></a><span class="kw">colSums</span>(<span class="kw">is.na</span>(data))</span></code></pre></div>
+<pre><code>##       SITE_ID          TYPE        DATEON       DATEOFF          TSO4          TNO3          TNH4            CA            MG           NA.             K            CL          NSO4         NHNO3 
+##             0             0             0             0          1220          1220          1220          1225          1223          1225          1298          1230          1222          1222 
+##          WSO2          WNO3     TOTAL_SO2     TOTAL_NO3   FLOW_VOLUME   VALID_HOURS COMMENT_CODES  STD2LOCAL_CF   TEMP_SOURCE       QA_CODE   UPDATE_DATE 
+##          1246         49124          1234          1212           902           892             0            17             0             0             0</code></pre>
 <p>Notice that each pollutant concentration variables contain almost the same percentage of missing values. We tried to extract missing patterns using mi::missing_data.frame(). To save memory, we only input the first 20,000 data.</p>
-<pre><code>## NOTE: The following pairs of variables appear to have the same missingness pattern.
-##  Please verify whether they are in fact logically distinct variables.
-##      [,1]           [,2]         
-## [1,] &quot;TSO4&quot;         &quot;TNO3&quot;       
-## [2,] &quot;TSO4&quot;         &quot;TNH4&quot;       
-## [3,] &quot;TSO4&quot;         &quot;MG&quot;         
-## [4,] &quot;TNO3&quot;         &quot;TNH4&quot;       
-## [5,] &quot;TNO3&quot;         &quot;MG&quot;         
-## [6,] &quot;TNH4&quot;         &quot;MG&quot;         
-## [7,] &quot;NSO4&quot;         &quot;NHNO3&quot;      
-## [8,] &quot;STD2LOCAL_CF&quot; &quot;TEMP_SOURCE&quot;</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="missing-values.html#cb21-1"></a><span class="co">#library(mi)</span></span>
+<span id="cb21-2"><a href="missing-values.html#cb21-2"></a><span class="co">#library(betareg)</span></span>
+<span id="cb21-3"><a href="missing-values.html#cb21-3"></a><span class="co">#x &lt;- missing_data.frame(dt[1:20000,])</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="missing-values.html#cb22-1"></a><span class="co">#image(x)</span></span></code></pre></div>
 <p>The result is consistent to what we found before, [“TSO4”, “TNO3”, “TNH4”, “CA”, “MG”, “TSO4”] have the same missingness pattern.</p>
 <p>Also we found out that within each “Side_ID”, the number of missing values is almost the same across each pollutant. We will further work on understanding if these is any patterns between missing values and date or locations. At this point, we would not directly remove these missing points as some missing values may link to other groups in the data.</p>
+</div>
+<div id="data-source-2-1" class="section level2">
+<h2><span class="header-section-number">4.2</span> Data Source 2</h2>
 
+</div>
 </div>
             </section>
 
@@ -165,7 +254,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/04-missing.Rmd",
+"link": "https://github.com/edavGroup3/usairpollution/edit/main/04-missing.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -173,7 +262,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/04-missing.Rmd",
+"link": "https://github.com/edavGroup3/usairpollution/blob/main/04-missing.Rmd",
 "text": null
 },
 "download": null,

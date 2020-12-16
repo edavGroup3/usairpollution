@@ -9,7 +9,6 @@ library(dygraphs)
 library(xts)
 library(cowplot)
 ```
-
 ## Data
 Before moving on, let us draw some insights from each pollutant concentration over the past ten years. 
 ```{r}
@@ -159,3 +158,5 @@ ggplot(new_data, aes(xaxis_year, NO3, color = year)) +
     ylab("NO3 (ug/m^3)") +
     ggtitle("Monthly NO3 in New York State across each year")
 ```
+
+
