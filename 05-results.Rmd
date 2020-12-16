@@ -11,7 +11,7 @@ library(cowplot)
 ```
 
 ## Data
-Before moving on, let us draw some insights from the concentraion of each pollutant over the past ten years. 
+Before moving on, let us draw some insights from each pollutant concentration over the past ten years. 
 ```{r}
 data = read.csv(file='./data/processedData.csv')
 data <- data %>% na.omit()
@@ -22,12 +22,12 @@ data$month <- format(as.Date(data$date, "%F"), "%m")
 data %>% select(SO2, NO3) %>% summary()
 ```
 * Notes:
-  + The means and the medians for each pollutant, especially SO2 is far apart. It implies that median might be a better representation to each pollutant distribution. 
+  + The mean and the median for each pollutant, especially SO2 is far apart. It implies that median might be a better representation to each pollutant distribution. 
   + The largest observation of each pollutant is hugely deviated from mean and median. We need to visualize the distribution of each pollutant more carefully to eliminate any possible outliers. That is what we will do in the next section. 
 
 
 ### Data Distribution
-* In order to visualize the distribution of each pollutant, we constructed boxplot. Moreover, since environmental factors vary across the entire nation, we faceted each boxplot by regions (east, middle, west) to see how the concentration of each pollutant varies by region. For further information about how we split the regions, please refer to previous section on transforming the datasets. 
+* In order to visualize the distribution of each pollutant, we constructed boxplots. Moreover, since environmental factors vary across the entire nation, we faceted each boxplot by regions (east, middle, west) to see how the concentration of each pollutant varies by regions. For further information about how we split the regions, please refer to previous section called Data Cleaning. 
 * Since most data values are lower than 1, we transform all concentration values with log scale to better visualize them. 
 ```{r}
 selected_cols <- c("date", "REGION","STATE", "COUNTY","VALID_HOURS","SO2", "NO3")
@@ -52,14 +52,14 @@ ggplot(tidy_data, aes(x=reorder(Pollutant, -Concentration, median),
   ggtitle("The Distribution of each Air Pollutant faceted by Regions (SO2, NO3)")
 ```
 
-* Notes:
-  + For all pollutants, the median value is higher in eastern area than the other two regions. In particular, large numbers of high values emerge in that region. Further investigation is needed.
+* Remarks:
+  + For both pollutants, the median value is higher in eastern area than the other two regions. In particular, large numbers of high values emerge in that region. Further investigation is needed.
   + There are lots of outliers in each pollutant data. This observation suggests that we should not delete these outliers since they become a commonplace in this analysis. 
   
 ## How does air pollution spread over the past ten years?
 
 ### Time Series of SO2 and NO3 Across the Nation
-* Here we plot two dygraphs, one for each pollutant, to visualize the overall distribution in the past ten years. Feel free to play with them. 
+* Here we plot two dygraphs, one for each pollutant, to visualize the overall distribution in the past ten years. Feel free to play with them and draw some insights. 
 ```{r}
 time_series_obj <- xts(x = data$SO2, order.by = data$date)
 dygraph(time_series_obj,
@@ -106,10 +106,10 @@ plot_NO3 <- ggplot(data_month, aes(x=as.Date(month_year, format="%F"), y=aver_NO
 plot_grid(plot_SO2, plot_NO3, nrow = 2)
 ```
 
-* Notes:
-  + Based on the monthly plots above, we may conclude that the overall SO2 concentration decreases year to year. In particular, it decreases significantly in 2020. We suspect part of the reason might be Covid-19. In the next section, we will further explore the effect of Covid-19 on SO2.  
+* Remarks:
+  + Based on the monthly plots above, we may conclude that the overall SO2 concentration decreases year to year. In particular, it decreases significantly in 2020. We suspect part of the reason might be due to Covid-19. In the next section, we will briefly investigate possible effects of Covid-19 on SO2 emission level.  
   + On the other hand, the overall NO3 concentration slightly diminished from 2010 to 2014 and then remain high since then. In addition to common pollutants like SO2, there are actually lots of toxic pollutants similar to NO3 that are challenging our environment. 
-  + We can observe cyclic pattern in both plots above. Then the next question we ask is what is causing the cyclical pattern? A rational guess we have is month. Therefore, we plot monthly sub-series of a time series for each pollutant as follows. 
+  + We can observe cyclic pattern in both plots above. Then the next question we ask is what is causing the cyclical pattern? A rational guess we have is monthly effect. Therefore, we plot monthly sub-series of a time series for each pollutant as follows. 
   
 ```{r}
 data_month$month_year = as.Date(data_month$month_year)
@@ -126,10 +126,10 @@ month_NO3 <- monthplot(NO3)
 * On the other hand, monthly effect does not entirely cause the cyclical pattern of NO3 as observed above since the overall trends are still different. 
 
 ### Did Covid-19 lockdown significantly reduce air pollution in New York State?
-* In India and China, researchers found out that air quality improves significantly in urban centres during lockdowns. For further information that research, please refer to [Comparative study on air quality status in India and Chinese cities before and during the COVID-19 lockdown period](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7375877/){target="_blank"}. By the same interest, we did some investigations on the impact of COVID-19 lockdown to the two pollutants, SO2 and NO3. 
+* In India and China, researchers found out that air quality improves significantly in urban districts during lockdown. If you want to dive deeper into this research, please refer to [Comparative study on air quality status in India and Chinese cities before and during the COVID-19 lockdown period](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7375877/){target="_blank"}. By the same interest, we did a brief investigations on the impact of COVID-19 lockdown to the two pollutants, SO2 and NO3. 
 
-* It is unrealistic to investigate the impact of Covid-19 to air pollution across the entire nation since each state response differently to the pandemic. Therefore, we decided to choose New York State as a representative. 
-The New York State government began with a full lockdown from March 2020 to April 2020 in response to Covid-19 Pandemic. In the following plot, we created a monthly concentration plot by year for each pollutant. Notice in March and April, the SO2 and NO3 concentration level did diminish but not significantly. Therefore, we may conclude that in terms of SO2 and NO3, Covid-19 lockdown did not reduce air pollution significantly. 
+* It is unrealistic to investigate the impact of Covid-19 to air pollution across the entire nation since each state responsed differently to the pandemic. Therefore, we decided to choose New York State as a representative. 
+The New York State government began with a full lockdown from March 2020 to April 2020 in response to Covid-19 Pandemic. In the following plot, we created a monthly concentration plot by year for each pollutant. Notice in March and April, the SO2 and NO3 concentration level did diminish but not significantly. Therefore, we may conclude that in terms of SO2 and NO3, Covid-19 lockdown did not reduce air pollution significantly. Further investigation is needed on other pollutants. 
 
 ```{r}
 new_data <- data %>% 
