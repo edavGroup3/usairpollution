@@ -1,24 +1,61 @@
 # Data Cleaning
+```{r setup, include=FALSE}
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
 
 ```{r}
 library(tidyr)
 library(dplyr)
+library(usmap)
 ```
 
-In data cleaning stage, we deleted unrelated columns from the original data set. We merged two data sets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type.
+## Data Source 1
+In the data cleaning stage, we deleted unrelated columns from the original data set. For air pollutant data, we first merged two datasets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type. 
 
 ```{r}
 site<-read.csv("./data/site.csv")
 raw<-read.csv("./data/Filter Pack Concentrations - Weekly.csv")
 site1<- site %>% select(SITE_ID,STATE,COUNTY,LATITUDE,LONGITUDE,ELEVATION)
 data <- full_join(site1,raw,by='SITE_ID') %>%
-  select(-WNO3,-QA_CODE,-DATEON,-COMMENT_CODES,-TOTAL_NO3) 
+  select(-WNO3,-QA_CODE,-DATEON,-COMMENT_CODES) 
 data$date_off <- as.Date(data$DATEOFF, "%m/%d/%Y")
 data$update_date <- as.Date(data$UPDATE_DATE, "%m/%d/%Y")
 data <- data %>%
-  select(-UPDATE_DATE,-DATEOFF) 
-head(data)
-save(data, file="./data/processedData.csv")
+  select(-UPDATE_DATE,-DATEOFF)
 ```
+
+Next, we added a column called "REGION" into the pollution data so that each state can be classified by one of three larger regions ("east", "middle", "west"). In terms of how we group each state, please refer to [Census Regions and Divisions of United States](https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf){target="_blank"}. 
+
+```{r}
+# First generate a region_table
+# reference: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf
+east_abbr <- c(.new_england, .east_north_central, .mid_atlantic, .east_south_central, .south_atlantic)
+west_abbr <- c(.west_north_central, .west_south_central)
+middle_abbr <- c(.mountain, .pacific)
+region_table <- data.frame("REGION"=c(rep('east', length(east_abbr)), rep('middle', length(middle_abbr)), rep('west', length(west_abbr))), "STATE" = c(east_abbr, middle_abbr, west_abbr))
+data <- left_join(data, region_table, by='STATE')
+head(data)
+write.csv(data, file="./data/processedData.csv")
+```
+
+## Data Source 2
+NOTE from data source website: 
+The following suppression rules are implemented in the ASCII files. 
+
+--Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
+
+--Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
+
+--Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
+
+```{r}
+load("./data/RawCancerData.RData")
+head(data)
+temp <- data %>%
+  select(-AGE_ADJUSTED_CI_LOWER, -AGE_ADJUSTED_CI_UPPER, -CRUDE_CI_LOWER, -CRUDE_CI_UPPER, -AREA)
+head(temp)
+save(temp, file="./data/DiseaseProcessedData.RData")
+```
+
 
 
