@@ -9,7 +9,7 @@ library(dplyr)
 library(usmap)
 ```
 
-## Air Pollutant Dataset
+## Data Source 1
 In the data cleaning stage, we deleted unrelated columns from the original data set. For air pollutant data, we first merged two datasets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type. 
 
 ```{r}
@@ -38,7 +38,7 @@ head(data)
 write.csv(data, file="./data/processedData.csv")
 ```
 
-## Cancer Dataset
+## Data Source 2
 NOTE from data source website: 
 The following suppression rules are implemented in the ASCII files. 
 
