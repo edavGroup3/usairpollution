@@ -7,7 +7,7 @@
 #<script src="scripts/script1.js"></script>
 <body>
 
-  <h1>Title</h1>
+  <h1>Cancer Rate by State</h1>
 
   <div id="vis"></div>
 
@@ -73,7 +73,7 @@ h1{
   svg.call(tip);
   
   
-  d3.csv("statespercent.csv").then(function(data){
+  d3.csv("./data/statespercent.csv").then(function(data){
     var dataArray = [];
     for (var d=0; d < data.length; d++){
       dataArray.push(parseFloat(data[d].value));
@@ -82,7 +82,7 @@ h1{
     var maxVal = d3.max(dataArray);
     var ramp = d3.scaleLinear().domain([minVal, maxVal]).range([lowColor, highColor]);
     
-    d3.json("us-states.json").then(function(json){
+    d3.json("./data/us-states.json").then(function(json){
       for (var i = 0; i < data.length; i++){
         var dataState = data[i].state;
         var dataValue = data[i].value;
@@ -94,67 +94,68 @@ h1{
           }
         }
       }
+        
+    svg.selectAll("path")
+      .data(json.features)
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .style("stroke", "#fff")
+      .style("stroke-width", "1")
+      .style("fill", function(d){return ramp(d.properties.value)});
+    
+    svg.selectAll("path")
+      .on("mouseover", function(event, d){
+        tip.show(event, d.properties.name + ': ' +d.properties.value)
+      })
+      .on("mouseout", tip.hide)
+    
+    //legend (not necessary)
+    var w = 140;
+    var h = 300;
+    var key = d3.select("div#plot")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("class", "legend");
       
-      svg.selectAll("path")
-        .data(json.features)
-        .enter()
-        .append("path")
-        .attr("d", path)
-        .style("stroke", "#fff")
-        .style("stroke-width", "1")
-        .style("fill", function(d){return ramp(d.properties.value)});
+    var legend = key.append("defs")
+      .append("svg:linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "100%")
+      .attr("y1", "0%")
+      .attr("x2", "100%")
+      .attr("y2", "100%")
+      .attr("spreadMethod", "pad");
+
+    legend.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", highColor)
+      .attr("stop-opacity", 1);
       
-      svg.selectAll("path")
-        .on("mouseover", function(event, d){
-          tip.show(event, d.properties.name + ': ' +d.properties.value)
-        })
-        .on("mouseout", tip.hide)
-      
-      //legend (not necessary)
-      var w = 140;
-      var h = 300;
-      var key = d3.select("div#plot")
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h)
-        .attr("class", "legend");
-      var legend = key.append("defs")
-			.append("svg:linearGradient")
-			.attr("id", "gradient")
-			.attr("x1", "100%")
-			.attr("y1", "0%")
-			.attr("x2", "100%")
-			.attr("y2", "100%")
-			.attr("spreadMethod", "pad");
+    legend.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", lowColor)
+      .attr("stop-opacity", 1);
 
-		legend.append("stop")
-			.attr("offset", "0%")
-			.attr("stop-color", highColor)
-			.attr("stop-opacity", 1);
-			
-		legend.append("stop")
-			.attr("offset", "100%")
-			.attr("stop-color", lowColor)
-			.attr("stop-opacity", 1);
+    key.append("rect")
+      .attr("width", w - 100)
+      .attr("height", h)
+      .style("fill", "url(#gradient)")
+      .attr("transform", "translate(0,10)");
 
-		key.append("rect")
-			.attr("width", w - 100)
-			.attr("height", h)
-			.style("fill", "url(#gradient)")
-			.attr("transform", "translate(0,10)");
+    var y = d3.scaleLinear()
+      .range([h, 0])
+      .domain([minVal, maxVal]);
 
-		var y = d3.scaleLinear()
-			.range([h, 0])
-			.domain([minVal, maxVal]);
+    var yAxis = d3.axisRight(y);
 
-		var yAxis = d3.axisRight(y);
-
-		key.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(41,10)")
-			.call(yAxis)
+    key.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(41,10)")
+      .call(yAxis)
     });
-    });
+  });
 
   
 </script>
