@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Data Cleaning | EDAV Group3 Final Project</title>
-  <meta name="description" content="Chapter 2 Data Cleaning | EDAV Group3 Final Project" />
+  <title>Chapter 3 Data Cleaning | EDAV Group3 Final Project</title>
+  <meta name="description" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Data Cleaning | EDAV Group3 Final Project" />
+  <meta property="og:title" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Data Cleaning | EDAV Group3 Final Project" />
+  <meta name="twitter:title" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
   
   
   
@@ -24,14 +24,14 @@
 <meta name="author" content="Xinwen Miao, Yilan Jiang, Huiqian Yu, Diyue Gu" />
 
 
-<meta name="date" content="2020-12-12" />
+<meta name="date" content="2020-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
+<link rel="prev" href="data.html"/>
 <link rel="next" href="missing-values.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,10 +51,80 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -72,25 +142,33 @@
 <li><a href="./">edavgroup3finalproj</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#describe-the-data-sources"><i class="fa fa-check"></i><b>1.0.1</b> Describe the data sources:</a></li>
-<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#basic-information-about-the-dataset"><i class="fa fa-check"></i><b>1.0.2</b> Basic information about the dataset:</a></li>
-<li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#describe-any-issues-with-the-data"><i class="fa fa-check"></i><b>1.0.3</b> Describe any issues with the data:</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#describe-the-data-sources"><i class="fa fa-check"></i><b>2.1</b> Describe the data sources:</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#basic-information-about-the-dataset"><i class="fa fa-check"></i><b>2.2</b> Basic information about the dataset:</a></li>
+<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#describe-any-issues-with-the-data"><i class="fa fa-check"></i><b>2.3</b> Describe any issues with the data:</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-cleaning.html"><a href="data-cleaning.html"><i class="fa fa-check"></i><b>2</b> Data Cleaning</a><ul>
-<li class="chapter" data-level="2.1" data-path="data-cleaning.html"><a href="data-cleaning.html#air-pollutant-dataset"><i class="fa fa-check"></i><b>2.1</b> Air Pollutant Dataset</a></li>
-<li class="chapter" data-level="2.2" data-path="data-cleaning.html"><a href="data-cleaning.html#cancer-dataset"><i class="fa fa-check"></i><b>2.2</b> Cancer Dataset</a></li>
+<li class="chapter" data-level="3" data-path="data-cleaning.html"><a href="data-cleaning.html"><i class="fa fa-check"></i><b>3</b> Data Cleaning</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-cleaning.html"><a href="data-cleaning.html#data-source-1"><i class="fa fa-check"></i><b>3.1</b> Data Source 1</a></li>
+<li class="chapter" data-level="3.2" data-path="data-cleaning.html"><a href="data-cleaning.html#data-source-2"><i class="fa fa-check"></i><b>3.2</b> Data Source 2</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>3</b> Missing values</a></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a><ul>
-<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#packages"><i class="fa fa-check"></i><b>4.1</b> Packages</a></li>
-<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#data"><i class="fa fa-check"></i><b>4.2</b> Data</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="results.html"><a href="results.html#data-distributions-ca-mg-cl-k"><i class="fa fa-check"></i><b>4.2.1</b> Data Distributions (CA, MG, CL, K)</a></li>
-<li class="chapter" data-level="4.2.2" data-path="results.html"><a href="results.html#data-distributions-so2-and-no3"><i class="fa fa-check"></i><b>4.2.2</b> Data Distributions (SO2 and NO3)</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a><ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#data-source-1-1"><i class="fa fa-check"></i><b>4.1</b> Data Source 1</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#data-source-2-1"><i class="fa fa-check"></i><b>4.2</b> Data Source 2</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#packages"><i class="fa fa-check"></i><b>5.1</b> Packages</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#data-1"><i class="fa fa-check"></i><b>5.2</b> Data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#data-distribution"><i class="fa fa-check"></i><b>5.2.1</b> Data Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#how-does-air-pollution-spread-over-the-past-ten-years"><i class="fa fa-check"></i><b>5.3</b> How does air pollution spread over the past ten years?</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#time-series-of-so2-and-no3-across-the-nation"><i class="fa fa-check"></i><b>5.3.1</b> Time Series of SO2 and NO3 Across the Nation</a></li>
+<li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#monthly-time-series"><i class="fa fa-check"></i><b>5.3.2</b> Monthly Time Series</a></li>
+<li class="chapter" data-level="5.3.3" data-path="results.html"><a href="results.html#did-covid-19-lockdown-significantly-reduce-air-pollution-in-new-york-state"><i class="fa fa-check"></i><b>5.3.3</b> Did Covid-19 lockdown significantly reduce air pollution in New York State?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -111,89 +189,81 @@
 
             <section class="normal" id="section-">
 <div id="data-cleaning" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Data Cleaning</h1>
-<div id="air-pollutant-dataset" class="section level2">
-<h2><span class="header-section-number">2.1</span> Air Pollutant Dataset</h2>
+<h1><span class="header-section-number">Chapter 3</span> Data Cleaning</h1>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-cleaning.html#cb9-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb9-2"><a href="data-cleaning.html#cb9-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb9-3"><a href="data-cleaning.html#cb9-3"></a><span class="kw">library</span>(usmap)</span></code></pre></div>
+<div id="data-source-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Data Source 1</h2>
 <p>In the data cleaning stage, we deleted unrelated columns from the original data set. For air pollutant data, we first merged two datasets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-cleaning.html#cb10-1"></a>site&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/site.csv&quot;</span>)</span>
+<span id="cb10-2"><a href="data-cleaning.html#cb10-2"></a>raw&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/Filter Pack Concentrations - Weekly.csv&quot;</span>)</span>
+<span id="cb10-3"><a href="data-cleaning.html#cb10-3"></a>site1&lt;-<span class="st"> </span>site <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(SITE_ID,STATE,COUNTY,LATITUDE,LONGITUDE,ELEVATION)</span>
+<span id="cb10-4"><a href="data-cleaning.html#cb10-4"></a>data &lt;-<span class="st"> </span><span class="kw">full_join</span>(site1,raw,<span class="dt">by=</span><span class="st">&#39;SITE_ID&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb10-5"><a href="data-cleaning.html#cb10-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>WNO3,<span class="op">-</span>QA_CODE,<span class="op">-</span>DATEON,<span class="op">-</span>COMMENT_CODES) </span>
+<span id="cb10-6"><a href="data-cleaning.html#cb10-6"></a>data<span class="op">$</span>date_off &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>DATEOFF, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb10-7"><a href="data-cleaning.html#cb10-7"></a>data<span class="op">$</span>update_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>UPDATE_DATE, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb10-8"><a href="data-cleaning.html#cb10-8"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb10-9"><a href="data-cleaning.html#cb10-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>UPDATE_DATE,<span class="op">-</span>DATEOFF)</span></code></pre></div>
 <p>Next, we added a column called “REGION” into the pollution data so that each state can be classified by one of three larger regions (“east”, “middle”, “west”). In terms of how we group each state, please refer to <a href="https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf" target="_blank">Census Regions and Divisions of United States</a>.</p>
-<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4
-## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103
-## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158
-## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627
-## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233
-## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222
-## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787
-##       CA     MG    NA.      K     CL   NSO4  NHNO3   WSO2 TOTAL_SO2 TOTAL_NO3
-## 1 0.0340 0.0077 0.2689 0.0378 0.2320 0.5517 0.5856 1.3545    1.7225    1.2458
-## 2 0.0624 0.0204 0.2784 0.0561 0.1138 0.7818 1.2644 2.8101    3.3315    2.4752
-## 3 0.0467 0.0570 0.6598 0.0624 0.7857 0.6660 1.0390 1.1372    1.5814    1.7090
-## 4 0.0897 0.0218 0.3470 0.0420 0.3637 0.5813 0.8364 2.4504    2.8382    1.4424
-## 5 0.1039 0.0234 0.4447 0.0641 0.3976 0.5874 1.1446 1.9528    2.3446    2.0658
-## 6 0.1021 0.0177 0.2827 0.0853 0.2880 0.6177 0.7192 1.6457    2.0578    1.6552
-##   FLOW_VOLUME VALID_HOURS STD2LOCAL_CF TEMP_SOURCE   date_off update_date
-## 1     13.6400         167    0.9187067          sa 2010-01-12  2010-07-01
-## 2     13.9685         168    0.9353095          sa 2010-01-19  2010-07-01
-## 3     14.0765         168    0.9436235          sa 2010-01-26  2010-07-01
-## 4     13.7188         168    0.9180029          sa 2010-02-02  2010-07-01
-## 5     13.6624         167    0.9200917          sa 2010-02-09  2010-07-01
-## 6     13.9217         168    0.9321208          sa 2010-02-16  2010-07-01
-##   REGION
-## 1   east
-## 2   east
-## 3   east
-## 4   east
-## 5   east
-## 6   east</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-cleaning.html#cb11-1"></a><span class="co"># First generate a region_table</span></span>
+<span id="cb11-2"><a href="data-cleaning.html#cb11-2"></a><span class="co"># reference: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf</span></span>
+<span id="cb11-3"><a href="data-cleaning.html#cb11-3"></a>east_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.new_england, .east_north_central, .mid_atlantic, .east_south_central, .south_atlantic)</span>
+<span id="cb11-4"><a href="data-cleaning.html#cb11-4"></a>west_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.west_north_central, .west_south_central)</span>
+<span id="cb11-5"><a href="data-cleaning.html#cb11-5"></a>middle_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.mountain, .pacific)</span>
+<span id="cb11-6"><a href="data-cleaning.html#cb11-6"></a>region_table &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;REGION&quot;</span>=<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;east&#39;</span>, <span class="kw">length</span>(east_abbr)), <span class="kw">rep</span>(<span class="st">&#39;middle&#39;</span>, <span class="kw">length</span>(middle_abbr)), <span class="kw">rep</span>(<span class="st">&#39;west&#39;</span>, <span class="kw">length</span>(west_abbr))), <span class="st">&quot;STATE&quot;</span> =<span class="st"> </span><span class="kw">c</span>(east_abbr, middle_abbr, west_abbr))</span>
+<span id="cb11-7"><a href="data-cleaning.html#cb11-7"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, region_table, <span class="dt">by=</span><span class="st">&#39;STATE&#39;</span>)</span>
+<span id="cb11-8"><a href="data-cleaning.html#cb11-8"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4     CA     MG    NA.      K     CL   NSO4  NHNO3   WSO2 TOTAL_SO2 TOTAL_NO3 FLOW_VOLUME VALID_HOURS STD2LOCAL_CF
+## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103 0.0340 0.0077 0.2689 0.0378 0.2320 0.5517 0.5856 1.3545    1.7225    1.2458     13.6400         167    0.9187067
+## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158 0.0624 0.0204 0.2784 0.0561 0.1138 0.7818 1.2644 2.8101    3.3315    2.4752     13.9685         168    0.9353095
+## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627 0.0467 0.0570 0.6598 0.0624 0.7857 0.6660 1.0390 1.1372    1.5814    1.7090     14.0765         168    0.9436235
+## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233 0.0897 0.0218 0.3470 0.0420 0.3637 0.5813 0.8364 2.4504    2.8382    1.4424     13.7188         168    0.9180029
+## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222 0.1039 0.0234 0.4447 0.0641 0.3976 0.5874 1.1446 1.9528    2.3446    2.0658     13.6624         167    0.9200917
+## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787 0.1021 0.0177 0.2827 0.0853 0.2880 0.6177 0.7192 1.6457    2.0578    1.6552     13.9217         168    0.9321208
+##   TEMP_SOURCE   date_off update_date REGION
+## 1          sa 2010-01-12  2010-07-01   east
+## 2          sa 2010-01-19  2010-07-01   east
+## 3          sa 2010-01-26  2010-07-01   east
+## 4          sa 2010-02-02  2010-07-01   east
+## 5          sa 2010-02-09  2010-07-01   east
+## 6          sa 2010-02-16  2010-07-01   east</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-cleaning.html#cb13-1"></a><span class="kw">write.csv</span>(data, <span class="dt">file=</span><span class="st">&quot;./data/processedData.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="cancer-dataset" class="section level2">
-<h2><span class="header-section-number">2.2</span> Cancer Dataset</h2>
+<div id="data-source-2" class="section level2">
+<h2><span class="header-section-number">3.2</span> Data Source 2</h2>
 <p>NOTE from data source website:
 The following suppression rules are implemented in the ASCII files.</p>
 <p>–Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p>
 <p>–Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p>
 <p>–Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p>
-<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER
-## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~
-##   AGE_ADJUSTED_CI_UPPER AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE
-## 1                     ~                 ~     ~  Incidence       5458 All Races
-## 2                     ~                 ~     ~  Mortality       5458 All Races
-## 3                     ~                 ~     ~  Incidence       5458 All Races
-## 4                     ~                 ~     ~  Mortality       5458 All Races
-## 5                     ~                 ~     ~  Incidence       5458 All Races
-## 6                     ~                 ~     ~  Mortality       5458 All Races
-##      SEX                           SITE      YEAR CRUDE_CI_LOWER CRUDE_CI_UPPER
-## 1 Female      All Cancer Sites Combined 2013-2017              ~              ~
-## 2 Female      All Cancer Sites Combined 2013-2017              ~              ~
-## 3 Female Brain and Other Nervous System 2013-2017              ~              ~
-## 4 Female Brain and Other Nervous System 2013-2017              ~              ~
-## 5 Female                         Cervix 2013-2017              ~              ~
-## 6 Female                         Cervix 2013-2017              ~              ~
-##   CRUDE_RATE
-## 1          ~
-## 2          ~
-## 3          ~
-## 4          ~
-## 5          ~
-## 6          ~</code></pre>
-<pre><code>##   STATE AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE    SEX
-## 1    AK                 ~     ~  Incidence       5458 All Races Female
-## 2    AK                 ~     ~  Mortality       5458 All Races Female
-## 3    AK                 ~     ~  Incidence       5458 All Races Female
-## 4    AK                 ~     ~  Mortality       5458 All Races Female
-## 5    AK                 ~     ~  Incidence       5458 All Races Female
-## 6    AK                 ~     ~  Mortality       5458 All Races Female
-##                             SITE      YEAR CRUDE_RATE
-## 1      All Cancer Sites Combined 2013-2017          ~
-## 2      All Cancer Sites Combined 2013-2017          ~
-## 3 Brain and Other Nervous System 2013-2017          ~
-## 4 Brain and Other Nervous System 2013-2017          ~
-## 5                         Cervix 2013-2017          ~
-## 6                         Cervix 2013-2017          ~</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-cleaning.html#cb14-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
+<span id="cb14-2"><a href="data-cleaning.html#cb14-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE    SEX                           SITE      YEAR
+## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence       5458 All Races Female      All Cancer Sites Combined 2013-2017
+## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality       5458 All Races Female      All Cancer Sites Combined 2013-2017
+## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence       5458 All Races Female Brain and Other Nervous System 2013-2017
+## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality       5458 All Races Female Brain and Other Nervous System 2013-2017
+## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence       5458 All Races Female                         Cervix 2013-2017
+## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality       5458 All Races Female                         Cervix 2013-2017
+##   CRUDE_CI_LOWER CRUDE_CI_UPPER CRUDE_RATE
+## 1              ~              ~          ~
+## 2              ~              ~          ~
+## 3              ~              ~          ~
+## 4              ~              ~          ~
+## 5              ~              ~          ~
+## 6              ~              ~          ~</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-cleaning.html#cb16-1"></a>temp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb16-2"><a href="data-cleaning.html#cb16-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>AGE_ADJUSTED_CI_LOWER, <span class="op">-</span>AGE_ADJUSTED_CI_UPPER, <span class="op">-</span>CRUDE_CI_LOWER, <span class="op">-</span>CRUDE_CI_UPPER, <span class="op">-</span>AREA)</span>
+<span id="cb16-3"><a href="data-cleaning.html#cb16-3"></a><span class="kw">head</span>(temp)</span></code></pre></div>
+<pre><code>##   STATE AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE    SEX                           SITE      YEAR CRUDE_RATE
+## 1    AK                 ~     ~  Incidence       5458 All Races Female      All Cancer Sites Combined 2013-2017          ~
+## 2    AK                 ~     ~  Mortality       5458 All Races Female      All Cancer Sites Combined 2013-2017          ~
+## 3    AK                 ~     ~  Incidence       5458 All Races Female Brain and Other Nervous System 2013-2017          ~
+## 4    AK                 ~     ~  Mortality       5458 All Races Female Brain and Other Nervous System 2013-2017          ~
+## 5    AK                 ~     ~  Incidence       5458 All Races Female                         Cervix 2013-2017          ~
+## 6    AK                 ~     ~  Mortality       5458 All Races Female                         Cervix 2013-2017          ~</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-cleaning.html#cb18-1"></a><span class="kw">save</span>(temp, <span class="dt">file=</span><span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -202,7 +272,7 @@ The following suppression rules are implemented in the ASCII files.</p>
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
