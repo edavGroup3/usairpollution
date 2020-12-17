@@ -55,7 +55,7 @@ load("./data/RawCancerData.RData")
 head(data)
 temp <- data %>%
   select(-AGE_ADJUSTED_CI_LOWER, -AGE_ADJUSTED_CI_UPPER, -CRUDE_CI_LOWER, -CRUDE_CI_UPPER) %>%
-  filter(EVENT_TYPE=="Incidence",SEX=="Male and Female",RACE=="All Races",SITE=="Lung and Bronchus")
+  filter(RACE=="All Races",SITE=="Lung and Bronchus")
 head(temp)
 save(temp, file="./data/DiseaseProcessedData.RData")
 ```
