@@ -1,0 +1,104 @@
+---
+title: "cancer"
+author: "Xinwen Miao"
+date: "12/16/2020"
+output: html_document
+---
+```{r setup, include=FALSE}
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(GGally)
+```
+
+
+##Data 
+Since cancer data are from year 2013-2017, use the total amount of each pollutant from 2013-2017 as the indicator.
+```{r}
+load("./data/DiseaseProcessedData.RData")
+data <- read.csv("./data/processedData.csv")
+data <- data %>% na.omit()
+cancer_data <- temp%>% na.omit()
+data$date = as.Date(data$date_off)
+data$year <- format(as.Date(data$date, "%F"), "%Y")
+data_year <- data %>% filter((year <= 2017) & (year >= 2013))
+cancer_data$COUNT <- as.numeric(as.character(cancer_data$COUNT))
+cancer_data$POPULATION <- as.numeric(as.character(cancer_data$POPULATION))
+
+so2 <- data_year %>% 
+  group_by(STATE) %>% 
+  summarise(TotalSO2 = sum(TOTAL_SO2, na.rm = TRUE))
+no3 <- data_year %>% 
+  group_by(STATE) %>% 
+  summarise(TotalNO3 = sum(TOTAL_NO3, na.rm = TRUE))
+incidence_data <- cancer_data%>%
+  filter(EVENT_TYPE=="Incidence")
+mortality_data <-cancer_data%>%
+  filter(EVENT_TYPE=="Mortality")
+
+totalIncidence_count <- incidence_data %>%
+  filter(SEX=="Male and Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalIncidence = sum(COUNT, na.rm = TRUE))
+FemaleIncidence_count <- incidence_data %>%
+  filter(SEX=='Female')%>%
+  group_by(STATE)%>%
+  summarise(FemaleIncidence = sum(COUNT, na.rm = TRUE))
+MaleIncidence_count <- incidence_data %>%
+  filter(SEX=='Male')%>%
+  group_by(STATE)%>%
+  summarise(MaleIncidence = sum(COUNT, na.rm = TRUE))
+pop <- incidence_data %>%
+  filter(SEX=="Male and Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalPop = sum(POPULATION, na.rm = TRUE))
+Femalepop <- incidence_data %>%
+  filter(SEX=="Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalFPop = sum(POPULATION, na.rm = TRUE))
+Malepop <- incidence_data %>%
+  filter(SEX=="Male")%>%
+  group_by(STATE)%>%
+  summarise(TotalMPop = sum(POPULATION, na.rm = TRUE))
+
+PopData <- merge(pop,Femalepop,by ="STATE")%>%
+  merge(Malepop,by ="STATE")
+CountData <- merge(totalIncidence_count,FemaleIncidence_count,by ="STATE")%>%
+  merge(MaleIncidence_count,by ="STATE")
+combined <- merge(PopData,CountData,by ="STATE") %>%
+  mutate(TotalRate = 100*(TotalIncidence/TotalPop))%>%
+  mutate(FemaleRate = 100*(FemaleIncidence/TotalFPop))%>%
+  mutate(MaleRate = 100*(MaleIncidence/TotalMPop))
+```
+```{r}
+tidy_data <- pivot_longer(combined, 
+             cols=c("FemaleRate", "MaleRate"),
+             names_to = "SEX",
+             values_to = "RATE",
+             values_drop_na = TRUE)
+ggplot(tidy_data,aes(RATE,group=1))+
+  geom_boxplot()+
+  facet_grid(rows=vars(SEX))
+
+#cleveland by state
+ggplot(tidy_data, aes(x = TotalRate, y = reorder(STATE, TotalRate))) +
+  geom_point(size = 3) +  # Use a larger dot
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))
+
+```
+
+```{r}
+newdata<- merge(x = combined, y = so2, by = "STATE", all.x = TRUE)
+newdata<- merge(x = newdata, y = no3, by = "STATE", all.x = TRUE)%>% na.omit()
+ggpairs(newdata[8:12], title="correlogram with ggpairs()") 
+ggcorr(newdata[8:12], method = c("everything", "pearson")) 
+#more related to SO2 than NO3
+
+```
