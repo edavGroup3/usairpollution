@@ -206,9 +206,7 @@ lmplot(stat.data = dataState,
 ```
 
 
-```{r}
 
-```
 ```{r}
 library(tools)
 library(micromap)
@@ -244,9 +242,9 @@ lmplot(stat.data = dataState,
                panel.header.size = 1.2)
           ))
 ```
+
 ```{r}
 library(choroplethr)
-
 dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
 
 #mean so2 by state
@@ -255,7 +253,6 @@ dataStateSO2<-dataStateSO2%>%rename(region=STATE, value=SO2)
 dataStateSO2$region<-tolower(state.name[match(dataStateSO2$region, state.abb)])
 
 state_choropleth(dataStateSO2,title="Mean SO2 Amount Over 10 Years by State", legend="SO2 Amount by state")+ scale_fill_brewer(palette=8)
-
 ```
 
 ```{r}
@@ -266,8 +263,10 @@ dataStateNO3$region<-tolower(state.name[match(dataStateNO3$region, state.abb)])
 
 state_choropleth(dataStateNO3,title="Mean NO3 Amount Over 10 Years by State", legend="NO3 Amount by state")+ scale_fill_brewer(palette=8)
 ```
-```{r}
 
+
+
+```{r}
 dataMosaic <- gather(dataState,key = 'pollutant',value = concentration, -STATE)
 ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentration, fill = pollutant,order = pollutant)) + 
     geom_bar(stat = "identity") + 
