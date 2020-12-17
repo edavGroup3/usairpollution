@@ -1,9 +1,6 @@
 # Missing values
 ## Data Source 1
-=======
-```{r setup-missing, include=FALSE}
- knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-```
+
 
 In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column. 
 
