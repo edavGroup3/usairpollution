@@ -1,18 +1,11 @@
 # Data
 
 ## Describe the data sources: 
-```{r setup-data, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-### Describe the data sources: 
+The aim of this project is to analyze the air pollutants over the U.S. The data was collected from CASTNET: Clean Air Status and Trends Network(https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
+We are also interested in the correlation between air pollution and lung and bronchus cancer. The cancer data was collected from CDC:Centers for Disease Control and Prevention.(https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm).This website provides the latest cancer data on the entire United States population.
 
-Huiqian is responsible for collecting data. 
-
-The aim of this project is to analyze the air pollutants over the U.S. The data was collect from CASTNET: Clean Air Status and Trends Network(https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
-
-## Basic information about the dataset:
-
+## Basic information about the air pollution dataset:
 
 ```{r}
 raw_data <- read.csv("./data/Filter Pack Concentrations - Weekly.csv")
@@ -52,7 +45,24 @@ The raw data has following 25 columns and 49124 rows:
 24. QA_CODE:	Quality assurance level of the record. (see QAPP for definition of quality assurance levels)
 25. UPDATE_DATE: Date and time of last record update.
 
-## Describe any issues with the data: 
+## Basic information about the cancer dataset:
+NOTE: The original csv. file is too large to be upload. We transformed it into an R.Data.
+```{r}
+load("./data/RawCancerData.RData")
+colnames(data)
+nrow(data)
+ncol(data)
+```
+NOTE from data source website: 
+The following suppression rules are implemented in the ASCII files. 
+
+--Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
+
+--Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
+
+--Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
+
+## Describe any issues with the air pollution data: 
 
 1.  We need to clean raw data and extract necessary columns: SITE_ID, DATEOFF, TSO4, TNO3, TNH4, CA, MG, NA, K, CL, NSO4, NHNO3, WSO2, WNO3.
 
@@ -91,5 +101,10 @@ The site data has following columns:
 
 
 We don't need all of these columns, we only need extract SITE_ID, STATE, CONTRY, LATITUDE, LONGITUDE, ELEVATION information.
+
+## Describe any issues with the cancer data:
+The count and population is by county. Our desired amount should be by state. So we have to add them together. 
+
+The year range of the dataset is 2013-2017. Thus, in order to use the air pollution data, we have to do some transformations to the air pollution dataset.
 
 
