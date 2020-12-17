@@ -15,6 +15,7 @@ library(tidyverse)
 library(dygraphs)
 library(xts)
 library(cowplot)
+library(GGally)
 ```
 ## Data
 Before moving on, let us draw some insights from each pollutant concentration over the past ten years. 
@@ -264,8 +265,6 @@ dataStateNO3$region<-tolower(state.name[match(dataStateNO3$region, state.abb)])
 state_choropleth(dataStateNO3,title="Mean NO3 Amount Over 10 Years by State", legend="NO3 Amount by state")+ scale_fill_brewer(palette=8)
 ```
 
-
-
 ```{r}
 dataMosaic <- gather(dataState,key = 'pollutant',value = concentration, -STATE)
 ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentration, fill = pollutant,order = pollutant)) + 
@@ -274,4 +273,145 @@ ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentrat
     ggtitle("Pollutant distribution by states")
 ```
 
+##Combine two datasets
+Since cancer data are from year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.
+```{r}
+load("./data/DiseaseProcessedData.RData")
+data <- read.csv("./data/processedData.csv")
+data <- data %>% na.omit()
+cancer_data <- temp%>% na.omit()
+data$date = as.Date(data$date_off)
+data$year <- format(as.Date(data$date, "%F"), "%Y")
+data_year <- data %>% filter((year <= 2017) & (year >= 2013))
+cancer_data$COUNT <- as.numeric(as.character(cancer_data$COUNT))
+cancer_data$POPULATION <- as.numeric(as.character(cancer_data$POPULATION))
 
+incidence_data <- cancer_data%>%
+  filter(EVENT_TYPE=="Incidence")
+mortality_data <-cancer_data%>%
+  filter(EVENT_TYPE=="Mortality")
+#Incident count
+totalIncidence_count <- incidence_data %>%
+  filter(SEX=="Male and Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalIncidence = sum(COUNT, na.rm = TRUE))
+FemaleIncidence_count <- incidence_data %>%
+  filter(SEX=='Female')%>%
+  group_by(STATE)%>%
+  summarise(FemaleIncidence = sum(COUNT, na.rm = TRUE))
+MaleIncidence_count <- incidence_data %>%
+  filter(SEX=='Male')%>%
+  group_by(STATE)%>%
+  summarise(MaleIncidence = sum(COUNT, na.rm = TRUE))
+#populations 
+pop <- incidence_data %>%
+  filter(SEX=="Male and Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalPop = sum(POPULATION, na.rm = TRUE))
+Femalepop <- incidence_data %>%
+  filter(SEX=="Female")%>%
+  group_by(STATE)%>%
+  summarise(TotalFPop = sum(POPULATION, na.rm = TRUE))
+Malepop <- incidence_data %>%
+  filter(SEX=="Male")%>%
+  group_by(STATE)%>%
+  summarise(TotalMPop = sum(POPULATION, na.rm = TRUE))
+#Combine dataframe
+PopData <- merge(pop,Femalepop,by ="STATE")%>%
+  merge(Malepop,by ="STATE")
+CountData <- merge(totalIncidence_count,FemaleIncidence_count,by ="STATE")%>%
+  merge(MaleIncidence_count,by ="STATE")
+combined <- merge(PopData,CountData,by ="STATE") %>%
+  mutate(TotalRate = 100*(TotalIncidence/TotalPop))%>%
+  mutate(FemaleRate = 100*(FemaleIncidence/TotalFPop))%>%
+  mutate(MaleRate = 100*(MaleIncidence/TotalMPop))
+#pollutants
+so2 <- data_year %>% 
+  group_by(STATE) %>% 
+  summarise(TotalSO2 = mean(TOTAL_SO2, na.rm = TRUE))
+no3 <- data_year %>% 
+  group_by(STATE) %>% 
+  summarise(TotalNO3 = mean(TOTAL_NO3, na.rm = TRUE))
+region<-data%>%
+  select(STATE,REGION)%>%
+  distinct(.keep_all = FALSE)
+#Cancer and pollutants df
+newdata<- merge(x = combined, y = so2, by = "STATE", all.x = TRUE)
+newdata<- merge(x = newdata, y = no3, by = "STATE", all.x = TRUE)%>% na.omit()
+newdata<- merge(x = newdata, y = region, by = "STATE", all.x = TRUE)%>% na.omit()
+newdata$REGION<-as.character(newdata$REGION) 
+```
+
+##Scatter plots 
+```{r}
+ggplot(newdata, aes(TotalSO2,TotalRate)) +geom_point(alpha =.5, size =1)  +theme_classic(14) +
+  ggtitle("Scatter Plot of Mean SO2 and TotalRate")+
+  xlab("meanSO2")
+ggplot(newdata, aes(TotalNO3, TotalRate)) +geom_point(alpha =.5, size =1) +theme_classic(14)+
+  ggtitle("Scatter Plot of Mean NO3 and TotalRate")+
+  xlab("meanNO3")
+```
+* Remarks:
+  + The scatter plots shows that there are no state with high SO2 and low incident rate and no state with low SO2 and high incident rate.
+  + The NO3 plot doesn't show a clear pattern. 
+
+##Cleveland dot plots of all gender cancer rate and SO2, NO3 concentrattion by region
+```{r}
+#cleveland by state
+ggplot(newdata, aes(x = TotalRate, y = reorder(STATE, TotalRate),color=REGION)) +
+  geom_point(size = 3) +  
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+    ggtitle("Cleveland Dot Plot of All Gender Cancer Region")
+ggplot(newdata, aes(x = TotalSO2, y = reorder(STATE, TotalSO2),color=REGION)) +
+  geom_point(size = 3) +  
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+    ggtitle("Cleveland Dot Plot of Mean SO2 Concentration")
+ggplot(newdata, aes(x = TotalNO3, y = reorder(STATE, TotalNO3),color=REGION)) +
+  geom_point(size = 3) +  
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+    ggtitle("Cleveland Dot Plot of Mean NO3 Concentration")
+```
+* Remarks:
+  + The distributions of regions in the above 3 plots have the same pattern: East and West region have higher cancer rate and pollutants' concentrations. Middle region have the lowest cancer rate and pollutants' concentrations. 
+  + There is a high chance that Lung and Bronchus cancer rate and pollutants' concentrations are correlated.
+  
+##Correlation matrix with visualizations
+```{r}
+ggpairs(newdata[8:12], title="correlogram with ggpairs()")+
+  ggtitle("Correlogram of Each Pair of the Indicators")
+  
+ggcorr(newdata[8:12], method = c("everything", "pearson")) +
+  ggtitle("Heatmap of Correlations")
+#more related to SO2 than NO3
+```
+* Remarks:
+  + The Corr values of TotalSO2 and TotalRate, TotalSO2 and FemaleRate, TotalSO2 and MaleRate are statistical significantly correlated.
+  + The heatmap also shows that the cancer rates are more related to SO2 compared to NO3.
+
+##Is there a difference between female cancer rate and male cancer rate?
+```{r}
+tidy_data <- pivot_longer(combined, 
+             cols=c("FemaleRate", "MaleRate"),
+             names_to = "SEX",
+             values_to = "RATE",
+             values_drop_na = TRUE)
+ggplot(tidy_data,aes(RATE,group=1))+
+  geom_boxplot()+
+  facet_grid(rows=vars(SEX))+
+  ggtitle("The Distribution of Cancer Rate Faceted by SEX")
+```
+* Remarks:
+  + The boxplots show that males tend to have a higher Lung and Bronchus cancer incident rate compare to females in general in the US.
+  + For female's rate, there is one state as an outlier. 
