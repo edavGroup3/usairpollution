@@ -7,7 +7,6 @@ date: "12/2020"
 # Results
 
 
-
 ## Packages
 All packages we have used in this section. 
 ```{r}
@@ -121,12 +120,12 @@ plot_grid(plot_SO2, plot_NO3, nrow = 2)
 ```{r}
 data_month$month_year = as.Date(data_month$month_year)
 SO2 <- ts(data_month$aver_SO2, start=c(2010, 1), end=c(2020, 8), frequency = 12)
-month_SO2 <- monthplot(SO2)
+month_SO2 <- monthplot(SO2, main="Sulfer Dioxide Trend, grouped by month")
 ```
 
 ```{r}
 NO3 <- ts(data_month$aver_NO3, start=c(2010, 1), end=c(2020, 8), frequency = 12)
-month_NO3 <- monthplot(NO3)
+month_NO3 <- monthplot(NO3, main="Nitrate Trend, grouped by month")
 ```
 
 * Based on the two plots above, we observe that monthly (for seasonal) effect causes the cyclical pattern of SO2 since after we facet the plot by month, the overall trends are similar. And the secular trend of SO2 peak in January and February, which makes sense since winter season requires heaters. 
