@@ -1,5 +1,11 @@
 # Data Cleaning
+<<<<<<< HEAD
 
+=======
+```{r setup-datacleaning, include=FALSE}
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+>>>>>>> 897e81ec6f1fa1654fb79aac5694eb57536a14ff
 
 ```{r}
 library(tidyr)
@@ -50,7 +56,8 @@ The following suppression rules are implemented in the ASCII files.
 load("./data/RawCancerData.RData")
 head(data)
 temp <- data %>%
-  select(-AGE_ADJUSTED_CI_LOWER, -AGE_ADJUSTED_CI_UPPER, -CRUDE_CI_LOWER, -CRUDE_CI_UPPER, -AREA)
+  select(-AGE_ADJUSTED_CI_LOWER, -AGE_ADJUSTED_CI_UPPER, -CRUDE_CI_LOWER, -CRUDE_CI_UPPER) %>%
+  filter(EVENT_TYPE=="Incidence",SEX=="Male and Female",RACE=="All Races",SITE=="Lung and Bronchus")
 head(temp)
 save(temp, file="./data/DiseaseProcessedData.RData")
 ```

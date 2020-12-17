@@ -1,6 +1,14 @@
 # Data
 
+<<<<<<< HEAD
 ## Describe the data sources: 
+=======
+```{r setup-data, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Describe the data sources: 
+>>>>>>> 897e81ec6f1fa1654fb79aac5694eb57536a14ff
 
 Huiqian is responsible for collecting data. 
 
