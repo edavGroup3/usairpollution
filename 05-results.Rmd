@@ -1,4 +1,12 @@
+---
+title: "Air Pollution over the US"
+date: "12/2020"
+---
+
+
 # Results
+
+
 
 ## Packages
 All packages we have used in this section. 
@@ -157,6 +165,114 @@ ggplot(new_data, aes(xaxis_year, NO3, color = year)) +
     xlab("month") +
     ylab("NO3 (ug/m^3)") +
     ggtitle("Monthly NO3 in New York State across each year")
+```
+
+```{r}
+#group by state, calculate mean SO2, mean NO3over past 10 years
+dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
+
+library(tools)
+library(micromap)
+data("USstates")
+statePolys <- create_map_table(USstates, IDcolumn = "ST")
+
+lmplot(stat.data = dataState,
+       map.data = statePolys,
+       panel.types = c('dot_legend', 'labels', 'dot', 'map'),
+       panel.data = list(NA, 'STATE','SO2', NA),
+       ord.by = 'SO2', 
+       rev.ord = TRUE,
+       grouping = 5,
+       colors = brewer.pal(5, "Set1"),
+       median.row = TRUE,
+       map.link = c('STATE', 'ID'),
+```
+
+
+```{r}
+map.color2 = "white",
+       panel.att = list(
+         list(1, point.type=20,
+              point.border=TRUE),
+          list(2, header = "STATE",
+               panel.width = 0.2,
+               panel.header.face = "bold",
+               panel.header.size = 1.2,
+               graph.grid.color = "grey99",
+               align = "left"),
+          list(3, header = "Mean SO2 Pollution Amount", 
+               panel.header.face = "bold",
+               panel.header.size = 1.2,
+               xaxis.title = 'ug/m^3'),
+          list(4, header = 'Geographical Location',
+               panel.header.face = "bold",
+               panel.header.size = 1.2)
+          ))
+```
+```{r}
+library(tools)
+library(micromap)
+data("USstates")
+statePolys <- create_map_table(USstates, IDcolumn = "ST")
+
+lmplot(stat.data = dataState,
+       map.data = statePolys,
+       panel.types = c('dot_legend', 'labels', 'dot', 'map'),
+       panel.data = list(NA, 'STATE','NO3', NA),
+       ord.by = 'NO3', 
+       rev.ord = TRUE,
+       grouping = 5,
+       colors = brewer.pal(5, "Set1"),
+       median.row = TRUE,
+       map.link = c('STATE', 'ID'),
+       map.color2 = "white",
+       panel.att = list(
+         list(1, point.type=20,
+              point.border=TRUE),
+          list(2, header = "STATE",
+               panel.width = 0.2,
+               panel.header.face = "bold",
+               panel.header.size = 1.2,
+               graph.grid.color = "grey99",
+               align = "left"),
+          list(3, header = "Mean NO3 Pollution Amount", 
+               panel.header.face = "bold",
+               panel.header.size = 1.2,
+               xaxis.title = 'ug/m^3'),
+          list(4, header = 'Geographical Location',
+               panel.header.face = "bold",
+               panel.header.size = 1.2)
+          ))
+```
+```{r}
+library(choroplethr)
+
+dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
+
+#mean so2 by state
+dataStateSO2<-dataState%>%select(STATE,SO2)
+dataStateSO2<-dataStateSO2%>%rename(region=STATE, value=SO2)
+dataStateSO2$region<-tolower(state.name[match(dataStateSO2$region, state.abb)])
+
+state_choropleth(dataStateSO2,title="Mean SO2 Amount Over 10 Years by State", legend="SO2 Amount by state")+ scale_fill_brewer(palette=8)
+
+```
+
+```{r}
+#mean NO3 by state
+dataStateNO3<-dataState%>%select(STATE,NO3)
+dataStateNO3<-dataStateNO3%>%rename(region=STATE, value=NO3)
+dataStateNO3$region<-tolower(state.name[match(dataStateNO3$region, state.abb)])
+
+state_choropleth(dataStateNO3,title="Mean NO3 Amount Over 10 Years by State", legend="NO3 Amount by state")+ scale_fill_brewer(palette=8)
+```
+```{r}
+
+dataMosaic <- gather(dataState,key = 'pollutant',value = concentration, -STATE)
+ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentration, fill = pollutant,order = pollutant)) + 
+    geom_bar(stat = "identity") + 
+    coord_flip() + 
+    ggtitle("Pollutant distribution by states")
 ```
 
 
