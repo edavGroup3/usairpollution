@@ -167,8 +167,14 @@ ggplot(new_data, aes(xaxis_year, NO3, color = year)) +
     ggtitle("Monthly NO3 in New York State across each year")
 ```
 
-```{r}
-#group by state, calculate mean SO2, mean NO3over past 10 years
+## How does air pollution spread across states?
+
+### Spatial distribution of SO2 and NO3 over states
+
+* To see the spatial distribution overstates, we draw the linked micromaps over two pollutants, mean SO2 and mean NO3 amount over past 10 years, and show plots of them. 
+
+```{r,fig.width=5, fig.height=6}
+#group by state, calculate mean SO2, mean NO3 over past 10 years
 dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
 
 library(tools)
@@ -206,9 +212,21 @@ lmplot(stat.data = dataState,
           ))
 ```
 
-
-
 ```{r}
+library(choroplethr)
+dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
+
+#mean so2 by state
+dataStateSO2<-dataState%>%select(STATE,SO2)
+dataStateSO2<-dataStateSO2%>%rename(region=STATE, value=SO2)
+dataStateSO2$region<-tolower(state.name[match(dataStateSO2$region, state.abb)])
+
+state_choropleth(dataStateSO2,title="Mean SO2 Amount Over 10 Years by State", legend="SO2 Amount by state")+ scale_fill_brewer(palette=8)
+```
+
+### Spatial distribution of NO3
+
+```{r,fig.width=5, fig.height=6}
 library(tools)
 library(micromap)
 data("USstates")
@@ -244,17 +262,6 @@ lmplot(stat.data = dataState,
           ))
 ```
 
-```{r}
-library(choroplethr)
-dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
-
-#mean so2 by state
-dataStateSO2<-dataState%>%select(STATE,SO2)
-dataStateSO2<-dataStateSO2%>%rename(region=STATE, value=SO2)
-dataStateSO2$region<-tolower(state.name[match(dataStateSO2$region, state.abb)])
-
-state_choropleth(dataStateSO2,title="Mean SO2 Amount Over 10 Years by State", legend="SO2 Amount by state")+ scale_fill_brewer(palette=8)
-```
 
 ```{r}
 #mean NO3 by state
@@ -265,6 +272,13 @@ dataStateNO3$region<-tolower(state.name[match(dataStateNO3$region, state.abb)])
 state_choropleth(dataStateNO3,title="Mean NO3 Amount Over 10 Years by State", legend="NO3 Amount by state")+ scale_fill_brewer(palette=8)
 ```
 
+* Based on the plot above, we observe that OH, IN, PA, KY, and VA have the top 5 mean SO2 amount, IN, IL, OH, NY, KY have top 5 mean NO3 amount during past 10 years.
+* According to EPA, the main source of SO2 and NO3 is the burning of fossil fuels by power plants and other industrial facilities. For fossil fules example, SO2 and NO3 concentration has a positive correlation with coal and petroleum consumption. According to Primary Energy Consumption Estimates by Source, Ranked by State, 2018(https://www.eia.gov/state/seds/data.php?incfile=/state/seds/sep_sum/html/rank_use_source.html&sid=US), we noticed that TX, IN, OH have highest coal consumption, KY and PA rank 7&8 in coal consumption. Also for petroleum consumption, LA, NY, IL, PA, OH rank 3,5,6,7,and 8. These contribute to high SO2 and NO3 emmsion in IN, OH, PA, IL, NY and KY. 
+* Moreover we found that states with highest SO2 and NO3 amount neighbor each other, it could be affected by the transport of SO2/NO3 within air shed affected by climate. Emissions of SO2/NO3 from OH and IN could travel to the East Coast, driving up the amount of air pollution in states such as PA, KY and VA.
+* Promoting cleaner energy can make to positive difference to air pollution because coal consumption is crucial reason of SO2 and NO3 emission.
+
+### Pollutant distribution over states
+
 ```{r}
 dataMosaic <- gather(dataState,key = 'pollutant',value = concentration, -STATE)
 ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentration, fill = pollutant,order = pollutant)) + 
@@ -272,6 +286,9 @@ ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentrat
     coord_flip() + 
     ggtitle("Pollutant distribution by states")
 ```
+
+* This stack bar chart shows the overall distribution of the main pollutants, SO2 and NO3. We noticed that states with higher SO2 tend to have higher NO3 emission, but also some states with higher SO2 while have lower NO3 emission. This could be affected by different combination of fossial fules using and factorial emission. Besides energy source like coal and petroleum, factories and other industrial installations have caused such pollution with metal smelting, petrochemical smog and food precessing. For example, heating and smelting metal processes produce emissions of sulfur oxides. 
+*  Air pollution can also be controlled by strengthen emission regulation through the installation of filters and scrubbers to clean exhaust fumes from factory processes, and by taking steps to minimize the generation of pollution at the source.
 
 ##Combine two datasets
 Since cancer data are from year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.
