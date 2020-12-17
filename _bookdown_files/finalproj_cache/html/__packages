@@ -17,3 +17,12 @@ usmap
 Matrix
 mi
 betareg
+GGally
+sp
+maptools
+RColorBrewer
+rgdal
+micromap
+XML
+acs
+choroplethr
