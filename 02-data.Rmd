@@ -1,8 +1,6 @@
 # Data
 
-<<<<<<< HEAD
 ## Describe the data sources: 
-=======
 ```{r setup-data, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```

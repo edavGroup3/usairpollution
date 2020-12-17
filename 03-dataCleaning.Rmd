@@ -1,7 +1,6 @@
 # Data Cleaning
-<<<<<<< HEAD
 
-=======
+
 ```{r setup-datacleaning, include=FALSE}
  knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
