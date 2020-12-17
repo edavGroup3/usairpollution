@@ -185,11 +185,7 @@ lmplot(stat.data = dataState,
        colors = brewer.pal(5, "Set1"),
        median.row = TRUE,
        map.link = c('STATE', 'ID'),
-```
-
-
-```{r}
-map.color2 = "white",
+       map.color2 = "white",
        panel.att = list(
          list(1, point.type=20,
               point.border=TRUE),
@@ -207,6 +203,11 @@ map.color2 = "white",
                panel.header.face = "bold",
                panel.header.size = 1.2)
           ))
+```
+
+
+```{r}
+
 ```
 ```{r}
 library(tools)
