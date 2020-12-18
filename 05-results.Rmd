@@ -289,11 +289,12 @@ ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentrat
 * This stack bar chart shows the overall distribution of the pollutants, SO2 and NO3. We noticed that states with higher SO2 tend to have higher NO3 emission, but also some states with higher SO2 while have lower NO3 emission. This could be affected by different combination of fossil fuels consuming and factorial emission. Besides energy source such as coal and petroleum, factories and other industrial installations have caused such pollution with metal smelting, petrochemical smog and food processing. For example, heating and smelting metal processes produce emissions of sulfur oxides. 
 *  Air pollution can also be controlled by strengthening emission regulation through the installation of filters and scrubbers to clean exhaust fumes from factory processes, and by taking steps to minimize the generation of pollution at the source.
 
-## How does air pollution correlate with lung cancer
+## How does air pollution correlate with lung cancer?
 
-##Combine two datasets
-Since cancer data is from year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.
+### Process cancer rate data
+Since cancer data is over year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.
 ```{r}
+##Combine two datasets
 load("./data/DiseaseProcessedData.RData")
 data <- read.csv("./data/processedData.csv")
 data <- data %>% na.omit()
@@ -360,8 +361,9 @@ newdata<- merge(x = newdata, y = region, by = "STATE", all.x = TRUE)%>% na.omit(
 newdata$REGION<-as.character(newdata$REGION) 
 ```
 
-##Scatter plots 
+### Correlation between air pollution and cancer rate
 ```{r}
+##Scatter plots 
 ggplot(newdata, aes(TotalSO2,TotalRate)) +geom_point(alpha =.5, size =1)  +theme_classic(14) +
   ggtitle("Scatter Plot of Mean SO2 and TotalRate")+
   xlab("meanSO2")
@@ -373,9 +375,10 @@ ggplot(newdata, aes(TotalNO3, TotalRate)) +geom_point(alpha =.5, size =1) +theme
   + The scatter plots shows that there are no state with high SO2 and low incident rate and no state with low SO2 and high incident rate.
   + The NO3 plot doesn't show a clear pattern. 
 
-##Cleveland dot plots of all gender cancer rate and SO2, NO3 concentrattion by region
 ```{r}
 #cleveland by state
+##Cleveland dot plots of all gender cancer rate and SO2, NO3 concentrattion by region
+
 ggplot(newdata, aes(x = TotalRate, y = reorder(STATE, TotalRate),color=REGION)) +
   geom_point(size = 3) +  
   theme_bw() +
@@ -405,8 +408,9 @@ ggplot(newdata, aes(x = TotalNO3, y = reorder(STATE, TotalNO3),color=REGION)) +
   + The distributions of regions in the above 3 plots have the same pattern: East and West region have higher cancer rate and pollutants' concentrations. Middle region have the lowest cancer rate and pollutants' concentrations. 
   + There is a high chance that Lung and Bronchus cancer rate and pollutants' concentrations are correlated.
   
-##Correlation matrix with visualizations
+
 ```{r}
+##Correlation matrix with visualizations
 ggpairs(newdata[8:12], title="correlogram with ggpairs()")+
   ggtitle("Correlogram of Each Pair of the Indicators")
   
@@ -418,8 +422,9 @@ ggcorr(newdata[8:12], method = c("everything", "pearson")) +
   + The Corr values of TotalSO2 and TotalRate, TotalSO2 and FemaleRate, TotalSO2 and MaleRate are statistical significantly correlated.
   + The heatmap also shows that the cancer rates are more related to SO2 compared to NO3.
 
-##Is there a difference between female cancer rate and male cancer rate?
+
 ```{r}
+## Is there a difference between female cancer rate and male cancer rate?
 tidy_data <- pivot_longer(combined, 
              cols=c("FemaleRate", "MaleRate"),
              names_to = "SEX",
@@ -433,3 +438,6 @@ ggplot(tidy_data,aes(RATE,group=1))+
 * Remarks:
   + The boxplots show that males tend to have a higher Lung and Bronchus cancer incident rate compare to females in general in the US.
   + For female's rate, there is one state as an outlier. 
+
+
+* Lung and bronchus cancer rate and SO2 concentration are correlated. There is no evidence shows that lung and bronchus cancer rate are related to the NO3 concentration. The east and west regions have higher lung and bronchus cancer rates and pollutants' concentrations compare to the middle region of the US. Also males tend to have higher lung and bronchus cancer rate than females.
