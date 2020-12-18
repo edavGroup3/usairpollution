@@ -16,6 +16,9 @@ library(dygraphs)
 library(xts)
 library(cowplot)
 library(GGally)
+library(tools)
+library(micromap)
+library(choroplethr)
 ```
 ## Data
 Before moving on, let us draw some insights from each pollutant concentration over the past ten years. 
@@ -177,8 +180,7 @@ ggplot(new_data, aes(xaxis_year, NO3, color = year)) +
 #group by state, calculate mean SO2, mean NO3 over past 10 years
 dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
 
-library(tools)
-library(micromap)
+
 data("USstates")
 statePolys <- create_map_table(USstates, IDcolumn = "ST")
 
@@ -213,7 +215,6 @@ lmplot(stat.data = dataState,
 ```
 
 ```{r}
-library(choroplethr)
 dataState<- data%>%group_by(STATE)%>%summarise(SO2 = mean(SO2), NO3=mean(NO3))
 
 #mean so2 by state
@@ -227,8 +228,7 @@ state_choropleth(dataStateSO2,title="Mean SO2 Amount Over 10 Years by State", le
 ### Spatial distribution of NO3
 
 ```{r,fig.width=5, fig.height=6}
-library(tools)
-library(micromap)
+
 data("USstates")
 statePolys <- create_map_table(USstates, IDcolumn = "ST")
 
