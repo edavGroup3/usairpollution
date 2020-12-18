@@ -440,4 +440,4 @@ ggplot(tidy_data,aes(RATE,group=1))+
   + For female's rate, there is one state as an outlier. 
 
 
-* Lung and bronchus cancer rate and SO2 concentration are correlated. There is no evidence shows that lung and bronchus cancer rate are related to the NO3 concentration. The east and west regions have higher lung and bronchus cancer rates and pollutants' concentrations compare to the middle region of the US. Also males tend to have higher lung and bronchus cancer rate than females.
+* Lung and bronchus cancer rate and SO2 concentration are correlated. There is not enough evidence shows that lung and bronchus cancer rate are related to the NO3 concentration. The east and west regions have higher lung and bronchus cancer rates and pollutants' concentrations compare to the middle region of the US. Also males tend to have higher lung and bronchus cancer rate than females.
