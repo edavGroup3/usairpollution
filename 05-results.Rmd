@@ -371,6 +371,7 @@ ggplot(newdata, aes(TotalNO3, TotalRate)) +geom_point(alpha =.5, size =1) +theme
   ggtitle("Scatter Plot of Mean NO3 and TotalRate")+
   xlab("meanNO3")
 ```
+
 * Remarks:
   + The scatter plots shows that there are no state with high SO2 and low incident rate and no state with low SO2 and high incident rate.
   + The NO3 plot doesn't show a clear pattern. 
@@ -404,6 +405,7 @@ ggplot(newdata, aes(x = TotalNO3, y = reorder(STATE, TotalNO3),color=REGION)) +
     panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
     ggtitle("Cleveland Dot Plot of Mean NO3 Concentration")
 ```
+
 * Remarks:
   + The distributions of regions in the above 3 plots have the same pattern: East and West region have higher cancer rate and pollutants' concentrations. Middle region have the lowest cancer rate and pollutants' concentrations. 
   + There is a high chance that Lung and Bronchus cancer rate and pollutants' concentrations are correlated.
@@ -418,6 +420,7 @@ ggcorr(newdata[8:12], method = c("everything", "pearson")) +
   ggtitle("Heatmap of Correlations")
 #more related to SO2 than NO3
 ```
+
 * Remarks:
   + The Corr values of TotalSO2 and TotalRate, TotalSO2 and FemaleRate, TotalSO2 and MaleRate are statistical significantly correlated.
   + The heatmap also shows that the cancer rates are more related to SO2 compared to NO3.
@@ -435,6 +438,7 @@ ggplot(tidy_data,aes(RATE,group=1))+
   facet_grid(rows=vars(SEX))+
   ggtitle("The Distribution of Cancer Rate Faceted by SEX")
 ```
+
 * Remarks:
   + The boxplots show that males tend to have a higher Lung and Bronchus cancer incident rate compare to females in general in the US.
   + For female's rate, there is one state as an outlier. 

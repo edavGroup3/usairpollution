@@ -225,20 +225,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-6"><a href="data-cleaning.html#cb14-6"></a>region_table &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;REGION&quot;</span>=<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;east&#39;</span>, <span class="kw">length</span>(east_abbr)), <span class="kw">rep</span>(<span class="st">&#39;middle&#39;</span>, <span class="kw">length</span>(middle_abbr)), <span class="kw">rep</span>(<span class="st">&#39;west&#39;</span>, <span class="kw">length</span>(west_abbr))), <span class="st">&quot;STATE&quot;</span> =<span class="st"> </span><span class="kw">c</span>(east_abbr, middle_abbr, west_abbr))</span>
 <span id="cb14-7"><a href="data-cleaning.html#cb14-7"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, region_table, <span class="dt">by=</span><span class="st">&#39;STATE&#39;</span>)</span>
 <span id="cb14-8"><a href="data-cleaning.html#cb14-8"></a><span class="kw">head</span>(data)</span></code></pre></div>
-<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4     CA     MG    NA.      K     CL   NSO4  NHNO3
-## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103 0.0340 0.0077 0.2689 0.0378 0.2320 0.5517 0.5856
-## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158 0.0624 0.0204 0.2784 0.0561 0.1138 0.7818 1.2644
-## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627 0.0467 0.0570 0.6598 0.0624 0.7857 0.6660 1.0390
-## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233 0.0897 0.0218 0.3470 0.0420 0.3637 0.5813 0.8364
-## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222 0.1039 0.0234 0.4447 0.0641 0.3976 0.5874 1.1446
-## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787 0.1021 0.0177 0.2827 0.0853 0.2880 0.6177 0.7192
-##     WSO2 TOTAL_SO2 TOTAL_NO3 FLOW_VOLUME VALID_HOURS STD2LOCAL_CF TEMP_SOURCE   date_off update_date REGION
-## 1 1.3545    1.7225    1.2458     13.6400         167    0.9187067          sa 2010-01-12  2010-07-01   east
-## 2 2.8101    3.3315    2.4752     13.9685         168    0.9353095          sa 2010-01-19  2010-07-01   east
-## 3 1.1372    1.5814    1.7090     14.0765         168    0.9436235          sa 2010-01-26  2010-07-01   east
-## 4 2.4504    2.8382    1.4424     13.7188         168    0.9180029          sa 2010-02-02  2010-07-01   east
-## 5 1.9528    2.3446    2.0658     13.6624         167    0.9200917          sa 2010-02-09  2010-07-01   east
-## 6 1.6457    2.0578    1.6552     13.9217         168    0.9321208          sa 2010-02-16  2010-07-01   east</code></pre>
+<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4     CA     MG    NA.
+## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103 0.0340 0.0077 0.2689
+## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158 0.0624 0.0204 0.2784
+## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627 0.0467 0.0570 0.6598
+## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233 0.0897 0.0218 0.3470
+## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222 0.1039 0.0234 0.4447
+## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787 0.1021 0.0177 0.2827
+##        K     CL   NSO4  NHNO3   WSO2 TOTAL_SO2 TOTAL_NO3 FLOW_VOLUME VALID_HOURS STD2LOCAL_CF TEMP_SOURCE
+## 1 0.0378 0.2320 0.5517 0.5856 1.3545    1.7225    1.2458     13.6400         167    0.9187067          sa
+## 2 0.0561 0.1138 0.7818 1.2644 2.8101    3.3315    2.4752     13.9685         168    0.9353095          sa
+## 3 0.0624 0.7857 0.6660 1.0390 1.1372    1.5814    1.7090     14.0765         168    0.9436235          sa
+## 4 0.0420 0.3637 0.5813 0.8364 2.4504    2.8382    1.4424     13.7188         168    0.9180029          sa
+## 5 0.0641 0.3976 0.5874 1.1446 1.9528    2.3446    2.0658     13.6624         167    0.9200917          sa
+## 6 0.0853 0.2880 0.6177 0.7192 1.6457    2.0578    1.6552     13.9217         168    0.9321208          sa
+##     date_off update_date REGION
+## 1 2010-01-12  2010-07-01   east
+## 2 2010-01-19  2010-07-01   east
+## 3 2010-01-26  2010-07-01   east
+## 4 2010-02-02  2010-07-01   east
+## 5 2010-02-09  2010-07-01   east
+## 6 2010-02-16  2010-07-01   east</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-cleaning.html#cb16-1"></a><span class="kw">write.csv</span>(data, <span class="dt">file=</span><span class="st">&quot;./data/processedData.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="data-source-2" class="section level2">
@@ -252,38 +259,45 @@ The following suppression rules are implemented in the ASCII files.</p></li>
 </ul>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-cleaning.html#cb17-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
 <span id="cb17-2"><a href="data-cleaning.html#cb17-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
-<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER AGE_ADJUSTED_RATE COUNT EVENT_TYPE
-## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
-## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
-## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
-## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
-## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
-## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
-##   POPULATION      RACE    SEX                           SITE      YEAR CRUDE_CI_LOWER CRUDE_CI_UPPER CRUDE_RATE
-## 1       5458 All Races Female      All Cancer Sites Combined 2013-2017              ~              ~          ~
-## 2       5458 All Races Female      All Cancer Sites Combined 2013-2017              ~              ~          ~
-## 3       5458 All Races Female Brain and Other Nervous System 2013-2017              ~              ~          ~
-## 4       5458 All Races Female Brain and Other Nervous System 2013-2017              ~              ~          ~
-## 5       5458 All Races Female                         Cervix 2013-2017              ~              ~          ~
-## 6       5458 All Races Female                         Cervix 2013-2017              ~              ~          ~</code></pre>
+<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER
+## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
+##   AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE    SEX                           SITE      YEAR
+## 1                 ~     ~  Incidence       5458 All Races Female      All Cancer Sites Combined 2013-2017
+## 2                 ~     ~  Mortality       5458 All Races Female      All Cancer Sites Combined 2013-2017
+## 3                 ~     ~  Incidence       5458 All Races Female Brain and Other Nervous System 2013-2017
+## 4                 ~     ~  Mortality       5458 All Races Female Brain and Other Nervous System 2013-2017
+## 5                 ~     ~  Incidence       5458 All Races Female                         Cervix 2013-2017
+## 6                 ~     ~  Mortality       5458 All Races Female                         Cervix 2013-2017
+##   CRUDE_CI_LOWER CRUDE_CI_UPPER CRUDE_RATE
+## 1              ~              ~          ~
+## 2              ~              ~          ~
+## 3              ~              ~          ~
+## 4              ~              ~          ~
+## 5              ~              ~          ~
+## 6              ~              ~          ~</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-cleaning.html#cb19-1"></a>temp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
 <span id="cb19-2"><a href="data-cleaning.html#cb19-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>AGE_ADJUSTED_CI_LOWER, <span class="op">-</span>AGE_ADJUSTED_CI_UPPER, <span class="op">-</span>CRUDE_CI_LOWER, <span class="op">-</span>CRUDE_CI_UPPER) <span class="op">%&gt;%</span></span>
 <span id="cb19-3"><a href="data-cleaning.html#cb19-3"></a><span class="st">  </span><span class="kw">filter</span>(RACE<span class="op">==</span><span class="st">&quot;All Races&quot;</span>,SITE<span class="op">==</span><span class="st">&quot;Lung and Bronchus&quot;</span>)</span>
 <span id="cb19-4"><a href="data-cleaning.html#cb19-4"></a><span class="kw">head</span>(temp)</span></code></pre></div>
-<pre><code>##   STATE                                       AREA AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE             SEX
-## 1    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence       5458 All Races          Female
-## 2    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality       5458 All Races          Female
-## 3    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      11499 All Races            Male
-## 4    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      11499 All Races            Male
-## 5    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      16957 All Races Male and Female
-## 6    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      16957 All Races Male and Female
-##                SITE      YEAR CRUDE_RATE
-## 1 Lung and Bronchus 2013-2017          ~
-## 2 Lung and Bronchus 2013-2017          ~
-## 3 Lung and Bronchus 2013-2017          ~
-## 4 Lung and Bronchus 2013-2017          ~
-## 5 Lung and Bronchus 2013-2017          ~
-## 6 Lung and Bronchus 2013-2017          ~</code></pre>
+<pre><code>##   STATE                                       AREA AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION
+## 1    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence       5458
+## 2    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality       5458
+## 3    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      11499
+## 4    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      11499
+## 5    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      16957
+## 6    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      16957
+##        RACE             SEX              SITE      YEAR CRUDE_RATE
+## 1 All Races          Female Lung and Bronchus 2013-2017          ~
+## 2 All Races          Female Lung and Bronchus 2013-2017          ~
+## 3 All Races            Male Lung and Bronchus 2013-2017          ~
+## 4 All Races            Male Lung and Bronchus 2013-2017          ~
+## 5 All Races Male and Female Lung and Bronchus 2013-2017          ~
+## 6 All Races Male and Female Lung and Bronchus 2013-2017          ~</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-cleaning.html#cb21-1"></a><span class="kw">save</span>(temp, <span class="dt">file=</span><span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span></code></pre></div>
 
 </div>

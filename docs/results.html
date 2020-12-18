@@ -579,10 +579,14 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="results.html#cb46-1"></a><span class="kw">ggplot</span>(newdata, <span class="kw">aes</span>(TotalNO3, TotalRate)) <span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">alpha =</span>.<span class="dv">5</span>, <span class="dt">size =</span><span class="dv">1</span>) <span class="op">+</span><span class="kw">theme_classic</span>(<span class="dv">14</span>)<span class="op">+</span></span>
 <span id="cb46-2"><a href="results.html#cb46-2"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Scatter Plot of Mean NO3 and TotalRate&quot;</span>)<span class="op">+</span></span>
 <span id="cb46-3"><a href="results.html#cb46-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;meanNO3&quot;</span>)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-38-2.png" width="672" style="display: block; margin: auto;" />
-* Remarks:
-+ The scatter plots shows that there are no state with high SO2 and low incident rate and no state with low SO2 and high incident rate.
-+ The NO3 plot doesn’t show a clear pattern.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-38-2.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Remarks:
+<ul>
+<li>The scatter plots shows that there are no state with high SO2 and low incident rate and no state with low SO2 and high incident rate.</li>
+<li>The NO3 plot doesn’t show a clear pattern.</li>
+</ul></li>
+</ul>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="results.html#cb47-1"></a><span class="co">#cleveland by state</span></span>
 <span id="cb47-2"><a href="results.html#cb47-2"></a><span class="co">##Cleveland dot plots of all gender cancer rate and SO2, NO3 concentrattion by region</span></span>
 <span id="cb47-3"><a href="results.html#cb47-3"></a></span>
@@ -612,10 +616,14 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <span id="cb49-6"><a href="results.html#cb49-6"></a>    <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),</span>
 <span id="cb49-7"><a href="results.html#cb49-7"></a>    <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>))<span class="op">+</span></span>
 <span id="cb49-8"><a href="results.html#cb49-8"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Cleveland Dot Plot of Mean NO3 Concentration&quot;</span>)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-39-3.png" width="672" style="display: block; margin: auto;" />
-* Remarks:
-+ The distributions of regions in the above 3 plots have the same pattern: East and West region have higher cancer rate and pollutants’ concentrations. Middle region have the lowest cancer rate and pollutants’ concentrations.
-+ There is a high chance that Lung and Bronchus cancer rate and pollutants’ concentrations are correlated.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-39-3.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Remarks:
+<ul>
+<li>The distributions of regions in the above 3 plots have the same pattern: East and West region have higher cancer rate and pollutants’ concentrations. Middle region have the lowest cancer rate and pollutants’ concentrations.</li>
+<li>There is a high chance that Lung and Bronchus cancer rate and pollutants’ concentrations are correlated.</li>
+</ul></li>
+</ul>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="results.html#cb50-1"></a><span class="co">##Correlation matrix with visualizations</span></span>
 <span id="cb50-2"><a href="results.html#cb50-2"></a><span class="kw">ggpairs</span>(newdata[<span class="dv">8</span><span class="op">:</span><span class="dv">12</span>], <span class="dt">title=</span><span class="st">&quot;correlogram with ggpairs()&quot;</span>)<span class="op">+</span></span>
 <span id="cb50-3"><a href="results.html#cb50-3"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlogram of Each Pair of the Indicators&quot;</span>)</span></code></pre></div>
@@ -641,11 +649,13 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <span id="cb53-8"><a href="results.html#cb53-8"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></span>
 <span id="cb53-9"><a href="results.html#cb53-9"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows=</span><span class="kw">vars</span>(SEX))<span class="op">+</span></span>
 <span id="cb53-10"><a href="results.html#cb53-10"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;The Distribution of Cancer Rate Faceted by SEX&quot;</span>)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="672" style="display: block; margin: auto;" />
-* Remarks:
-+ The boxplots show that males tend to have a higher Lung and Bronchus cancer incident rate compare to females in general in the US.
-+ For female’s rate, there is one state as an outlier.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ul>
+<li>Remarks:
+<ul>
+<li>The boxplots show that males tend to have a higher Lung and Bronchus cancer incident rate compare to females in general in the US.</li>
+<li>For female’s rate, there is one state as an outlier.</li>
+</ul></li>
 <li>Lung and bronchus cancer rate and SO2 concentration are correlated. There is not enough evidence shows that lung and bronchus cancer rate are related to the NO3 concentration. The east and west regions have higher lung and bronchus cancer rates and pollutants’ concentrations compare to the middle region of the US. Also males tend to have higher lung and bronchus cancer rate than females.</li>
 </ul>
 
