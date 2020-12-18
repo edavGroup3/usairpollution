@@ -1,5 +1,6 @@
 # Conclusion
 
+
 * Our project aims at analyzing seasonal and spatial changes of air pollutants over United States, does Covid-19 lockdown significantly reduce air pollution, and also trying to figure out correlation between pollutants and Lung and Bronchus cancer rate.
 * In terms of time series over the last ten years, we claim that concentration level of common pollutants such as Sulfer Dioxide is decreasing over years. However, many other toxic pollutants like Nitrate we discussed in the result section has not been paid enough attention to. 
 * As for spatial analysis, we conclude that for each state fossil fuels consumption and factory emission are the main reason of SO2 and NO3 emission, also weather could influence air pollution across states.
