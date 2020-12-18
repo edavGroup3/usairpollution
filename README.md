@@ -9,3 +9,7 @@
 
 - Data from: [CASTNET: Clean Air Status and Trends Network](https://java.epa.gov/castnet/clearsession.do) and [CDC: Centers for Disease Control and Prevention](https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm).
 
+
+
+*This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*
+
