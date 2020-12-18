@@ -51,14 +51,6 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
-<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
-<script src="libs/dygraphs-1.1.1/shapes.js"></script>
-<script src="libs/moment-2.8.4/moment.js"></script>
-<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
-<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
-<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
 
 
 <style type="text/css">
@@ -201,32 +193,214 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
 <div id="data-source-1-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Data Source 1</h2>
-<p>In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column.</p>
-<p>After removing “WNO3” and some other redundant columns, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
+<p>After data cleaning in the last section, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
 <p>After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="missing-values.html#cb25-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb25-2"><a href="missing-values.html#cb25-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&#39;./data/Filter_Pack_Concentrations_W.csv&#39;</span>)</span>
-<span id="cb25-3"><a href="missing-values.html#cb25-3"></a>remove_columns &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;WNO3&#39;</span>, <span class="st">&#39;QA_CODE&#39;</span>, <span class="st">&#39;DATEON&#39;</span>, <span class="st">&#39;COMMENT_CODES&#39;</span>, <span class="st">&#39;TOTAL_NO3&#39;</span>, <span class="st">&#39;UPDATE_DATE&#39;</span>)</span>
-<span id="cb25-4"><a href="missing-values.html#cb25-4"></a>dt &lt;-<span class="st"> </span><span class="kw">select</span>(data, <span class="op">-</span>remove_columns)</span>
-<span id="cb25-5"><a href="missing-values.html#cb25-5"></a><span class="kw">colSums</span>(<span class="kw">is.na</span>(data))</span></code></pre></div>
-<pre><code>##       SITE_ID          TYPE        DATEON       DATEOFF          TSO4          TNO3          TNH4 
-##             0             0             0             0          1220          1220          1220 
-##            CA            MG           NA.             K            CL          NSO4         NHNO3 
-##          1225          1223          1225          1298          1230          1222          1222 
-##          WSO2          WNO3     TOTAL_SO2     TOTAL_NO3   FLOW_VOLUME   VALID_HOURS COMMENT_CODES 
-##          1246         49124          1234          1212           902           892             0 
-##  STD2LOCAL_CF   TEMP_SOURCE       QA_CODE   UPDATE_DATE 
-##            17             0             0             0</code></pre>
-<p>Notice that each pollutant concentration variables contain almost the same percentage of missing values. We tried to extract missing patterns using mi::missing_data.frame(). To save memory, we only input the first 20,000 data.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="missing-values.html#cb27-1"></a><span class="co">#library(mi)</span></span>
-<span id="cb27-2"><a href="missing-values.html#cb27-2"></a><span class="co">#library(betareg)</span></span>
-<span id="cb27-3"><a href="missing-values.html#cb27-3"></a><span class="co">#x &lt;- missing_data.frame(dt[1:20000,])</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="missing-values.html#cb28-1"></a><span class="co">#image(x)</span></span></code></pre></div>
-<p>The result is consistent to what we found before, [“TSO4”, “TNO3”, “TNH4”, “CA”, “MG”, “TSO4”] have the same missingness pattern.</p>
-<p>Also we found out that within each “Side_ID”, the number of missing values is almost the same across each pollutant. We will further work on understanding if these is any patterns between missing values and date or locations. At this point, we would not directly remove these missing points as some missing values may link to other groups in the data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="missing-values.html#cb1-1"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&#39;./data/ProcessedData.csv&#39;</span>)</span>
+<span id="cb1-2"><a href="missing-values.html#cb1-2"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">SO2 =</span> TOTAL_SO2, <span class="dt">NO3=</span>TOTAL_NO3)</span>
+<span id="cb1-3"><a href="missing-values.html#cb1-3"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">X</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SITE_ID</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">STATE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">COUNTY</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">LATITUDE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">LONGITUDE</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">ELEVATION</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">TYPE</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="left">TSO4</td>
+<td align="right">1273</td>
+</tr>
+<tr class="even">
+<td align="left">TNO3</td>
+<td align="right">1273</td>
+</tr>
+<tr class="odd">
+<td align="left">TNH4</td>
+<td align="right">1273</td>
+</tr>
+<tr class="even">
+<td align="left">CA</td>
+<td align="right">1278</td>
+</tr>
+<tr class="odd">
+<td align="left">MG</td>
+<td align="right">1276</td>
+</tr>
+<tr class="even">
+<td align="left">NA.</td>
+<td align="right">1278</td>
+</tr>
+<tr class="odd">
+<td align="left">K</td>
+<td align="right">1351</td>
+</tr>
+<tr class="even">
+<td align="left">CL</td>
+<td align="right">1283</td>
+</tr>
+<tr class="odd">
+<td align="left">NSO4</td>
+<td align="right">1275</td>
+</tr>
+<tr class="even">
+<td align="left">NHNO3</td>
+<td align="right">1275</td>
+</tr>
+<tr class="odd">
+<td align="left">WSO2</td>
+<td align="right">1299</td>
+</tr>
+<tr class="even">
+<td align="left">SO2</td>
+<td align="right">1287</td>
+</tr>
+<tr class="odd">
+<td align="left">NO3</td>
+<td align="right">1265</td>
+</tr>
+<tr class="even">
+<td align="left">FLOW_VOLUME</td>
+<td align="right">955</td>
+</tr>
+<tr class="odd">
+<td align="left">VALID_HOURS</td>
+<td align="right">945</td>
+</tr>
+<tr class="even">
+<td align="left">STD2LOCAL_CF</td>
+<td align="right">70</td>
+</tr>
+<tr class="odd">
+<td align="left">TEMP_SOURCE</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="left">date_off</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="left">update_date</td>
+<td align="right">53</td>
+</tr>
+<tr class="even">
+<td align="left">REGION</td>
+<td align="right">553</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="missing-values.html#cb2-1"></a>df &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(REGION, SO2, NO3, CA, MG, K, CL)</span>
+<span id="cb2-2"><a href="missing-values.html#cb2-2"></a>df_na &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">percent=</span><span class="kw">round</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(df))<span class="op">/</span><span class="kw">nrow</span>(df)<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb2-3"><a href="missing-values.html#cb2-3"></a>df_na<span class="op">$</span>keyFeatures &lt;-<span class="st"> </span><span class="kw">rownames</span>(df_na)</span>
+<span id="cb2-4"><a href="missing-values.html#cb2-4"></a><span class="kw">ggplot</span>(df_na, <span class="kw">aes</span>(keyFeatures, percent, <span class="dt">fill=</span>percent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb2-5"><a href="missing-values.html#cb2-5"></a><span class="st">  </span><span class="kw">geom_col</span>()<span class="op">+</span></span>
+<span id="cb2-6"><a href="missing-values.html#cb2-6"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Features&quot;</span>)<span class="op">+</span></span>
+<span id="cb2-7"><a href="missing-values.html#cb2-7"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb2-8"><a href="missing-values.html#cb2-8"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Percentage of NAs of Main Features&quot;</span>)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Notice that each pollutant concentration variables contain almost the same percentage of missing values, about 3 percents.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="missing-values.html#cb3-1"></a><span class="kw">gg_miss_upset</span>(df)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The two plots above are consistent to what we suspected, all pollutant concentrations have almost the same missing value pattern. There are 1259 rows missing all five major pollutants and 16 rows missing four major pollutants.</p>
 </div>
 <div id="data-source-2-1" class="section level2">
 <h2><span class="header-section-number">4.2</span> Data Source 2</h2>
+<p>Let us then look at a cancer dataset we used to study the relationship between air polluants and lung cancer.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="missing-values.html#cb4-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span>
+<span id="cb4-2"><a href="missing-values.html#cb4-2"></a>data &lt;-<span class="st"> </span>temp</span>
+<span id="cb4-3"><a href="missing-values.html#cb4-3"></a>data[data<span class="op">==</span><span class="st">&quot;~&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb4-4"><a href="missing-values.html#cb4-4"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">STATE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">AREA</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">AGE_ADJUSTED_RATE</td>
+<td align="right">3077</td>
+</tr>
+<tr class="even">
+<td align="left">COUNT</td>
+<td align="right">3077</td>
+</tr>
+<tr class="odd">
+<td align="left">EVENT_TYPE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">POPULATION</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">RACE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">SEX</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">SITE</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">YEAR</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">CRUDE_RATE</td>
+<td align="right">3077</td>
+</tr>
+</tbody>
+</table>
+<p>There are 3077 missing values for three features of the dataset. The following plot provide information on the overall percentage of missing values in each feature. Notice that missing values patterns are uniform across all the entire dataset.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="missing-values.html#cb5-1"></a><span class="kw">vis_miss</span>(data)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
+If we break the missing values down by a categorical variable called EVENT_TYPE, then we can see that there are are more missing values when the EVENT_TYPE is “Mortality” compared to “Incidence”.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="missing-values.html#cb6-1"></a><span class="kw">gg_miss_fct</span>(<span class="dt">x=</span>data, <span class="dt">fct=</span>EVENT_TYPE)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
