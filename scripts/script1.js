@@ -23,7 +23,7 @@ var tip = d3.tip()
 svg.call(tip);
 
 
-d3.csv("statespercent.csv").then(function(data){
+d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/statespercent.csv").then(function(data){
   var dataArray = [];
   for (var d=0; d < data.length; d++){
     dataArray.push(parseFloat(data[d].value));
@@ -32,7 +32,7 @@ d3.csv("statespercent.csv").then(function(data){
   var maxVal = d3.max(dataArray);
   var ramp = d3.scaleLinear().domain([minVal, maxVal]).range([lowColor, highColor]);
   
-  d3.json("us-states.json").then(function(json){
+  d3.json("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/us-states.json").then(function(json){
     for (var i = 0; i < data.length; i++){
       var dataState = data[i].state;
       var dataValue = data[i].value;
