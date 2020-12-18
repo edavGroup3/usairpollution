@@ -1,5 +1,5 @@
 --- 
-title: "EDAV Group3 Final Project"
+title: "EDAV Group3: Air Pollution Over the United States"
 author: "Xinwen Miao, Yilan Jiang, Huiqian Yu, Diyue Gu"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
