@@ -168,6 +168,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#monthly-time-series"><i class="fa fa-check"></i><b>5.3.2</b> Monthly Time Series</a></li>
 <li class="chapter" data-level="5.3.3" data-path="results.html"><a href="results.html#did-covid-19-lockdown-significantly-reduce-air-pollution-in-new-york-state"><i class="fa fa-check"></i><b>5.3.3</b> Did Covid-19 lockdown significantly reduce air pollution in New York State?</a></li>
 </ul></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#how-does-air-pollution-spread-across-states"><i class="fa fa-check"></i><b>5.4</b> How does air pollution spread across states?</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="results.html"><a href="results.html#spatial-distribution-of-so2-and-no3-over-states"><i class="fa fa-check"></i><b>5.4.1</b> Spatial distribution of SO2 and NO3 over states</a></li>
+<li class="chapter" data-level="5.4.2" data-path="results.html"><a href="results.html#spatial-distribution-of-no3"><i class="fa fa-check"></i><b>5.4.2</b> Spatial distribution of NO3</a></li>
+<li class="chapter" data-level="5.4.3" data-path="results.html"><a href="results.html#pollutant-distribution-over-states"><i class="fa fa-check"></i><b>5.4.3</b> Pollutant distribution over states</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a><ul>
@@ -372,7 +377,16 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <span id="cb39-5"><a href="results.html#cb39-5"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;NO3 (ug/m^3)&quot;</span>) <span class="op">+</span></span>
 <span id="cb39-6"><a href="results.html#cb39-6"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly NO3 in New York State across each year&quot;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="results.html#cb40-1"></a><span class="co">#group by state, calculate mean SO2, mean NO3over past 10 years</span></span>
+</div>
+</div>
+<div id="how-does-air-pollution-spread-across-states" class="section level2">
+<h2><span class="header-section-number">5.4</span> How does air pollution spread across states?</h2>
+<div id="spatial-distribution-of-so2-and-no3-over-states" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Spatial distribution of SO2 and NO3 over states</h3>
+<ul>
+<li>To see the spatial distribution overstates, we draw the linked micromaps over two pollutants, mean SO2 and mean NO3 amount over past 10 years, and show plots of them.</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="results.html#cb40-1"></a><span class="co">#group by state, calculate mean SO2, mean NO3 over past 10 years</span></span>
 <span id="cb40-2"><a href="results.html#cb40-2"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
 <span id="cb40-3"><a href="results.html#cb40-3"></a></span>
 <span id="cb40-4"><a href="results.html#cb40-4"></a><span class="kw">library</span>(tools)</span>
@@ -408,51 +422,54 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <span id="cb40-34"><a href="results.html#cb40-34"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
 <span id="cb40-35"><a href="results.html#cb40-35"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
 <span id="cb40-36"><a href="results.html#cb40-36"></a>          ))</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="results.html#cb41-1"></a><span class="kw">library</span>(tools)</span>
-<span id="cb41-2"><a href="results.html#cb41-2"></a><span class="kw">library</span>(micromap)</span>
-<span id="cb41-3"><a href="results.html#cb41-3"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
-<span id="cb41-4"><a href="results.html#cb41-4"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
-<span id="cb41-5"><a href="results.html#cb41-5"></a></span>
-<span id="cb41-6"><a href="results.html#cb41-6"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
-<span id="cb41-7"><a href="results.html#cb41-7"></a>       <span class="dt">map.data =</span> statePolys,</span>
-<span id="cb41-8"><a href="results.html#cb41-8"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
-<span id="cb41-9"><a href="results.html#cb41-9"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;NO3&#39;</span>, <span class="ot">NA</span>),</span>
-<span id="cb41-10"><a href="results.html#cb41-10"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;NO3&#39;</span>, </span>
-<span id="cb41-11"><a href="results.html#cb41-11"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb41-12"><a href="results.html#cb41-12"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
-<span id="cb41-13"><a href="results.html#cb41-13"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
-<span id="cb41-14"><a href="results.html#cb41-14"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb41-15"><a href="results.html#cb41-15"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
-<span id="cb41-16"><a href="results.html#cb41-16"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb41-17"><a href="results.html#cb41-17"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
-<span id="cb41-18"><a href="results.html#cb41-18"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
-<span id="cb41-19"><a href="results.html#cb41-19"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
-<span id="cb41-20"><a href="results.html#cb41-20"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
-<span id="cb41-21"><a href="results.html#cb41-21"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
-<span id="cb41-22"><a href="results.html#cb41-22"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb41-23"><a href="results.html#cb41-23"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb41-24"><a href="results.html#cb41-24"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
-<span id="cb41-25"><a href="results.html#cb41-25"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
-<span id="cb41-26"><a href="results.html#cb41-26"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean NO3 Pollution Amount&quot;</span>, </span>
-<span id="cb41-27"><a href="results.html#cb41-27"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb41-28"><a href="results.html#cb41-28"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb41-29"><a href="results.html#cb41-29"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
-<span id="cb41-30"><a href="results.html#cb41-30"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
-<span id="cb41-31"><a href="results.html#cb41-31"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb41-32"><a href="results.html#cb41-32"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
-<span id="cb41-33"><a href="results.html#cb41-33"></a>          ))</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="results.html#cb41-1"></a><span class="kw">library</span>(choroplethr)</span>
+<span id="cb41-2"><a href="results.html#cb41-2"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
+<span id="cb41-3"><a href="results.html#cb41-3"></a></span>
+<span id="cb41-4"><a href="results.html#cb41-4"></a><span class="co">#mean so2 by state</span></span>
+<span id="cb41-5"><a href="results.html#cb41-5"></a>dataStateSO2&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,SO2)</span>
+<span id="cb41-6"><a href="results.html#cb41-6"></a>dataStateSO2&lt;-dataStateSO2<span class="op">%&gt;%</span><span class="kw">rename</span>(<span class="dt">region=</span>STATE, <span class="dt">value=</span>SO2)</span>
+<span id="cb41-7"><a href="results.html#cb41-7"></a>dataStateSO2<span class="op">$</span>region&lt;-<span class="kw">tolower</span>(state.name[<span class="kw">match</span>(dataStateSO2<span class="op">$</span>region, state.abb)])</span>
+<span id="cb41-8"><a href="results.html#cb41-8"></a></span>
+<span id="cb41-9"><a href="results.html#cb41-9"></a><span class="kw">state_choropleth</span>(dataStateSO2,<span class="dt">title=</span><span class="st">&quot;Mean SO2 Amount Over 10 Years by State&quot;</span>, <span class="dt">legend=</span><span class="st">&quot;SO2 Amount by state&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="dv">8</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="results.html#cb42-1"></a><span class="kw">library</span>(choroplethr)</span>
-<span id="cb42-2"><a href="results.html#cb42-2"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
-<span id="cb42-3"><a href="results.html#cb42-3"></a></span>
-<span id="cb42-4"><a href="results.html#cb42-4"></a><span class="co">#mean so2 by state</span></span>
-<span id="cb42-5"><a href="results.html#cb42-5"></a>dataStateSO2&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,SO2)</span>
-<span id="cb42-6"><a href="results.html#cb42-6"></a>dataStateSO2&lt;-dataStateSO2<span class="op">%&gt;%</span><span class="kw">rename</span>(<span class="dt">region=</span>STATE, <span class="dt">value=</span>SO2)</span>
-<span id="cb42-7"><a href="results.html#cb42-7"></a>dataStateSO2<span class="op">$</span>region&lt;-<span class="kw">tolower</span>(state.name[<span class="kw">match</span>(dataStateSO2<span class="op">$</span>region, state.abb)])</span>
-<span id="cb42-8"><a href="results.html#cb42-8"></a></span>
-<span id="cb42-9"><a href="results.html#cb42-9"></a><span class="kw">state_choropleth</span>(dataStateSO2,<span class="dt">title=</span><span class="st">&quot;Mean SO2 Amount Over 10 Years by State&quot;</span>, <span class="dt">legend=</span><span class="st">&quot;SO2 Amount by state&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="dv">8</span>)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="spatial-distribution-of-no3" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Spatial distribution of NO3</h3>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="results.html#cb42-1"></a><span class="kw">library</span>(tools)</span>
+<span id="cb42-2"><a href="results.html#cb42-2"></a><span class="kw">library</span>(micromap)</span>
+<span id="cb42-3"><a href="results.html#cb42-3"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
+<span id="cb42-4"><a href="results.html#cb42-4"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
+<span id="cb42-5"><a href="results.html#cb42-5"></a></span>
+<span id="cb42-6"><a href="results.html#cb42-6"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
+<span id="cb42-7"><a href="results.html#cb42-7"></a>       <span class="dt">map.data =</span> statePolys,</span>
+<span id="cb42-8"><a href="results.html#cb42-8"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
+<span id="cb42-9"><a href="results.html#cb42-9"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;NO3&#39;</span>, <span class="ot">NA</span>),</span>
+<span id="cb42-10"><a href="results.html#cb42-10"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;NO3&#39;</span>, </span>
+<span id="cb42-11"><a href="results.html#cb42-11"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb42-12"><a href="results.html#cb42-12"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
+<span id="cb42-13"><a href="results.html#cb42-13"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
+<span id="cb42-14"><a href="results.html#cb42-14"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb42-15"><a href="results.html#cb42-15"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
+<span id="cb42-16"><a href="results.html#cb42-16"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb42-17"><a href="results.html#cb42-17"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
+<span id="cb42-18"><a href="results.html#cb42-18"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
+<span id="cb42-19"><a href="results.html#cb42-19"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
+<span id="cb42-20"><a href="results.html#cb42-20"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
+<span id="cb42-21"><a href="results.html#cb42-21"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb42-22"><a href="results.html#cb42-22"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-23"><a href="results.html#cb42-23"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb42-24"><a href="results.html#cb42-24"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
+<span id="cb42-25"><a href="results.html#cb42-25"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
+<span id="cb42-26"><a href="results.html#cb42-26"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean NO3 Pollution Amount&quot;</span>, </span>
+<span id="cb42-27"><a href="results.html#cb42-27"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-28"><a href="results.html#cb42-28"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb42-29"><a href="results.html#cb42-29"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
+<span id="cb42-30"><a href="results.html#cb42-30"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
+<span id="cb42-31"><a href="results.html#cb42-31"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-32"><a href="results.html#cb42-32"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
+<span id="cb42-33"><a href="results.html#cb42-33"></a>          ))</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="results.html#cb43-1"></a><span class="co">#mean NO3 by state</span></span>
 <span id="cb43-2"><a href="results.html#cb43-2"></a>dataStateNO3&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,NO3)</span>
 <span id="cb43-3"><a href="results.html#cb43-3"></a>dataStateNO3&lt;-dataStateNO3<span class="op">%&gt;%</span><span class="kw">rename</span>(<span class="dt">region=</span>STATE, <span class="dt">value=</span>NO3)</span>
@@ -460,12 +477,25 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <span id="cb43-5"><a href="results.html#cb43-5"></a></span>
 <span id="cb43-6"><a href="results.html#cb43-6"></a><span class="kw">state_choropleth</span>(dataStateNO3,<span class="dt">title=</span><span class="st">&quot;Mean NO3 Amount Over 10 Years by State&quot;</span>, <span class="dt">legend=</span><span class="st">&quot;NO3 Amount by state&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="dv">8</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Based on the plot above, we observe that OH, IN, PA, KY, and VA have the top 5 mean SO2 amount, IN, IL, OH, NY, KY have top 5 mean NO3 amount during past 10 years.</li>
+<li>According to EPA, the main source of SO2 and NO3 is the burning of fossil fuels by power plants and other industrial facilities. For fossil fules example, SO2 and NO3 concentration has a positive correlation with coal and petroleum consumption. According to Primary Energy Consumption Estimates by Source, Ranked by State, 2018(<a href="https://www.eia.gov/state/seds/data.php?incfile=/state/seds/sep_sum/html/rank_use_source.html&amp;sid=US" class="uri">https://www.eia.gov/state/seds/data.php?incfile=/state/seds/sep_sum/html/rank_use_source.html&amp;sid=US</a>), we noticed that TX, IN, OH have highest coal consumption, KY and PA rank 7&amp;8 in coal consumption. Also for petroleum consumption, LA, NY, IL, PA, OH rank 3,5,6,7,and 8. These contribute to high SO2 and NO3 emmsion in IN, OH, PA, IL, NY and KY.</li>
+<li>Moreover we found that states with highest SO2 and NO3 amount neighbor each other, it could be affected by the transport of SO2/NO3 within air shed affected by climate. Emissions of SO2/NO3 from OH and IN could travel to the East Coast, driving up the amount of air pollution in states such as PA, KY and VA.</li>
+<li>Promoting cleaner energy can make to positive difference to air pollution because coal consumption is crucial reason of SO2 and NO3 emission.</li>
+</ul>
+</div>
+<div id="pollutant-distribution-over-states" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Pollutant distribution over states</h3>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="results.html#cb44-1"></a>dataMosaic &lt;-<span class="st"> </span><span class="kw">gather</span>(dataState,<span class="dt">key =</span> <span class="st">&#39;pollutant&#39;</span>,<span class="dt">value =</span> concentration, <span class="op">-</span>STATE)</span>
 <span id="cb44-2"><a href="results.html#cb44-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> dataMosaic, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(STATE, <span class="op">-</span>concentration), <span class="dt">y =</span> concentration, <span class="dt">fill =</span> pollutant,<span class="dt">order =</span> pollutant)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb44-3"><a href="results.html#cb44-3"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb44-4"><a href="results.html#cb44-4"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb44-5"><a href="results.html#cb44-5"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Pollutant distribution by states&quot;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>This stack bar chart shows the overall distribution of the main pollutants, SO2 and NO3. We noticed that states with higher SO2 tend to have higher NO3 emission, but also some states with higher SO2 while have lower NO3 emission. This could be affected by different combination of fossial fules using and factorial emission. Besides energy source like coal and petroleum, factories and other industrial installations have caused such pollution with metal smelting, petrochemical smog and food precessing. For example, heating and smelting metal processes produce emissions of sulfur oxides.</li>
+<li>Air pollution can also be controlled by strengthen emission regulation through the installation of filters and scrubbers to clean exhaust fumes from factory processes, and by taking steps to minimize the generation of pollution at the source.</li>
+</ul>
 <p>##Combine two datasets
 Since cancer data are from year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="results.html#cb45-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span>
