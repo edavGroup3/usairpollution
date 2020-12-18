@@ -3,7 +3,7 @@
 
 - An exploratory data analysis on air pollution over the United States, seasonal and spatial spread, also connection with lung cancer.
 
-- Click [here](https://github.com/edavGroup3/usairpollution/) to see the repo, open `/docs/index.html` in a browser to see the report.
+- Click [here](/https://edavgroup3.github.io/usairpollution/) 
 
 - Click [here](/) to see the interactive part.
 
