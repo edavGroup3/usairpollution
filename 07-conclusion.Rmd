@@ -1,5 +1,5 @@
 # Conclusion
 * Our project aims at analyzing seasonal and spatial changes of air pollutants over the United States, does Covid-19 lockdown significantly reduce air pollution, and also trying to figure out correlation between pollutants and Lung and Bronchus cancer rate.
-* Here need time series conclusion
+* Here need time series conclusion 
 * As for spatial analysis, we conclude that for each state fossil fuels consumption and factory emission are the main reason of SO2 and NO3 emission, also weather could influence air pollution across states.
 * Lung and bronchus cancer rate and SO2 concentration are correlated. There is not enough evidence shows that lung and bronchus cancer rate are related to the NO3 concentration.
