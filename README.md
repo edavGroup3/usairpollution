@@ -1,7 +1,7 @@
 # Air Pollution Over the United States
 20 Fall Final Project of [5702 EDAV](https://edav.info/)
 
-- An exploratory data analysis on air pollution over the United States, seasonal and spatial spread, also connection with lung cancer.
+- An exploratory data analysis on air pollution over the United States, seasonal and spatial spread, also correlation with cancer rate. 
 
 - Bookdown [here](https://edavgroup3.github.io/usairpollution/) 
 
