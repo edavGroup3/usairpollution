@@ -1,8 +1,8 @@
 # Conclusion
+<<<<<<< HEAD
 ## Air Pllutant Trend in US over the Past ten years
-* Overall, concentration level of common pollutants such as Sulfer Dioxide is decreasing over years. However, many other toxic pollutants like Nitrate we discussed in the result section has not been paid enough attention to. 
 
-## Lung and Bronchus Cancer Rate and Pollutants' Concentrations
-* lung and bronchus cancer rate and SO2 concentration are correlated. There is no evidence shows that lung and bronchus cancer rate are related to the NO3 concentration.
-* The east and west regions have higher lung and bronchus cancer rates and pollutants' concentrations compare to the middle region of the US.
-* Males tend to have higher lung and bronchus cancer rate than females.
+* Our project aims at analyzing seasonal and spatial changes of air pollutants over the United States, does Covid-19 lockdown significantly reduce air pollution, and also trying to figure out correlation between pollutants and Lung and Bronchus cancer rate.
+* In terms of time series over the last ten years, we claim that concentration level of common pollutants such as Sulfer Dioxide is decreasing over years. However, many other toxic pollutants like Nitrate we discussed in the result section has not been paid enough attention to. 
+* As for spatial analysis, we conclude that for each state fossil fuels consumption and factory emission are the main reason of SO2 and NO3 emission, also weather could influence air pollution across states.
+* Lung and bronchus cancer rate and SO2 concentration are correlated. There is not enough evidence shows that lung and bronchus cancer rate are related to the NO3 concentration.
