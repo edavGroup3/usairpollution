@@ -1,5 +1,5 @@
 # Conclusion
-## Lung and Bronchus Cancer Rate and Pollutants' Poncentrations
-lung and bronchus cancer rate and SO2 concentration are correlated. There is no evidence shows that lung and bronchus cancer rate are related to the NO3 concentration.
-The east and west regions have higher lung and bronchus cancer rates and pollutants' concentrations compare to the middle region of the US.
-Males tend to have higher lung and bronchus cancer rate than females.
+* Our project aims at analyzing seasonal and spatial changes of air pollutants over the United States, and also trying to figure out correlation bewtween pollutants and Lung and Bronchus cancer rate.
+* Here need time series conclusion
+* As for spatial analysis, we conclude that for each state fossil fuels consumption and factory emission are the main reason of SO2 and NO3 emission, also weather could influence air pollution across states.
+* Lung and bronchus cancer rate and SO2 concentration are correlated. There is not enough evidence shows that lung and bronchus cancer rate are related to the NO3 concentration.
