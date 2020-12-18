@@ -1,8 +1,8 @@
 var width = 960;
 var height = 500;
 
-var lowColor = '#E8F8F5'
-var highColor = '#0E6251'
+var lowColor = '#E8F8F5';
+var highColor = '#0E6251';
 
 var projection = d3.geoAlbersUsa()
   .translate([width/2, height/2])
@@ -60,7 +60,7 @@ d3.csv("statespercent.csv").then(function(data){
     .on("mouseover", function(event, d){
       tip.show(event, d.properties.name + ': ' +d.properties.value)
     })
-    .on("mouseout", tip.hide)
+    .on("mouseout", tip.hide);
   
   //legend (not necessary)
   var w = 140;
