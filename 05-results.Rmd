@@ -289,7 +289,7 @@ ggplot(data = dataMosaic, aes(x = reorder(STATE, -concentration), y = concentrat
 * This stack bar chart shows the overall distribution of the pollutants, SO2 and NO3. We noticed that states with higher SO2 tend to have higher NO3 emission, but also some states with higher SO2 while have lower NO3 emission. This could be affected by different combination of fossil fuels consuming and factorial emission. Besides energy source such as coal and petroleum, factories and other industrial installations have caused such pollution with metal smelting, petrochemical smog and food processing. For example, heating and smelting metal processes produce emissions of sulfur oxides. 
 *  Air pollution can also be controlled by strengthening emission regulation through the installation of filters and scrubbers to clean exhaust fumes from factory processes, and by taking steps to minimize the generation of pollution at the source.
 
-## How does air pollution correlate with lung cancer?
+## How does air pollution correlate with Lung and Bronchus cancer?
 
 ### Process cancer rate data
 Since cancer data is over year 2013-2017, we use the mean of the amount of SO2 and NO3 from 2013-2017 as the indicator.
@@ -361,7 +361,7 @@ newdata<- merge(x = newdata, y = region, by = "STATE", all.x = TRUE)%>% na.omit(
 newdata$REGION<-as.character(newdata$REGION) 
 ```
 
-### Correlation between air pollution and cancer rate
+### Correlation between air pollution and Lung and Bronchus cancer rate
 ```{r}
 ##Scatter plots 
 ggplot(newdata, aes(TotalSO2,TotalRate)) +geom_point(alpha =.5, size =1)  +theme_classic(14) +
