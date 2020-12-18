@@ -9,7 +9,7 @@ var projection = d3.geoAlbersUsa()
   .scale([1000]);
 
 var path = d3.geoPath()
-  .projection(projection)
+  .projection(projection);
 
 var svg = d3.select("div#plot")
   .append("svg")
@@ -23,7 +23,7 @@ var tip = d3.tip()
 svg.call(tip);
 
 
-d3.csv("statespercent.csv").then(function(data){
+d3.csv("https://github.com/edavGroup3/usairpollution/blob/main/data/statespercent.csv").then(function(data){
   var dataArray = [];
   for (var d=0; d < data.length; d++){
     dataArray.push(parseFloat(data[d].value));
@@ -32,7 +32,7 @@ d3.csv("statespercent.csv").then(function(data){
   var maxVal = d3.max(dataArray);
   var ramp = d3.scaleLinear().domain([minVal, maxVal]).range([lowColor, highColor]);
   
-  d3.json("us-states.json").then(function(json){
+  d3.json("https://github.com/edavGroup3/usairpollution/blob/main/data/us-states.json").then(function(json){
     for (var i = 0; i < data.length; i++){
       var dataState = data[i].state;
       var dataValue = data[i].value;
@@ -57,37 +57,13 @@ d3.csv("statespercent.csv").then(function(data){
     .style("fill", function(d){return ramp(d.properties.value)});
   
   svg.selectAll("path")
-    .on("mouseover", function(event, d){
-      tip.show(event, d.properties.name + ': ' +d.properties.value)
-    })
-    .on("mouseout", tip.hide);
-  
-  //legend (not necessary)
-  var w = 140;
-  var h = 300;
-  var key = d3.select("div#plot")
-    .append("svg")
-    .attr("width", w)
-    .attr("height", h)
-    .attr("class", "legend");
-    
-    svg.selectAll("path")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .style("stroke", "#fff")
-      .style("stroke-width", "1")
-      .style("fill", function(d){return ramp(d.properties.value)});
-    
-    svg.selectAll("path")
       .on("mouseover", function(event, d){
         tip.show(event, d.properties.name + '<br/><br/>' +
         'Lung Cancer Rate: ' + d.properties.value +'%' + '<br/>' + 
         'SO2 Concentration: ' + d.properties.so2 + ' µg/m^3');
       })
-      .on("mouseout", tip.hide)
-    
+      .on("mouseout", tip.hide);
+  
     //legend (not necessary)
     var w = 140;
     var h = 300;
@@ -105,20 +81,10 @@ d3.csv("statespercent.csv").then(function(data){
 		.attr("y2", "100%")
 		.attr("spreadMethod", "pad");
 
-  var legend = key.append("defs")
-    .append("svg:linearGradient")
-    .attr("id", "gradient")
-    .attr("x1", "100%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "100%")
-    .attr("spreadMethod", "pad");
-
-
-  legend.append("stop")
-    .attr("offset", "0%")
-    .attr("stop-color", highColor)
-    .attr("stop-opacity", 1);
+    legend.append("stop")
+			.attr("offset", "0%")
+			.attr("stop-color", highColor)
+			.attr("stop-opacity", 1);
     
   legend.append("stop")
     .attr("offset", "100%")
@@ -140,6 +106,6 @@ d3.csv("statespercent.csv").then(function(data){
   key.append("g")
     .attr("class", "y axis")
     .attr("transform", "translate(41,10)")
-    .call(yAxis)
+    .call(yAxis);
   });
 });
