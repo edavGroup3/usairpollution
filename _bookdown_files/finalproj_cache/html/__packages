@@ -26,3 +26,6 @@ micromap
 XML
 acs
 choroplethr
+knitr
+UpSetR
+naniar

@@ -1,34 +1,63 @@
 # Missing values
+
 ## Data Source 1
 
+```{r, echo=FALSE}
+library(dplyr)
+library(knitr)
+library(UpSetR)
+library(naniar)
+```
 
-In the raw dataset, each row contains at least one missing value as the column called “WNO3” is empty. This column was supposed to record nitrate (NO3) concentration from Whatman filter. However, since the U.S. Environmental Protection Agency records NO3 concentration from Teflon filter only, we removed the entire column. 
 
-After removing “WNO3” and some other redundant columns, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent. 
+After data cleaning in the last section, we ends up with 1337 rows with at least one missing values, 19422 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent. 
 
 After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below. 
 
 ```{r}
-library(dplyr)
-data <- read.csv(file='./data/Filter_Pack_Concentrations_W.csv')
-remove_columns <- c('WNO3', 'QA_CODE', 'DATEON', 'COMMENT_CODES', 'TOTAL_NO3', 'UPDATE_DATE')
-dt <- select(data, -remove_columns)
-colSums(is.na(data))
+data <- read.csv(file='./data/ProcessedData.csv')
+data <- data %>% rename(SO2 = TOTAL_SO2, NO3=TOTAL_NO3)
+kable(colSums(is.na(data)))
 ```
 
-Notice that each pollutant concentration variables contain almost the same percentage of missing values. We tried to extract missing patterns using mi::missing_data.frame(). To save memory, we only input the first 20,000 data. 
-```{r}
-#library(mi)
-#library(betareg)
-#x <- missing_data.frame(dt[1:20000,])
-```
 
 ```{r}
-#image(x)
+df <- data %>% select(REGION, SO2, NO3, CA, MG, K, CL)
+df_na <- data.frame(percent=round(colSums(is.na(df))/nrow(df)*100))
+df_na$keyFeatures <- rownames(df_na)
+ggplot(df_na, aes(keyFeatures, percent, fill=percent)) + 
+  geom_col()+
+  xlab("Features")+
+  ylab("Percentage") + 
+  ggtitle("Percentage of NAs of Main Features")
 ```
 
-The result is consistent to what we found before, ["TSO4", "TNO3", "TNH4", "CA", "MG", "TSO4"] have the same missingness pattern. 
+Notice that each pollutant concentration variables contain almost the same percentage of missing values, about 3 percents. 
 
-Also we found out that within each "Side_ID", the number of missing values is almost the same across each pollutant. We will further work on understanding if these is any patterns between missing values and date or locations. At this point, we would not directly remove these missing points as some missing values may link to other groups in the data. 
+```{r}
+gg_miss_upset(df)
+```
+
+The two plots above are consistent to what we suspected, all pollutant concentrations have almost the same missing value pattern. There are 1259 rows missing all five major pollutants and 16 rows missing four major pollutants. 
 
 ## Data Source 2
+
+Let us then look at a cancer dataset we used to study the relationship between air polluants and lung cancer. 
+```{r}
+load("./data/DiseaseProcessedData.RData")
+data <- temp
+data[data=="~"] <- NA
+kable(colSums(is.na(data)))
+```
+There are 3077 missing values for three features of the dataset. The following plot provide information on the overall percentage of missing values in each feature. Notice that missing values patterns are uniform across all the entire dataset. 
+
+```{r}
+vis_miss(data)
+```
+
+If we break the missing values down by a categorical variable called EVENT_TYPE, then we can see that there are are more missing values when the EVENT_TYPE is denoted as "Mortality" than "Incidence". 
+
+```{r}
+gg_miss_fct(x=data, fct=EVENT_TYPE)
+```
+
