@@ -36,14 +36,14 @@ write.csv(data, file="./data/processedData.csv")
 ```
 
 ## Data Source 2
-NOTE from data source website: 
+* NOTE from data source website: 
 The following suppression rules are implemented in the ASCII files. 
 
---Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
++ Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
 
---Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
++ Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
 
---Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
++ Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
 
 ```{r}
 load("./data/RawCancerData.RData")

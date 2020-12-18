@@ -243,11 +243,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="data-source-2" class="section level2">
 <h2><span class="header-section-number">3.2</span> Data Source 2</h2>
-<p>NOTE from data source website:
-The following suppression rules are implemented in the ASCII files.</p>
-<p>–Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p>
-<p>–Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p>
-<p>–Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p>
+<ul>
+<li><p>NOTE from data source website:
+The following suppression rules are implemented in the ASCII files.</p></li>
+<li><p>Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p></li>
+<li><p>Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p></li>
+<li><p>Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p></li>
+</ul>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-cleaning.html#cb17-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
 <span id="cb17-2"><a href="data-cleaning.html#cb17-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
 <pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER AGE_ADJUSTED_RATE COUNT EVENT_TYPE

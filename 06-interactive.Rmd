@@ -1,6 +1,6 @@
 # Interactive component
 
-<h2>Cancer Rate by State</h2>
+<h2>Cancer Rate and SO2 Concentration Level by State</h2>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src="https://d3js.org/d3-selection.v2.min.js"></script>
 <script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
@@ -40,3 +40,10 @@ h2{
 <div id="plot"></div>
 
 <script src="scripts/script1.js"></script>
+
+<p>Remark: </p>
+<p>If the SO2 concentration level is shown to be -1, then we do not have the data for that particular state.
+</p>
+<p>Sources: </p>
+<p> https://www.npmjs.com/package/d3-v6-tip https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3#statesdata.csv
+</p>
