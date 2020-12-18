@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Missing values | EDAV Group3 Final Project</title>
-  <meta name="description" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
+  <title>Chapter 4 Missing values | EDAV Group3: Air Pollution Over the United States</title>
+  <meta name="description" content="Chapter 4 Missing values | EDAV Group3: Air Pollution Over the United States" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
+  <meta property="og:title" content="Chapter 4 Missing values | EDAV Group3: Air Pollution Over the United States" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Missing values | EDAV Group3 Final Project" />
+  <meta name="twitter:title" content="Chapter 4 Missing values | EDAV Group3: Air Pollution Over the United States" />
   
   
   
@@ -51,6 +51,14 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
 
 
 <style type="text/css">
@@ -165,11 +173,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="results.html"><a href="results.html#spatial-distribution-of-no3"><i class="fa fa-check"></i><b>5.4.2</b> Spatial distribution of NO3</a></li>
 <li class="chapter" data-level="5.4.3" data-path="results.html"><a href="results.html#pollutant-distribution-over-states"><i class="fa fa-check"></i><b>5.4.3</b> Pollutant distribution over states</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#how-does-air-pollution-correlate-with-lung-and-bronchus-cancer"><i class="fa fa-check"></i><b>5.5</b> How does air pollution correlate with Lung and Bronchus cancer?</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="results.html"><a href="results.html#process-cancer-rate-data"><i class="fa fa-check"></i><b>5.5.1</b> Process cancer rate data</a></li>
+<li class="chapter" data-level="5.5.2" data-path="results.html"><a href="results.html#correlation-between-air-pollution-and-lung-and-bronchus-cancer-rate"><i class="fa fa-check"></i><b>5.5.2</b> Correlation between air pollution and Lung and Bronchus cancer rate</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a><ul>
-<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#lung-and-bronchus-cancer-rate-and-pollutants-poncentrations"><i class="fa fa-check"></i><b>7.1</b> Lung and Bronchus Cancer Rate and Pollutants’ Poncentrations</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -181,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3 Final Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3: Air Pollution Over the United States</a>
           </h1>
         </div>
 
@@ -193,11 +203,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
 <div id="data-source-1-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Data Source 1</h2>
-<p>After data cleaning in the last section, we ends up with 1337 rows with at least one missing values, 16596 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
+<p>After data cleaning in the last section, we ends up with 1337 rows with at least one missing values, 19422 total missing values, and the percentage of missing values over the entire dataset is around 1.78 percent.</p>
 <p>After that, we would like to know if all variables have the same percentage of missing values. Therefore, we sum up missing values by column as shown below.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="missing-values.html#cb1-1"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&#39;./data/ProcessedData.csv&#39;</span>)</span>
-<span id="cb1-2"><a href="missing-values.html#cb1-2"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">SO2 =</span> TOTAL_SO2, <span class="dt">NO3=</span>TOTAL_NO3)</span>
-<span id="cb1-3"><a href="missing-values.html#cb1-3"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="missing-values.html#cb22-1"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&#39;./data/ProcessedData.csv&#39;</span>)</span>
+<span id="cb22-2"><a href="missing-values.html#cb22-2"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">SO2 =</span> TOTAL_SO2, <span class="dt">NO3=</span>TOTAL_NO3)</span>
+<span id="cb22-3"><a href="missing-values.html#cb22-3"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -320,27 +330,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="missing-values.html#cb2-1"></a>df &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(REGION, SO2, NO3, CA, MG, K, CL)</span>
-<span id="cb2-2"><a href="missing-values.html#cb2-2"></a>df_na &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">percent=</span><span class="kw">round</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(df))<span class="op">/</span><span class="kw">nrow</span>(df)<span class="op">*</span><span class="dv">100</span>))</span>
-<span id="cb2-3"><a href="missing-values.html#cb2-3"></a>df_na<span class="op">$</span>keyFeatures &lt;-<span class="st"> </span><span class="kw">rownames</span>(df_na)</span>
-<span id="cb2-4"><a href="missing-values.html#cb2-4"></a><span class="kw">ggplot</span>(df_na, <span class="kw">aes</span>(keyFeatures, percent, <span class="dt">fill=</span>percent)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb2-5"><a href="missing-values.html#cb2-5"></a><span class="st">  </span><span class="kw">geom_col</span>()<span class="op">+</span></span>
-<span id="cb2-6"><a href="missing-values.html#cb2-6"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Features&quot;</span>)<span class="op">+</span></span>
-<span id="cb2-7"><a href="missing-values.html#cb2-7"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb2-8"><a href="missing-values.html#cb2-8"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Percentage of NAs of Main Features&quot;</span>)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="missing-values.html#cb23-1"></a>df &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(REGION, SO2, NO3, CA, MG, K, CL)</span>
+<span id="cb23-2"><a href="missing-values.html#cb23-2"></a>df_na &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">percent=</span><span class="kw">round</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(df))<span class="op">/</span><span class="kw">nrow</span>(df)<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb23-3"><a href="missing-values.html#cb23-3"></a>df_na<span class="op">$</span>keyFeatures &lt;-<span class="st"> </span><span class="kw">rownames</span>(df_na)</span>
+<span id="cb23-4"><a href="missing-values.html#cb23-4"></a><span class="kw">ggplot</span>(df_na, <span class="kw">aes</span>(keyFeatures, percent, <span class="dt">fill=</span>percent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb23-5"><a href="missing-values.html#cb23-5"></a><span class="st">  </span><span class="kw">geom_col</span>()<span class="op">+</span></span>
+<span id="cb23-6"><a href="missing-values.html#cb23-6"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Features&quot;</span>)<span class="op">+</span></span>
+<span id="cb23-7"><a href="missing-values.html#cb23-7"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb23-8"><a href="missing-values.html#cb23-8"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Percentage of NAs of Main Features&quot;</span>)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Notice that each pollutant concentration variables contain almost the same percentage of missing values, about 3 percents.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="missing-values.html#cb3-1"></a><span class="kw">gg_miss_upset</span>(df)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="missing-values.html#cb24-1"></a><span class="kw">gg_miss_upset</span>(df)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The two plots above are consistent to what we suspected, all pollutant concentrations have almost the same missing value pattern. There are 1259 rows missing all five major pollutants and 16 rows missing four major pollutants.</p>
 </div>
 <div id="data-source-2-1" class="section level2">
 <h2><span class="header-section-number">4.2</span> Data Source 2</h2>
 <p>Let us then look at a cancer dataset we used to study the relationship between air polluants and lung cancer.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="missing-values.html#cb4-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span>
-<span id="cb4-2"><a href="missing-values.html#cb4-2"></a>data &lt;-<span class="st"> </span>temp</span>
-<span id="cb4-3"><a href="missing-values.html#cb4-3"></a>data[data<span class="op">==</span><span class="st">&quot;~&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb4-4"><a href="missing-values.html#cb4-4"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="missing-values.html#cb25-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span>
+<span id="cb25-2"><a href="missing-values.html#cb25-2"></a>data &lt;-<span class="st"> </span>temp</span>
+<span id="cb25-3"><a href="missing-values.html#cb25-3"></a>data[data<span class="op">==</span><span class="st">&quot;~&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb25-4"><a href="missing-values.html#cb25-4"></a><span class="kw">kable</span>(<span class="kw">colSums</span>(<span class="kw">is.na</span>(data)))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -396,11 +406,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>There are 3077 missing values for three features of the dataset. The following plot provide information on the overall percentage of missing values in each feature. Notice that missing values patterns are uniform across all the entire dataset.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="missing-values.html#cb5-1"></a><span class="kw">vis_miss</span>(data)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
-If we break the missing values down by a categorical variable called EVENT_TYPE, then we can see that there are are more missing values when the EVENT_TYPE is “Mortality” compared to “Incidence”.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="missing-values.html#cb6-1"></a><span class="kw">gg_miss_fct</span>(<span class="dt">x=</span>data, <span class="dt">fct=</span>EVENT_TYPE)</span></code></pre></div>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="missing-values.html#cb26-1"></a><span class="kw">vis_miss</span>(data)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If we break the missing values down by a categorical variable called EVENT_TYPE, then we can see that there are are more missing values when the EVENT_TYPE is denoted as “Mortality” than “Incidence”.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="missing-values.html#cb27-1"></a><span class="kw">gg_miss_fct</span>(<span class="dt">x=</span>data, <span class="dt">fct=</span>EVENT_TYPE)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

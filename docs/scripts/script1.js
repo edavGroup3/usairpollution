@@ -6,7 +6,7 @@ var highColor = '#0E6251';
 
 var projection = d3.geoAlbersUsa()
   .translate([width/2, height/2])
-  .scale([1000]);
+  .scale([850]);
 
 var path = d3.geoPath()
   .projection(projection);

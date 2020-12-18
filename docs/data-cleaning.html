@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data Cleaning | EDAV Group3 Final Project</title>
-  <meta name="description" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
+  <title>Chapter 3 Data Cleaning | EDAV Group3: Air Pollution Over the United States</title>
+  <meta name="description" content="Chapter 3 Data Cleaning | EDAV Group3: Air Pollution Over the United States" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
+  <meta property="og:title" content="Chapter 3 Data Cleaning | EDAV Group3: Air Pollution Over the United States" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data Cleaning | EDAV Group3 Final Project" />
+  <meta name="twitter:title" content="Chapter 3 Data Cleaning | EDAV Group3: Air Pollution Over the United States" />
   
   
   
@@ -173,11 +173,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="results.html"><a href="results.html#spatial-distribution-of-no3"><i class="fa fa-check"></i><b>5.4.2</b> Spatial distribution of NO3</a></li>
 <li class="chapter" data-level="5.4.3" data-path="results.html"><a href="results.html#pollutant-distribution-over-states"><i class="fa fa-check"></i><b>5.4.3</b> Pollutant distribution over states</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#how-does-air-pollution-correlate-with-lung-and-bronchus-cancer"><i class="fa fa-check"></i><b>5.5</b> How does air pollution correlate with Lung and Bronchus cancer?</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="results.html"><a href="results.html#process-cancer-rate-data"><i class="fa fa-check"></i><b>5.5.1</b> Process cancer rate data</a></li>
+<li class="chapter" data-level="5.5.2" data-path="results.html"><a href="results.html#correlation-between-air-pollution-and-lung-and-bronchus-cancer-rate"><i class="fa fa-check"></i><b>5.5.2</b> Correlation between air pollution and Lung and Bronchus cancer rate</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a><ul>
-<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#lung-and-bronchus-cancer-rate-and-pollutants-poncentrations"><i class="fa fa-check"></i><b>7.1</b> Lung and Bronchus Cancer Rate and Pollutants’ Poncentrations</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -189,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3 Final Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3: Air Pollution Over the United States</a>
           </h1>
         </div>
 
@@ -199,52 +201,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-cleaning" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Data Cleaning</h1>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-cleaning.html#cb15-1"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb15-2"><a href="data-cleaning.html#cb15-2"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb15-3"><a href="data-cleaning.html#cb15-3"></a><span class="kw">library</span>(usmap)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-cleaning.html#cb12-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb12-2"><a href="data-cleaning.html#cb12-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb12-3"><a href="data-cleaning.html#cb12-3"></a><span class="kw">library</span>(usmap)</span></code></pre></div>
 <div id="data-source-1" class="section level2">
 <h2><span class="header-section-number">3.1</span> Data Source 1</h2>
 <p>In the data cleaning stage, we deleted unrelated columns from the original data set. For air pollutant data, we first merged two datasets by their SITE_ID to add location information into the air pollution info. Also, we changed the date time format into desired date type.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-cleaning.html#cb16-1"></a>site&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/site.csv&quot;</span>)</span>
-<span id="cb16-2"><a href="data-cleaning.html#cb16-2"></a>raw&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/Filter Pack Concentrations - Weekly.csv&quot;</span>)</span>
-<span id="cb16-3"><a href="data-cleaning.html#cb16-3"></a>site1&lt;-<span class="st"> </span>site <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(SITE_ID,STATE,COUNTY,LATITUDE,LONGITUDE,ELEVATION)</span>
-<span id="cb16-4"><a href="data-cleaning.html#cb16-4"></a>data &lt;-<span class="st"> </span><span class="kw">full_join</span>(site1,raw,<span class="dt">by=</span><span class="st">&#39;SITE_ID&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb16-5"><a href="data-cleaning.html#cb16-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>WNO3,<span class="op">-</span>QA_CODE,<span class="op">-</span>DATEON,<span class="op">-</span>COMMENT_CODES) </span>
-<span id="cb16-6"><a href="data-cleaning.html#cb16-6"></a>data<span class="op">$</span>date_off &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>DATEOFF, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
-<span id="cb16-7"><a href="data-cleaning.html#cb16-7"></a>data<span class="op">$</span>update_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>UPDATE_DATE, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
-<span id="cb16-8"><a href="data-cleaning.html#cb16-8"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
-<span id="cb16-9"><a href="data-cleaning.html#cb16-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>UPDATE_DATE,<span class="op">-</span>DATEOFF)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-cleaning.html#cb13-1"></a>site&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/site.csv&quot;</span>)</span>
+<span id="cb13-2"><a href="data-cleaning.html#cb13-2"></a>raw&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./data/Filter Pack Concentrations - Weekly.csv&quot;</span>)</span>
+<span id="cb13-3"><a href="data-cleaning.html#cb13-3"></a>site1&lt;-<span class="st"> </span>site <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(SITE_ID,STATE,COUNTY,LATITUDE,LONGITUDE,ELEVATION)</span>
+<span id="cb13-4"><a href="data-cleaning.html#cb13-4"></a>data &lt;-<span class="st"> </span><span class="kw">full_join</span>(site1,raw,<span class="dt">by=</span><span class="st">&#39;SITE_ID&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb13-5"><a href="data-cleaning.html#cb13-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>WNO3,<span class="op">-</span>QA_CODE,<span class="op">-</span>DATEON,<span class="op">-</span>COMMENT_CODES) </span>
+<span id="cb13-6"><a href="data-cleaning.html#cb13-6"></a>data<span class="op">$</span>date_off &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>DATEOFF, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb13-7"><a href="data-cleaning.html#cb13-7"></a>data<span class="op">$</span>update_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(data<span class="op">$</span>UPDATE_DATE, <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb13-8"><a href="data-cleaning.html#cb13-8"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb13-9"><a href="data-cleaning.html#cb13-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>UPDATE_DATE,<span class="op">-</span>DATEOFF)</span></code></pre></div>
 <p>Next, we added a column called “REGION” into the pollution data so that each state can be classified by one of three larger regions (“east”, “middle”, “west”). In terms of how we group each state, please refer to <a href="https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf" target="_blank">Census Regions and Divisions of United States</a>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-cleaning.html#cb17-1"></a><span class="co"># First generate a region_table</span></span>
-<span id="cb17-2"><a href="data-cleaning.html#cb17-2"></a><span class="co"># reference: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf</span></span>
-<span id="cb17-3"><a href="data-cleaning.html#cb17-3"></a>east_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.new_england, .east_north_central, .mid_atlantic, .east_south_central, .south_atlantic)</span>
-<span id="cb17-4"><a href="data-cleaning.html#cb17-4"></a>west_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.west_north_central, .west_south_central)</span>
-<span id="cb17-5"><a href="data-cleaning.html#cb17-5"></a>middle_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.mountain, .pacific)</span>
-<span id="cb17-6"><a href="data-cleaning.html#cb17-6"></a>region_table &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;REGION&quot;</span>=<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;east&#39;</span>, <span class="kw">length</span>(east_abbr)), <span class="kw">rep</span>(<span class="st">&#39;middle&#39;</span>, <span class="kw">length</span>(middle_abbr)), <span class="kw">rep</span>(<span class="st">&#39;west&#39;</span>, <span class="kw">length</span>(west_abbr))), <span class="st">&quot;STATE&quot;</span> =<span class="st"> </span><span class="kw">c</span>(east_abbr, middle_abbr, west_abbr))</span>
-<span id="cb17-7"><a href="data-cleaning.html#cb17-7"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, region_table, <span class="dt">by=</span><span class="st">&#39;STATE&#39;</span>)</span>
-<span id="cb17-8"><a href="data-cleaning.html#cb17-8"></a><span class="kw">head</span>(data)</span></code></pre></div>
-<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4     CA     MG    NA.
-## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103 0.0340 0.0077 0.2689
-## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158 0.0624 0.0204 0.2784
-## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627 0.0467 0.0570 0.6598
-## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233 0.0897 0.0218 0.3470
-## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222 0.1039 0.0234 0.4447
-## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787 0.1021 0.0177 0.2827
-##        K     CL   NSO4  NHNO3   WSO2 TOTAL_SO2 TOTAL_NO3 FLOW_VOLUME VALID_HOURS STD2LOCAL_CF TEMP_SOURCE
-## 1 0.0378 0.2320 0.5517 0.5856 1.3545    1.7225    1.2458     13.6400         167    0.9187067          sa
-## 2 0.0561 0.1138 0.7818 1.2644 2.8101    3.3315    2.4752     13.9685         168    0.9353095          sa
-## 3 0.0624 0.7857 0.6660 1.0390 1.1372    1.5814    1.7090     14.0765         168    0.9436235          sa
-## 4 0.0420 0.3637 0.5813 0.8364 2.4504    2.8382    1.4424     13.7188         168    0.9180029          sa
-## 5 0.0641 0.3976 0.5874 1.1446 1.9528    2.3446    2.0658     13.6624         167    0.9200917          sa
-## 6 0.0853 0.2880 0.6177 0.7192 1.6457    2.0578    1.6552     13.9217         168    0.9321208          sa
-##     date_off update_date REGION
-## 1 2010-01-12  2010-07-01   east
-## 2 2010-01-19  2010-07-01   east
-## 3 2010-01-26  2010-07-01   east
-## 4 2010-02-02  2010-07-01   east
-## 5 2010-02-09  2010-07-01   east
-## 6 2010-02-16  2010-07-01   east</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-cleaning.html#cb19-1"></a><span class="kw">write.csv</span>(data, <span class="dt">file=</span><span class="st">&quot;./data/processedData.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-cleaning.html#cb14-1"></a><span class="co"># First generate a region_table</span></span>
+<span id="cb14-2"><a href="data-cleaning.html#cb14-2"></a><span class="co"># reference: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf</span></span>
+<span id="cb14-3"><a href="data-cleaning.html#cb14-3"></a>east_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.new_england, .east_north_central, .mid_atlantic, .east_south_central, .south_atlantic)</span>
+<span id="cb14-4"><a href="data-cleaning.html#cb14-4"></a>west_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.west_north_central, .west_south_central)</span>
+<span id="cb14-5"><a href="data-cleaning.html#cb14-5"></a>middle_abbr &lt;-<span class="st"> </span><span class="kw">c</span>(.mountain, .pacific)</span>
+<span id="cb14-6"><a href="data-cleaning.html#cb14-6"></a>region_table &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;REGION&quot;</span>=<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;east&#39;</span>, <span class="kw">length</span>(east_abbr)), <span class="kw">rep</span>(<span class="st">&#39;middle&#39;</span>, <span class="kw">length</span>(middle_abbr)), <span class="kw">rep</span>(<span class="st">&#39;west&#39;</span>, <span class="kw">length</span>(west_abbr))), <span class="st">&quot;STATE&quot;</span> =<span class="st"> </span><span class="kw">c</span>(east_abbr, middle_abbr, west_abbr))</span>
+<span id="cb14-7"><a href="data-cleaning.html#cb14-7"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, region_table, <span class="dt">by=</span><span class="st">&#39;STATE&#39;</span>)</span>
+<span id="cb14-8"><a href="data-cleaning.html#cb14-8"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<pre><code>##   SITE_ID STATE  COUNTY LATITUDE LONGITUDE ELEVATION TYPE   TSO4   TNO3   TNH4     CA     MG    NA.      K     CL   NSO4  NHNO3
+## 1  ABT147    CT Windham 41.84046 -72.01037       202    C 0.8974 0.6695 0.4103 0.0340 0.0077 0.2689 0.0378 0.2320 0.5517 0.5856
+## 2  ABT147    CT Windham 41.84046 -72.01037       202    C 2.5815 1.2309 1.1158 0.0624 0.0204 0.2784 0.0561 0.1138 0.7818 1.2644
+## 3  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2745 0.6865 0.4627 0.0467 0.0570 0.6598 0.0624 0.7857 0.6660 1.0390
+## 4  ABT147    CT Windham 41.84046 -72.01037       202    C 1.3667 0.6192 0.5233 0.0897 0.0218 0.3470 0.0420 0.3637 0.5813 0.8364
+## 5  ABT147    CT Windham 41.84046 -72.01037       202    C 1.2823 0.9395 0.5222 0.1039 0.0234 0.4447 0.0641 0.3976 0.5874 1.1446
+## 6  ABT147    CT Windham 41.84046 -72.01037       202    C 0.9568 0.9474 0.4787 0.1021 0.0177 0.2827 0.0853 0.2880 0.6177 0.7192
+##     WSO2 TOTAL_SO2 TOTAL_NO3 FLOW_VOLUME VALID_HOURS STD2LOCAL_CF TEMP_SOURCE   date_off update_date REGION
+## 1 1.3545    1.7225    1.2458     13.6400         167    0.9187067          sa 2010-01-12  2010-07-01   east
+## 2 2.8101    3.3315    2.4752     13.9685         168    0.9353095          sa 2010-01-19  2010-07-01   east
+## 3 1.1372    1.5814    1.7090     14.0765         168    0.9436235          sa 2010-01-26  2010-07-01   east
+## 4 2.4504    2.8382    1.4424     13.7188         168    0.9180029          sa 2010-02-02  2010-07-01   east
+## 5 1.9528    2.3446    2.0658     13.6624         167    0.9200917          sa 2010-02-09  2010-07-01   east
+## 6 1.6457    2.0578    1.6552     13.9217         168    0.9321208          sa 2010-02-16  2010-07-01   east</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-cleaning.html#cb16-1"></a><span class="kw">write.csv</span>(data, <span class="dt">file=</span><span class="st">&quot;./data/processedData.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="data-source-2" class="section level2">
 <h2><span class="header-section-number">3.2</span> Data Source 2</h2>
@@ -253,48 +248,41 @@ The following suppression rules are implemented in the ASCII files.</p>
 <p>–Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p>
 <p>–Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p>
 <p>–Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-cleaning.html#cb20-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
-<span id="cb20-2"><a href="data-cleaning.html#cb20-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
-<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER
-## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~
-##   AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE    SEX                           SITE      YEAR
-## 1                 ~     ~  Incidence       5458 All Races Female      All Cancer Sites Combined 2013-2017
-## 2                 ~     ~  Mortality       5458 All Races Female      All Cancer Sites Combined 2013-2017
-## 3                 ~     ~  Incidence       5458 All Races Female Brain and Other Nervous System 2013-2017
-## 4                 ~     ~  Mortality       5458 All Races Female Brain and Other Nervous System 2013-2017
-## 5                 ~     ~  Incidence       5458 All Races Female                         Cervix 2013-2017
-## 6                 ~     ~  Mortality       5458 All Races Female                         Cervix 2013-2017
-##   CRUDE_CI_LOWER CRUDE_CI_UPPER CRUDE_RATE
-## 1              ~              ~          ~
-## 2              ~              ~          ~
-## 3              ~              ~          ~
-## 4              ~              ~          ~
-## 5              ~              ~          ~
-## 6              ~              ~          ~</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="data-cleaning.html#cb22-1"></a>temp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
-<span id="cb22-2"><a href="data-cleaning.html#cb22-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>AGE_ADJUSTED_CI_LOWER, <span class="op">-</span>AGE_ADJUSTED_CI_UPPER, <span class="op">-</span>CRUDE_CI_LOWER, <span class="op">-</span>CRUDE_CI_UPPER) <span class="op">%&gt;%</span></span>
-<span id="cb22-3"><a href="data-cleaning.html#cb22-3"></a><span class="st">  </span><span class="kw">filter</span>(RACE<span class="op">==</span><span class="st">&quot;All Races&quot;</span>,SITE<span class="op">==</span><span class="st">&quot;Lung and Bronchus&quot;</span>)</span>
-<span id="cb22-4"><a href="data-cleaning.html#cb22-4"></a><span class="kw">head</span>(temp)</span></code></pre></div>
-<pre><code>##   STATE                                       AREA AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION
-## 1    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence       5458
-## 2    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality       5458
-## 3    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      11499
-## 4    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      11499
-## 5    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      16957
-## 6    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      16957
-##        RACE             SEX              SITE      YEAR CRUDE_RATE
-## 1 All Races          Female Lung and Bronchus 2013-2017          ~
-## 2 All Races          Female Lung and Bronchus 2013-2017          ~
-## 3 All Races            Male Lung and Bronchus 2013-2017          ~
-## 4 All Races            Male Lung and Bronchus 2013-2017          ~
-## 5 All Races Male and Female Lung and Bronchus 2013-2017          ~
-## 6 All Races Male and Female Lung and Bronchus 2013-2017          ~</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-cleaning.html#cb24-1"></a><span class="kw">save</span>(temp, <span class="dt">file=</span><span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-cleaning.html#cb17-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
+<span id="cb17-2"><a href="data-cleaning.html#cb17-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<pre><code>##   STATE                                       AREA AGE_ADJUSTED_CI_LOWER AGE_ADJUSTED_CI_UPPER AGE_ADJUSTED_RATE COUNT EVENT_TYPE
+## 1    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
+## 2    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
+## 3    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
+## 4    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
+## 5    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Incidence
+## 6    AK AK: Aleutians East Borough (02013) - 1994+                     ~                     ~                 ~     ~  Mortality
+##   POPULATION      RACE    SEX                           SITE      YEAR CRUDE_CI_LOWER CRUDE_CI_UPPER CRUDE_RATE
+## 1       5458 All Races Female      All Cancer Sites Combined 2013-2017              ~              ~          ~
+## 2       5458 All Races Female      All Cancer Sites Combined 2013-2017              ~              ~          ~
+## 3       5458 All Races Female Brain and Other Nervous System 2013-2017              ~              ~          ~
+## 4       5458 All Races Female Brain and Other Nervous System 2013-2017              ~              ~          ~
+## 5       5458 All Races Female                         Cervix 2013-2017              ~              ~          ~
+## 6       5458 All Races Female                         Cervix 2013-2017              ~              ~          ~</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-cleaning.html#cb19-1"></a>temp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="data-cleaning.html#cb19-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>AGE_ADJUSTED_CI_LOWER, <span class="op">-</span>AGE_ADJUSTED_CI_UPPER, <span class="op">-</span>CRUDE_CI_LOWER, <span class="op">-</span>CRUDE_CI_UPPER) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="data-cleaning.html#cb19-3"></a><span class="st">  </span><span class="kw">filter</span>(RACE<span class="op">==</span><span class="st">&quot;All Races&quot;</span>,SITE<span class="op">==</span><span class="st">&quot;Lung and Bronchus&quot;</span>)</span>
+<span id="cb19-4"><a href="data-cleaning.html#cb19-4"></a><span class="kw">head</span>(temp)</span></code></pre></div>
+<pre><code>##   STATE                                       AREA AGE_ADJUSTED_RATE COUNT EVENT_TYPE POPULATION      RACE             SEX
+## 1    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence       5458 All Races          Female
+## 2    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality       5458 All Races          Female
+## 3    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      11499 All Races            Male
+## 4    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      11499 All Races            Male
+## 5    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Incidence      16957 All Races Male and Female
+## 6    AK AK: Aleutians East Borough (02013) - 1994+                 ~     ~  Mortality      16957 All Races Male and Female
+##                SITE      YEAR CRUDE_RATE
+## 1 Lung and Bronchus 2013-2017          ~
+## 2 Lung and Bronchus 2013-2017          ~
+## 3 Lung and Bronchus 2013-2017          ~
+## 4 Lung and Bronchus 2013-2017          ~
+## 5 Lung and Bronchus 2013-2017          ~
+## 6 Lung and Bronchus 2013-2017          ~</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-cleaning.html#cb21-1"></a><span class="kw">save</span>(temp, <span class="dt">file=</span><span class="st">&quot;./data/DiseaseProcessedData.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

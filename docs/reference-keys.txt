@@ -23,6 +23,8 @@ how-does-air-pollution-spread-across-states
 spatial-distribution-of-so2-and-no3-over-states
 spatial-distribution-of-no3
 pollutant-distribution-over-states
+how-does-air-pollution-correlate-with-lung-and-bronchus-cancer
+process-cancer-rate-data
+correlation-between-air-pollution-and-lung-and-bronchus-cancer-rate
 interactive-component
 conclusion
-lung-and-bronchus-cancer-rate-and-pollutants-poncentrations

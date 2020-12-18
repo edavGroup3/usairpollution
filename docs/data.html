@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Data | EDAV Group3 Final Project</title>
-  <meta name="description" content="Chapter 2 Data | EDAV Group3 Final Project" />
+  <title>Chapter 2 Data | EDAV Group3: Air Pollution Over the United States</title>
+  <meta name="description" content="Chapter 2 Data | EDAV Group3: Air Pollution Over the United States" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Data | EDAV Group3 Final Project" />
+  <meta property="og:title" content="Chapter 2 Data | EDAV Group3: Air Pollution Over the United States" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Data | EDAV Group3 Final Project" />
+  <meta name="twitter:title" content="Chapter 2 Data | EDAV Group3: Air Pollution Over the United States" />
   
   
   
@@ -173,11 +173,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="results.html"><a href="results.html#spatial-distribution-of-no3"><i class="fa fa-check"></i><b>5.4.2</b> Spatial distribution of NO3</a></li>
 <li class="chapter" data-level="5.4.3" data-path="results.html"><a href="results.html#pollutant-distribution-over-states"><i class="fa fa-check"></i><b>5.4.3</b> Pollutant distribution over states</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#how-does-air-pollution-correlate-with-lung-and-bronchus-cancer"><i class="fa fa-check"></i><b>5.5</b> How does air pollution correlate with Lung and Bronchus cancer?</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="results.html"><a href="results.html#process-cancer-rate-data"><i class="fa fa-check"></i><b>5.5.1</b> Process cancer rate data</a></li>
+<li class="chapter" data-level="5.5.2" data-path="results.html"><a href="results.html#correlation-between-air-pollution-and-lung-and-bronchus-cancer-rate"><i class="fa fa-check"></i><b>5.5.2</b> Correlation between air pollution and Lung and Bronchus cancer rate</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a><ul>
-<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#lung-and-bronchus-cancer-rate-and-pollutants-poncentrations"><i class="fa fa-check"></i><b>7.1</b> Lung and Bronchus Cancer Rate and Pollutants’ Poncentrations</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -189,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3 Final Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV Group3: Air Pollution Over the United States</a>
           </h1>
         </div>
 
@@ -201,21 +203,100 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> Data</h1>
 <div id="describe-the-data-sources" class="section level2">
 <h2><span class="header-section-number">2.1</span> Describe the data sources:</h2>
-<p>The aim of this project is to analyze the air pollutants over the U.S. The data was collected from CASTNET: Clean Air Status and Trends Network(<a href="https://java.epa.gov/castnet/clearsession.do" class="uri">https://java.epa.gov/castnet/clearsession.do</a>), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
-We are also interested in the correlation between air pollution and lung and bronchus cancer. The cancer data was collected from CDC:Centers for Disease Control and Prevention.(<a href="https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm" class="uri">https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm</a>).This website provides the latest cancer data on the entire United States population.</p>
+<p>The aim of this project is to analyze the air pollutants over the U.S. The data was collected from CASTNET: Clean Air Status and Trends Network (<a href="https://java.epa.gov/castnet/clearsession.do" class="uri">https://java.epa.gov/castnet/clearsession.do</a>), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.</p>
+<p>We are also interested in the correlation between air pollution and lung and bronchus cancer. The cancer data was collected from CDC:Centers for Disease Control and Prevention (<a href="https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm" class="uri">https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm</a>).This website provides the latest cancer data on the entire United States population.</p>
 </div>
 <div id="basic-information-about-the-air-pollution-dataset" class="section level2">
 <h2><span class="header-section-number">2.2</span> Basic information about the air pollution dataset:</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data.html#cb1-1"></a>raw_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/Filter Pack Concentrations - Weekly.csv&quot;</span>)</span>
-<span id="cb1-2"><a href="data.html#cb1-2"></a><span class="kw">colnames</span>(raw_data)</span></code></pre></div>
-<pre><code>##  [1] &quot;SITE_ID&quot;       &quot;TYPE&quot;          &quot;DATEON&quot;        &quot;DATEOFF&quot;       &quot;TSO4&quot;          &quot;TNO3&quot;         
-##  [7] &quot;TNH4&quot;          &quot;CA&quot;            &quot;MG&quot;            &quot;NA.&quot;           &quot;K&quot;             &quot;CL&quot;           
-## [13] &quot;NSO4&quot;          &quot;NHNO3&quot;         &quot;WSO2&quot;          &quot;WNO3&quot;          &quot;TOTAL_SO2&quot;     &quot;TOTAL_NO3&quot;    
-## [19] &quot;FLOW_VOLUME&quot;   &quot;VALID_HOURS&quot;   &quot;COMMENT_CODES&quot; &quot;STD2LOCAL_CF&quot;  &quot;TEMP_SOURCE&quot;   &quot;QA_CODE&quot;      
-## [25] &quot;UPDATE_DATE&quot;</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data.html#cb3-1"></a><span class="kw">nrow</span>(raw_data)</span></code></pre></div>
+<span id="cb1-2"><a href="data.html#cb1-2"></a><span class="kw">kable</span>(<span class="kw">colnames</span>(raw_data))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SITE_ID</td>
+</tr>
+<tr class="even">
+<td align="left">TYPE</td>
+</tr>
+<tr class="odd">
+<td align="left">DATEON</td>
+</tr>
+<tr class="even">
+<td align="left">DATEOFF</td>
+</tr>
+<tr class="odd">
+<td align="left">TSO4</td>
+</tr>
+<tr class="even">
+<td align="left">TNO3</td>
+</tr>
+<tr class="odd">
+<td align="left">TNH4</td>
+</tr>
+<tr class="even">
+<td align="left">CA</td>
+</tr>
+<tr class="odd">
+<td align="left">MG</td>
+</tr>
+<tr class="even">
+<td align="left">NA.</td>
+</tr>
+<tr class="odd">
+<td align="left">K</td>
+</tr>
+<tr class="even">
+<td align="left">CL</td>
+</tr>
+<tr class="odd">
+<td align="left">NSO4</td>
+</tr>
+<tr class="even">
+<td align="left">NHNO3</td>
+</tr>
+<tr class="odd">
+<td align="left">WSO2</td>
+</tr>
+<tr class="even">
+<td align="left">WNO3</td>
+</tr>
+<tr class="odd">
+<td align="left">TOTAL_SO2</td>
+</tr>
+<tr class="even">
+<td align="left">TOTAL_NO3</td>
+</tr>
+<tr class="odd">
+<td align="left">FLOW_VOLUME</td>
+</tr>
+<tr class="even">
+<td align="left">VALID_HOURS</td>
+</tr>
+<tr class="odd">
+<td align="left">COMMENT_CODES</td>
+</tr>
+<tr class="even">
+<td align="left">STD2LOCAL_CF</td>
+</tr>
+<tr class="odd">
+<td align="left">TEMP_SOURCE</td>
+</tr>
+<tr class="even">
+<td align="left">QA_CODE</td>
+</tr>
+<tr class="odd">
+<td align="left">UPDATE_DATE</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data.html#cb2-1"></a><span class="kw">nrow</span>(raw_data)</span></code></pre></div>
 <pre><code>## [1] 49124</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data.html#cb5-1"></a><span class="kw">ncol</span>(raw_data)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data.html#cb4-1"></a><span class="kw">ncol</span>(raw_data)</span></code></pre></div>
 <pre><code>## [1] 25</code></pre>
 <p>The raw data has following 25 columns and 49124 rows:</p>
 <ol style="list-style-type: decimal">
@@ -249,21 +330,73 @@ We are also interested in the correlation between air pollution and lung and bro
 <div id="basic-information-about-the-cancer-dataset" class="section level2">
 <h2><span class="header-section-number">2.3</span> Basic information about the cancer dataset:</h2>
 <p>NOTE: The original csv. file is too large to be upload. We transformed it into an R.Data.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data.html#cb7-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
-<span id="cb7-2"><a href="data.html#cb7-2"></a><span class="kw">colnames</span>(data)</span></code></pre></div>
-<pre><code>##  [1] &quot;STATE&quot;                 &quot;AREA&quot;                  &quot;AGE_ADJUSTED_CI_LOWER&quot; &quot;AGE_ADJUSTED_CI_UPPER&quot;
-##  [5] &quot;AGE_ADJUSTED_RATE&quot;     &quot;COUNT&quot;                 &quot;EVENT_TYPE&quot;            &quot;POPULATION&quot;           
-##  [9] &quot;RACE&quot;                  &quot;SEX&quot;                   &quot;SITE&quot;                  &quot;YEAR&quot;                 
-## [13] &quot;CRUDE_CI_LOWER&quot;        &quot;CRUDE_CI_UPPER&quot;        &quot;CRUDE_RATE&quot;</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data.html#cb9-1"></a><span class="kw">nrow</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data.html#cb6-1"></a><span class="kw">load</span>(<span class="st">&quot;./data/RawCancerData.RData&quot;</span>)</span>
+<span id="cb6-2"><a href="data.html#cb6-2"></a><span class="kw">kable</span>(<span class="kw">colnames</span>(data))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">STATE</td>
+</tr>
+<tr class="even">
+<td align="left">AREA</td>
+</tr>
+<tr class="odd">
+<td align="left">AGE_ADJUSTED_CI_LOWER</td>
+</tr>
+<tr class="even">
+<td align="left">AGE_ADJUSTED_CI_UPPER</td>
+</tr>
+<tr class="odd">
+<td align="left">AGE_ADJUSTED_RATE</td>
+</tr>
+<tr class="even">
+<td align="left">COUNT</td>
+</tr>
+<tr class="odd">
+<td align="left">EVENT_TYPE</td>
+</tr>
+<tr class="even">
+<td align="left">POPULATION</td>
+</tr>
+<tr class="odd">
+<td align="left">RACE</td>
+</tr>
+<tr class="even">
+<td align="left">SEX</td>
+</tr>
+<tr class="odd">
+<td align="left">SITE</td>
+</tr>
+<tr class="even">
+<td align="left">YEAR</td>
+</tr>
+<tr class="odd">
+<td align="left">CRUDE_CI_LOWER</td>
+</tr>
+<tr class="even">
+<td align="left">CRUDE_CI_UPPER</td>
+</tr>
+<tr class="odd">
+<td align="left">CRUDE_RATE</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data.html#cb7-1"></a><span class="kw">nrow</span>(data)</span></code></pre></div>
 <pre><code>## [1] 2726160</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data.html#cb11-1"></a><span class="kw">ncol</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data.html#cb9-1"></a><span class="kw">ncol</span>(data)</span></code></pre></div>
 <pre><code>## [1] 15</code></pre>
-<p>NOTE from data source website:
-The following suppression rules are implemented in the ASCII files.</p>
-<p>–Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p>
-<p>–Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p>
-<p>–Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p>
+<ul>
+<li><p>NOTE from data source website:
+(The following suppression rules are implemented in the ASCII files.)</p></li>
+<li><p>Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category (‘~’ assigned to count, rate, LCI, and UCI);</p></li>
+<li><p>Rate and Counts are suppressed if state requested suppressions for race and ethnicity (‘-’ assigned to count, rate, LCI, and UCI);</p></li>
+<li><p>Within each Race, CancerSite, Area, RateType and DataType, “Male” or “Female” counts are suppressed (supplementarily) if the counterpart sex (“Female” or “Male”) is suppressed. Leave “Male and Female” count unchanged (‘+’ assigned to count due to supplementary suppression).</p></li>
+</ul>
 </div>
 <div id="describe-any-issues-with-the-air-pollution-data" class="section level2">
 <h2><span class="header-section-number">2.4</span> Describe any issues with the air pollution data:</h2>
@@ -272,12 +405,74 @@ The following suppression rules are implemented in the ASCII files.</p>
 <li><p>The date information display in DATEOFF, mm/dd/yyy hh:mm:ss, we need to convert it into DATE mm/dd/yyyy format.</p></li>
 <li><p>The location information from raw data is SITE_ID, which is site identification code used by CASTNET. To transform SITE_ID into general geographical location, we download site information data from CASTNET: <a href="https://java.epa.gov/castnet/epa_jsp/prepackageddata.jsp" class="uri">https://java.epa.gov/castnet/epa_jsp/prepackageddata.jsp</a>, and further join the information.</p></li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data.html#cb13-1"></a>site_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/site.csv&quot;</span>)</span>
-<span id="cb13-2"><a href="data.html#cb13-2"></a><span class="kw">colnames</span>(site_data)</span></code></pre></div>
-<pre><code>##  [1] &quot;SITE_ID&quot;       &quot;SITE_NUM&quot;      &quot;SITE_NAME&quot;     &quot;ACTIVE&quot;        &quot;INACTIVE&quot;      &quot;AGENCY&quot;       
-##  [7] &quot;STATE&quot;         &quot;COUNTY&quot;        &quot;TIME_ZONE&quot;     &quot;LATITUDE&quot;      &quot;LONGITUDE&quot;     &quot;ELEVATION&quot;    
-## [13] &quot;MAPID&quot;         &quot;LAND_USE&quot;      &quot;TERRAIN&quot;       &quot;MLM&quot;           &quot;NADP_ID&quot;       &quot;NADP_DISTANCE&quot;
-## [19] &quot;UPDATE_DATE&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data.html#cb11-1"></a>site_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/site.csv&quot;</span>)</span>
+<span id="cb11-2"><a href="data.html#cb11-2"></a><span class="kw">kable</span>(<span class="kw">colnames</span>(site_data))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SITE_ID</td>
+</tr>
+<tr class="even">
+<td align="left">SITE_NUM</td>
+</tr>
+<tr class="odd">
+<td align="left">SITE_NAME</td>
+</tr>
+<tr class="even">
+<td align="left">ACTIVE</td>
+</tr>
+<tr class="odd">
+<td align="left">INACTIVE</td>
+</tr>
+<tr class="even">
+<td align="left">AGENCY</td>
+</tr>
+<tr class="odd">
+<td align="left">STATE</td>
+</tr>
+<tr class="even">
+<td align="left">COUNTY</td>
+</tr>
+<tr class="odd">
+<td align="left">TIME_ZONE</td>
+</tr>
+<tr class="even">
+<td align="left">LATITUDE</td>
+</tr>
+<tr class="odd">
+<td align="left">LONGITUDE</td>
+</tr>
+<tr class="even">
+<td align="left">ELEVATION</td>
+</tr>
+<tr class="odd">
+<td align="left">MAPID</td>
+</tr>
+<tr class="even">
+<td align="left">LAND_USE</td>
+</tr>
+<tr class="odd">
+<td align="left">TERRAIN</td>
+</tr>
+<tr class="even">
+<td align="left">MLM</td>
+</tr>
+<tr class="odd">
+<td align="left">NADP_ID</td>
+</tr>
+<tr class="even">
+<td align="left">NADP_DISTANCE</td>
+</tr>
+<tr class="odd">
+<td align="left">UPDATE_DATE</td>
+</tr>
+</tbody>
+</table>
 <p>The site data has following columns:</p>
 <ol style="list-style-type: decimal">
 <li>SITE_ID:Site identification code</li>

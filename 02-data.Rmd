@@ -1,15 +1,20 @@
 # Data
 
+```{r, echo=FALSE}
+library(knitr)
+```
+
 ## Describe the data sources: 
 
-The aim of this project is to analyze the air pollutants over the U.S. The data was collected from CASTNET: Clean Air Status and Trends Network(https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
-We are also interested in the correlation between air pollution and lung and bronchus cancer. The cancer data was collected from CDC:Centers for Disease Control and Prevention.(https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm).This website provides the latest cancer data on the entire United States population.
+The aim of this project is to analyze the air pollutants over the U.S. The data was collected from CASTNET: Clean Air Status and Trends Network (https://java.epa.gov/castnet/clearsession.do), which is a national monitoring network established to assess trends in pollutant concentrations, atmospheric deposition, and ecological effects due to changes in air pollutant emissions. CASTNET offers filter pack data which are reported for the time interval which the filter was exposed. The data set is easily accessible through custom report. We chose weekly ambient concentrations of SO2 and HNO3 gases, and SO4, NO3, NH4 and base cation concentrations for particles as measured by open-face filter packs from 2010 to 2020 all over the U.S.
+
+We are also interested in the correlation between air pollution and lung and bronchus cancer. The cancer data was collected from CDC:Centers for Disease Control and Prevention (https://www.cdc.gov/cancer/uscs/dataviz/download_data.htm).This website provides the latest cancer data on the entire United States population.
 
 ## Basic information about the air pollution dataset:
 
 ```{r}
 raw_data <- read.csv("./data/Filter Pack Concentrations - Weekly.csv")
-colnames(raw_data)
+kable(colnames(raw_data))
 ```
 
 ```{r}
@@ -49,18 +54,19 @@ The raw data has following 25 columns and 49124 rows:
 NOTE: The original csv. file is too large to be upload. We transformed it into an R.Data.
 ```{r}
 load("./data/RawCancerData.RData")
-colnames(data)
+kable(colnames(data))
 nrow(data)
 ncol(data)
 ```
-NOTE from data source website: 
-The following suppression rules are implemented in the ASCII files. 
 
---Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
+* NOTE from data source website: 
+(The following suppression rules are implemented in the ASCII files.)
 
---Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
++ Rates and Counts are suppressed if fewer than 16 cases were reported in a specific category ('~' assigned to count, rate, LCI, and UCI); 
 
---Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
++ Rate and Counts are suppressed if state requested suppressions for race and ethnicity ('-' assigned to count, rate, LCI, and UCI);
+
++ Within each Race, CancerSite, Area, RateType and DataType, "Male" or "Female" counts are suppressed (supplementarily) if the counterpart sex ("Female" or "Male") is suppressed. Leave "Male and Female" count unchanged ('+' assigned to count due to supplementary suppression). 
 
 ## Describe any issues with the air pollution data: 
 
@@ -74,7 +80,7 @@ The following suppression rules are implemented in the ASCII files.
 
 ```{r}
 site_data <- read.csv("./data/site.csv")
-colnames(site_data)
+kable(colnames(site_data))
 ```
 
 The site data has following columns:
