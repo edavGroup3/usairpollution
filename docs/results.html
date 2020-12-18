@@ -207,7 +207,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-3"><a href="results.html#cb29-3"></a><span class="kw">library</span>(dygraphs)</span>
 <span id="cb29-4"><a href="results.html#cb29-4"></a><span class="kw">library</span>(xts)</span>
 <span id="cb29-5"><a href="results.html#cb29-5"></a><span class="kw">library</span>(cowplot)</span>
-<span id="cb29-6"><a href="results.html#cb29-6"></a><span class="kw">library</span>(GGally)</span></code></pre></div>
+<span id="cb29-6"><a href="results.html#cb29-6"></a><span class="kw">library</span>(GGally)</span>
+<span id="cb29-7"><a href="results.html#cb29-7"></a><span class="kw">library</span>(tools)</span>
+<span id="cb29-8"><a href="results.html#cb29-8"></a><span class="kw">library</span>(micromap)</span>
+<span id="cb29-9"><a href="results.html#cb29-9"></a><span class="kw">library</span>(choroplethr)</span></code></pre></div>
 </div>
 <div id="data-1" class="section level2">
 <h2><span class="header-section-number">5.2</span> Data</h2>
@@ -389,86 +392,82 @@ The New York State government began with a full lockdown from March 2020 to Apri
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="results.html#cb40-1"></a><span class="co">#group by state, calculate mean SO2, mean NO3 over past 10 years</span></span>
 <span id="cb40-2"><a href="results.html#cb40-2"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
 <span id="cb40-3"><a href="results.html#cb40-3"></a></span>
-<span id="cb40-4"><a href="results.html#cb40-4"></a><span class="kw">library</span>(tools)</span>
-<span id="cb40-5"><a href="results.html#cb40-5"></a><span class="kw">library</span>(micromap)</span>
-<span id="cb40-6"><a href="results.html#cb40-6"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
-<span id="cb40-7"><a href="results.html#cb40-7"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
-<span id="cb40-8"><a href="results.html#cb40-8"></a></span>
-<span id="cb40-9"><a href="results.html#cb40-9"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
-<span id="cb40-10"><a href="results.html#cb40-10"></a>       <span class="dt">map.data =</span> statePolys,</span>
-<span id="cb40-11"><a href="results.html#cb40-11"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
-<span id="cb40-12"><a href="results.html#cb40-12"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;SO2&#39;</span>, <span class="ot">NA</span>),</span>
-<span id="cb40-13"><a href="results.html#cb40-13"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;SO2&#39;</span>, </span>
-<span id="cb40-14"><a href="results.html#cb40-14"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb40-15"><a href="results.html#cb40-15"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
-<span id="cb40-16"><a href="results.html#cb40-16"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
-<span id="cb40-17"><a href="results.html#cb40-17"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb40-18"><a href="results.html#cb40-18"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
-<span id="cb40-19"><a href="results.html#cb40-19"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb40-20"><a href="results.html#cb40-20"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
-<span id="cb40-21"><a href="results.html#cb40-21"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
-<span id="cb40-22"><a href="results.html#cb40-22"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
-<span id="cb40-23"><a href="results.html#cb40-23"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
-<span id="cb40-24"><a href="results.html#cb40-24"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
-<span id="cb40-25"><a href="results.html#cb40-25"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb40-26"><a href="results.html#cb40-26"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb40-27"><a href="results.html#cb40-27"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
-<span id="cb40-28"><a href="results.html#cb40-28"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
-<span id="cb40-29"><a href="results.html#cb40-29"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean SO2 Pollution Amount&quot;</span>, </span>
-<span id="cb40-30"><a href="results.html#cb40-30"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb40-31"><a href="results.html#cb40-31"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb40-32"><a href="results.html#cb40-32"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
-<span id="cb40-33"><a href="results.html#cb40-33"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
-<span id="cb40-34"><a href="results.html#cb40-34"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb40-35"><a href="results.html#cb40-35"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
-<span id="cb40-36"><a href="results.html#cb40-36"></a>          ))</span></code></pre></div>
+<span id="cb40-4"><a href="results.html#cb40-4"></a></span>
+<span id="cb40-5"><a href="results.html#cb40-5"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
+<span id="cb40-6"><a href="results.html#cb40-6"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
+<span id="cb40-7"><a href="results.html#cb40-7"></a></span>
+<span id="cb40-8"><a href="results.html#cb40-8"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
+<span id="cb40-9"><a href="results.html#cb40-9"></a>       <span class="dt">map.data =</span> statePolys,</span>
+<span id="cb40-10"><a href="results.html#cb40-10"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
+<span id="cb40-11"><a href="results.html#cb40-11"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;SO2&#39;</span>, <span class="ot">NA</span>),</span>
+<span id="cb40-12"><a href="results.html#cb40-12"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;SO2&#39;</span>, </span>
+<span id="cb40-13"><a href="results.html#cb40-13"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb40-14"><a href="results.html#cb40-14"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
+<span id="cb40-15"><a href="results.html#cb40-15"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
+<span id="cb40-16"><a href="results.html#cb40-16"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb40-17"><a href="results.html#cb40-17"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
+<span id="cb40-18"><a href="results.html#cb40-18"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb40-19"><a href="results.html#cb40-19"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
+<span id="cb40-20"><a href="results.html#cb40-20"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
+<span id="cb40-21"><a href="results.html#cb40-21"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
+<span id="cb40-22"><a href="results.html#cb40-22"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
+<span id="cb40-23"><a href="results.html#cb40-23"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb40-24"><a href="results.html#cb40-24"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb40-25"><a href="results.html#cb40-25"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb40-26"><a href="results.html#cb40-26"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
+<span id="cb40-27"><a href="results.html#cb40-27"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
+<span id="cb40-28"><a href="results.html#cb40-28"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean SO2 Pollution Amount&quot;</span>, </span>
+<span id="cb40-29"><a href="results.html#cb40-29"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb40-30"><a href="results.html#cb40-30"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb40-31"><a href="results.html#cb40-31"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
+<span id="cb40-32"><a href="results.html#cb40-32"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
+<span id="cb40-33"><a href="results.html#cb40-33"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb40-34"><a href="results.html#cb40-34"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
+<span id="cb40-35"><a href="results.html#cb40-35"></a>          ))</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="480" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="results.html#cb41-1"></a><span class="kw">library</span>(choroplethr)</span>
-<span id="cb41-2"><a href="results.html#cb41-2"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
-<span id="cb41-3"><a href="results.html#cb41-3"></a></span>
-<span id="cb41-4"><a href="results.html#cb41-4"></a><span class="co">#mean so2 by state</span></span>
-<span id="cb41-5"><a href="results.html#cb41-5"></a>dataStateSO2&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,SO2)</span>
-<span id="cb41-6"><a href="results.html#cb41-6"></a>dataStateSO2&lt;-dataStateSO2<span class="op">%&gt;%</span><span class="kw">rename</span>(<span class="dt">region=</span>STATE, <span class="dt">value=</span>SO2)</span>
-<span id="cb41-7"><a href="results.html#cb41-7"></a>dataStateSO2<span class="op">$</span>region&lt;-<span class="kw">tolower</span>(state.name[<span class="kw">match</span>(dataStateSO2<span class="op">$</span>region, state.abb)])</span>
-<span id="cb41-8"><a href="results.html#cb41-8"></a></span>
-<span id="cb41-9"><a href="results.html#cb41-9"></a><span class="kw">state_choropleth</span>(dataStateSO2,<span class="dt">title=</span><span class="st">&quot;Mean SO2 Amount Over 10 Years by State&quot;</span>, <span class="dt">legend=</span><span class="st">&quot;SO2 Amount by state&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="results.html#cb41-1"></a>dataState&lt;-<span class="st"> </span>data<span class="op">%&gt;%</span><span class="kw">group_by</span>(STATE)<span class="op">%&gt;%</span><span class="kw">summarise</span>(<span class="dt">SO2 =</span> <span class="kw">mean</span>(SO2), <span class="dt">NO3=</span><span class="kw">mean</span>(NO3))</span>
+<span id="cb41-2"><a href="results.html#cb41-2"></a></span>
+<span id="cb41-3"><a href="results.html#cb41-3"></a><span class="co">#mean so2 by state</span></span>
+<span id="cb41-4"><a href="results.html#cb41-4"></a>dataStateSO2&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,SO2)</span>
+<span id="cb41-5"><a href="results.html#cb41-5"></a>dataStateSO2&lt;-dataStateSO2<span class="op">%&gt;%</span><span class="kw">rename</span>(<span class="dt">region=</span>STATE, <span class="dt">value=</span>SO2)</span>
+<span id="cb41-6"><a href="results.html#cb41-6"></a>dataStateSO2<span class="op">$</span>region&lt;-<span class="kw">tolower</span>(state.name[<span class="kw">match</span>(dataStateSO2<span class="op">$</span>region, state.abb)])</span>
+<span id="cb41-7"><a href="results.html#cb41-7"></a></span>
+<span id="cb41-8"><a href="results.html#cb41-8"></a><span class="kw">state_choropleth</span>(dataStateSO2,<span class="dt">title=</span><span class="st">&quot;Mean SO2 Amount Over 10 Years by State&quot;</span>, <span class="dt">legend=</span><span class="st">&quot;SO2 Amount by state&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="dv">8</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="spatial-distribution-of-no3" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> Spatial distribution of NO3</h3>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="results.html#cb42-1"></a><span class="kw">library</span>(tools)</span>
-<span id="cb42-2"><a href="results.html#cb42-2"></a><span class="kw">library</span>(micromap)</span>
-<span id="cb42-3"><a href="results.html#cb42-3"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
-<span id="cb42-4"><a href="results.html#cb42-4"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
-<span id="cb42-5"><a href="results.html#cb42-5"></a></span>
-<span id="cb42-6"><a href="results.html#cb42-6"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
-<span id="cb42-7"><a href="results.html#cb42-7"></a>       <span class="dt">map.data =</span> statePolys,</span>
-<span id="cb42-8"><a href="results.html#cb42-8"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
-<span id="cb42-9"><a href="results.html#cb42-9"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;NO3&#39;</span>, <span class="ot">NA</span>),</span>
-<span id="cb42-10"><a href="results.html#cb42-10"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;NO3&#39;</span>, </span>
-<span id="cb42-11"><a href="results.html#cb42-11"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb42-12"><a href="results.html#cb42-12"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
-<span id="cb42-13"><a href="results.html#cb42-13"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
-<span id="cb42-14"><a href="results.html#cb42-14"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb42-15"><a href="results.html#cb42-15"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
-<span id="cb42-16"><a href="results.html#cb42-16"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb42-17"><a href="results.html#cb42-17"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
-<span id="cb42-18"><a href="results.html#cb42-18"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
-<span id="cb42-19"><a href="results.html#cb42-19"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
-<span id="cb42-20"><a href="results.html#cb42-20"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
-<span id="cb42-21"><a href="results.html#cb42-21"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
-<span id="cb42-22"><a href="results.html#cb42-22"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb42-23"><a href="results.html#cb42-23"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb42-24"><a href="results.html#cb42-24"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
-<span id="cb42-25"><a href="results.html#cb42-25"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
-<span id="cb42-26"><a href="results.html#cb42-26"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean NO3 Pollution Amount&quot;</span>, </span>
-<span id="cb42-27"><a href="results.html#cb42-27"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb42-28"><a href="results.html#cb42-28"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb42-29"><a href="results.html#cb42-29"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
-<span id="cb42-30"><a href="results.html#cb42-30"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
-<span id="cb42-31"><a href="results.html#cb42-31"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
-<span id="cb42-32"><a href="results.html#cb42-32"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
-<span id="cb42-33"><a href="results.html#cb42-33"></a>          ))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="results.html#cb42-1"></a><span class="kw">data</span>(<span class="st">&quot;USstates&quot;</span>)</span>
+<span id="cb42-2"><a href="results.html#cb42-2"></a>statePolys &lt;-<span class="st"> </span><span class="kw">create_map_table</span>(USstates, <span class="dt">IDcolumn =</span> <span class="st">&quot;ST&quot;</span>)</span>
+<span id="cb42-3"><a href="results.html#cb42-3"></a></span>
+<span id="cb42-4"><a href="results.html#cb42-4"></a><span class="kw">lmplot</span>(<span class="dt">stat.data =</span> dataState,</span>
+<span id="cb42-5"><a href="results.html#cb42-5"></a>       <span class="dt">map.data =</span> statePolys,</span>
+<span id="cb42-6"><a href="results.html#cb42-6"></a>       <span class="dt">panel.types =</span> <span class="kw">c</span>(<span class="st">&#39;dot_legend&#39;</span>, <span class="st">&#39;labels&#39;</span>, <span class="st">&#39;dot&#39;</span>, <span class="st">&#39;map&#39;</span>),</span>
+<span id="cb42-7"><a href="results.html#cb42-7"></a>       <span class="dt">panel.data =</span> <span class="kw">list</span>(<span class="ot">NA</span>, <span class="st">&#39;STATE&#39;</span>,<span class="st">&#39;NO3&#39;</span>, <span class="ot">NA</span>),</span>
+<span id="cb42-8"><a href="results.html#cb42-8"></a>       <span class="dt">ord.by =</span> <span class="st">&#39;NO3&#39;</span>, </span>
+<span id="cb42-9"><a href="results.html#cb42-9"></a>       <span class="dt">rev.ord =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb42-10"><a href="results.html#cb42-10"></a>       <span class="dt">grouping =</span> <span class="dv">5</span>,</span>
+<span id="cb42-11"><a href="results.html#cb42-11"></a>       <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set1&quot;</span>),</span>
+<span id="cb42-12"><a href="results.html#cb42-12"></a>       <span class="dt">median.row =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb42-13"><a href="results.html#cb42-13"></a>       <span class="dt">map.link =</span> <span class="kw">c</span>(<span class="st">&#39;STATE&#39;</span>, <span class="st">&#39;ID&#39;</span>),</span>
+<span id="cb42-14"><a href="results.html#cb42-14"></a>       <span class="dt">map.color2 =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb42-15"><a href="results.html#cb42-15"></a>       <span class="dt">panel.att =</span> <span class="kw">list</span>(</span>
+<span id="cb42-16"><a href="results.html#cb42-16"></a>         <span class="kw">list</span>(<span class="dv">1</span>, <span class="dt">point.type=</span><span class="dv">20</span>,</span>
+<span id="cb42-17"><a href="results.html#cb42-17"></a>              <span class="dt">point.border=</span><span class="ot">TRUE</span>),</span>
+<span id="cb42-18"><a href="results.html#cb42-18"></a>          <span class="kw">list</span>(<span class="dv">2</span>, <span class="dt">header =</span> <span class="st">&quot;STATE&quot;</span>,</span>
+<span id="cb42-19"><a href="results.html#cb42-19"></a>               <span class="dt">panel.width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb42-20"><a href="results.html#cb42-20"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-21"><a href="results.html#cb42-21"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb42-22"><a href="results.html#cb42-22"></a>               <span class="dt">graph.grid.color =</span> <span class="st">&quot;grey99&quot;</span>,</span>
+<span id="cb42-23"><a href="results.html#cb42-23"></a>               <span class="dt">align =</span> <span class="st">&quot;left&quot;</span>),</span>
+<span id="cb42-24"><a href="results.html#cb42-24"></a>          <span class="kw">list</span>(<span class="dv">3</span>, <span class="dt">header =</span> <span class="st">&quot;Mean NO3 Pollution Amount&quot;</span>, </span>
+<span id="cb42-25"><a href="results.html#cb42-25"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-26"><a href="results.html#cb42-26"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb42-27"><a href="results.html#cb42-27"></a>               <span class="dt">xaxis.title =</span> <span class="st">&#39;ug/m^3&#39;</span>),</span>
+<span id="cb42-28"><a href="results.html#cb42-28"></a>          <span class="kw">list</span>(<span class="dv">4</span>, <span class="dt">header =</span> <span class="st">&#39;Geographical Location&#39;</span>,</span>
+<span id="cb42-29"><a href="results.html#cb42-29"></a>               <span class="dt">panel.header.face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb42-30"><a href="results.html#cb42-30"></a>               <span class="dt">panel.header.size =</span> <span class="fl">1.2</span>)</span>
+<span id="cb42-31"><a href="results.html#cb42-31"></a>          ))</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="results.html#cb43-1"></a><span class="co">#mean NO3 by state</span></span>
 <span id="cb43-2"><a href="results.html#cb43-2"></a>dataStateNO3&lt;-dataState<span class="op">%&gt;%</span><span class="kw">select</span>(STATE,NO3)</span>
